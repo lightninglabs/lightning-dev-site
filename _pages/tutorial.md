@@ -10,6 +10,10 @@ This tutorial will get you up to speed with all the skills necessary to work
 with `lnd`. We will be building a Bitcoin micropayments paywell into a news
 site!
 
+This tutorial assumes you have completed installation of Go, `btcd`, and `lnd`
+on simnet.  If not, you can find the installation instructions
+[here](/installation/).
+
 # Stages
 
 Each of the different stages of this tutorial is oriented towards a specific
