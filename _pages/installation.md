@@ -183,13 +183,12 @@ be active on Litecoin's testnet4.
 
 ## Next Steps
 
-* **[Tutorial](/tutorial/):** Get acquainted with `lnd` development by building a
-Bitcoin micropayments content paywell.
+* **[Tutorial](/tutorial/):** Get acquainted with the skills necessary for `lnd` development.
 * **[Step-by-step send payment guide with
-docker](https://github.com/lightningnetwork/lnd/tree/master/docker):** This
-guide describes how to package `lnd` with `btcd` together to make deployment
-as easy as running a few commands.
-* **[Contribution
-guide](https://github.com/lightningnetwork/lnd/blob/master/docs/code_contribution_guidelines.md):**
-How to contribute to `lnd`.
+  docker](https://github.com/lightningnetwork/lnd/tree/master/docker):** This
+  guide describes how to package `lnd` with `btcd` together to make deployment
+  easier.
+* **[Resources](/resources/):** Learn more about the Lightning Network
+* **[Reference Documentation](/docs/):** Read the docs.
+* **[Code Contribution Guidelines](/contribute/):** Contribute to `lnd` itself.
 
