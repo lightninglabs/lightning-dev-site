@@ -1,7 +1,6 @@
 ---
 layout: page
 title: Stage 1 - Setting up a local cluster
-permalink: /tutorial/01-lncli
 ---
 
 ### Introduction
