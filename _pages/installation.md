@@ -167,7 +167,7 @@ externalip=128.111.13.23
 externalip=111.32.29.29
 
 [Bitcoin]
-bitcoin.active=1
+bitcoin.active
 bitcoin.rpchost=localhost:18334
 ```
 
@@ -185,7 +185,7 @@ be active on Litecoin's testnet4.
 
 * **[Tutorial](/tutorial/):** Get acquainted with the skills necessary for `lnd` development.
 * **[Step-by-step send payment guide with
-  docker](https://github.com/lightningnetwork/lnd/tree/master/docker):** This
+  docker](/docker-guide/):** This
   guide describes how to package `lnd` with `btcd` together to make deployment
   easier.
 * **[Resources](/resources/):** Learn more about the Lightning Network

@@ -11,7 +11,13 @@ channels, and route payments between one another. We will also establish a
 baseline understanding of the different components that must work together as
 part of developing on `lnd`.
 
-The schema will be the following. Keep in mind that you can extend this network to include additional nodes `David`, `Eve`, etc. by simply running more `lnd` instances with different ports and `datadir`s.
+This tutorial assumes you have completed installation of Go, `btcd`, and `lnd`
+on simnet.  If not, you can find the installation instructions
+[here](/installation/).
+
+The schema will be the following. Keep in mind that you can easily extend this
+network to include additional nodes `David`, `Eve`, etc. by simply running more
+local `lnd` instances.
 
 [//]: # (TODO Max: Replace this with an actual image)
 ```
@@ -64,7 +70,8 @@ workflow.
 
 #### Running btcd
 
-Let's start by running btcd. Ensure you have your `$GOPATH` set, and run:
+Let's start by running btcd, if you don't have it up already. Open up a new
+terminal window, ensure you have your `$GOPATH` set, and run:
 ```bash
 btcd --simnet --txindex --rpcuser=kek --rpcpass=kek
 ```
@@ -80,14 +87,21 @@ Breaking down the components:
 
 #### Running lnd
 
-Now, let's set up the three `lnd` nodes. To keep things as clean and separate as possible, open up a new terminal window, ensure you have `$GOPATH` set, and create a new directory under `$GOPATH` called `dev` that will represent our development space. We will also create separate folders to store the state for alice, bob, and charlie.
+Now, let's set up the three `lnd` nodes. To keep things as clean and separate
+as possible, open up a new terminal window, ensure you have `$GOPATH` set and
+`$GOPATH/bin` in your `PATH`, and create a new directory under `$GOPATH` called
+`dev` that will represent our development space. We will create separate
+folders to store the state for alice, bob, and charlie, and run all of our
+`lnd` nodes on different `localhost` ports instead of using
+[Docker](/docker-guide/) to make our networking a bit easier.
+
 ```bash
-cd $GOPATH
 # Create our development space
+cd $GOPATH
 mkdir dev
 cd dev
 
-# Create folders for each of our devs
+# Create folders for each of our nodes
 mkdir alice
 mkdir bob
 mkdir charlie
@@ -111,31 +125,414 @@ $ tree $GOPATH -L 2
     └── ...
 ```
 
-Start up the Alice node:
+Start up the Alice node from within the `alice` directory:
 ```bash
-lnd --rpcport=10001 --peerport=10011 --restport=8001 --datadir=test_data --logdir=test_log --debuglevel=info --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+$ cd $GOPATH/dev/alice
+alice$ lnd --rpcport=10001 --peerport=10011 --restport=8001 --datadir=test_data --logdir=test_log --debuglevel=info --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
 ```
-
-=== Work in Progress
+The Alice node should now be running and displaying output.
 
 Breaking down the components:
-  * `--rpcport`:
-  * `--peerport`:
-  * `--restport`:
-  * `--datadir`:
-  * `--logdir`:
-  * `--debuglevel`:
-  * `--bitcoin.rpcuser`:
-  * `--bitcoin.rpcpass`:
-  * `--bitcoin.simnet`:
-  * `--bitcoin.active`:
+  * `--rpcport`: The port to listen for the RPC server. This is the primary way
+    an application will communicate with `lnd`
+  * `--peerport`: The port to listen on for incoming P2P
+    connections. This is at the networking level, and is distinct from the
+    Lightning channel networks and Bitcoin/Litcoin network itself.
+  * `--restport`: The port exposing a REST api for interacting with `lnd` over
+    HTTP. For example, you can get Alice's channel balance by making a GET
+    request to `localhost:8001/v1/channels`. This is not needed for this
+    tutorial, but you can see some examples
+    [here](https://gist.github.com/Roasbeef/624c02cd5a90a44ab06ea90e30a6f5f0).
+  * `--datadir`: The directory that `lnd`'s data will be stored inside
+  * `--logdir`: The directory to log output.
+  * `--debuglevel`: The logging level for all subsystems. Can be set to
+    `trace`, `debug`, `info`, `warn`, `error`, `critical`.
+  * `--bitcoin.rpcuser` and `--bitcoin.rpcpass`: The username and password for
+    the `btcd` instance
+  * `--bitcoin.simnet`: Specifies whether to use `simnet` or `testnet`
+  * `--bitcoin.active`: Specifies that bitcoin is active. Can also include
+    `--litecoin.active` to activate Litecoin
 
-[//]: # (TODO Max: Make some remark that you always need to run from the same directory)
+### Running Bob and Charlie
 
-===
+Just as we did with Alice, start up the Bob node from within the `bob`
+directory, and the Charlie node from within the `charlie` directory. Doing so
+will configure the `datadir` and `logdir` to be in separate locations so that
+there is never a conflict.
 
-We will run all of our `lnd` nodes on different `localhost` ports instead of
-using [Docker](/docker-guide/), which will make our networking a bit easier.
+Keep in mind that for each additional terminal window you set, you will need to
+set `$GOPATH` and include `$GOPATH/bin` in your `PATH`. You could create a
+setup script that includes the following lines:
+```bash
+export GOPATH=~/github/ln-lnd
+export PATH=$PATH:$GOPATH/bin
+```
+and run it every time you start a new terminal window working on `lnd`.
+
+Run Bob and Charlie:
+```bash
+# In a new terminal window
+cd $GOPATH/dev/bob
+bob$ lnd --rpcport=10002 --peerport=10012 --restport=8002 --datadir=test_data --logdir=test_log --debuglevel=info --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+
+# In another terminal window
+cd $GOPATH/dev/charlie
+charlie$ lnd --rpcport=10003 --peerport=10013 --restport=8003 --datadir=test_data --logdir=test_log --debuglevel=info --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+```
+
+### Configuring lnd.conf
+
+To skip having to type out a bunch of flags on the command line every time, we
+can instead modify our `lnd.conf`, and the arguments specified therein will be
+loaded into `lnd` automatically. Any additional configuration added as a
+command line argument will be applied *after* reading from `lnd.conf`, and will
+overwrite the `lnd.conf` option if applicable.
+
+- On MacOS, `lnd.conf` is located at: `/Users/[username]/Library/Application\ Support/Lnd/lnd.conf`
+- On Linux: `~/.lnd/lnd.conf`
+
+Here is an example `lnd.conf` that can save us from re-specifying a bunch of command line options:
+```bash
+[Application Options]
+datadir=test_data
+logdir=test_log
+debuglevel=info
+debughtlc=true
+
+[Bitcoin]
+bitcoin.simnet
+bitcoin.active
+bitcoin.rpcuser=kek
+bitcoin.rpcpass=kek
+```
+
+Now, when we start nodes, we only have to type
+```bash
+alice$ lnd --rpcport=10001 --peerport=10011 --restport=8001
+bob$ lnd --rpcport=10002 --peerport=10012 --restport=8002
+charlie$ lnd --rpcport=10003 --peerport=10013 --restport=8003
+```
+etc.
+
+### Working with lncli
+
+Now that we have our `lnd` nodes up and running, let's interact with them! To
+control `lnd` we will need to use `lncli`, the command line interface.
+
+Open up a new terminal window, set `$GOPATH` and include `$GOPATH/bin` in your
+`PATH` as usual. Let's test that we can connect to Alice by requesting basic information:
+```bash
+cd $GOPATH/dev/alice
+alice$ lncli --rpcserver=localhost:10001 getinfo
+```
+
+`lncli` just made an RPC call to the Alice `lnd` node. Notice that we had to
+specify the `--rpcserver` here, which corresponds to port `10001` that we set
+when starting the Alice `lnd` node.
+
+#### lncli options
+
+To see all the commands available for `lncli`, simply type `lncli --help` or
+`lncli -h`.
+
+### Setting up Bitcoin addresses
+Let's create a new Bitcoin address for Alice. This will be the address that
+stores Alice's on-chain balance.
+```bash
+alice$ lncli --rpcserver=localhost:10001 newaddress np2wkh
+{
+    "address": <ALICE_ADDRESS>
+}
+```
+
+Open up new terminal windows and do the same for Bob and Charlie. `alice$` or
+`bob$` denotes running the command from the Alice or Bob `lncli` window
+respectively.
+```bash
+# In a new terminal window, setting $GOPATH, etc.
+cd $GOPATH/dev/bob
+bob$ lncli --rpcserver=localhost:10002 newaddress np2wkh
+{
+    "address": <BOB_ADDRESS>
+}
+
+# In a new terminal window:
+cd $GOPATH/dev/bob
+charlie$ lncli --rpcserver=localhost:10003 newaddress np2wkh
+{
+    "address": <CHARLIE_ADDRESS>
+}
+```
+
+To avoid typing the `--rpcserver=localhost:1000X` flag every time, we can set
+some aliases. Add the following to your `.bashrc`:
+```bash
+alias lncli-alice="lncli --rpcserver=localhost:10001"
+alias lncli-bob="lncli --rpcserver=localhost:10002"
+alias lncli-charlie="lncli --rpcserver=localhost:10003"
+```
+
+To make sure this was applied to all of your current terminal windows, rerun
+your `.bashrc` file:
+```bash
+alice$ source ~/.bashrc
+bob$ source ~/.bashrc
+charlie$ source ~/.bashrc
+```
+For simplicity, the rest of the tutorial will assume that this step was complete.
+
+### Funding Alice
+
+That's a lot of configuration! Recall that at this point, we've generated
+onchain addresses for Alice, Bob, and Charlie. Now, we will get some practice
+working with `btcd` and fund these addresses with some `simnet` Bitcoin.
+
+Quit btcd and re-run it, setting Alice as the recipient of all mining rewards:
+```bash
+btcd --simnet --txindex --rpcuser=kek --rpcpass=kek --miningaddr=<ALICE_ADDRESS>
+```
+
+Generate 400 blocks, so that Alice gets the reward. We need at least 100 blocks
+because coinbase funds can't be spent until after 100 confirmations, and we
+need about 300 to activate segwit. The following command can be run in any
+window with `$GOPATH` and `$PATH` set.
+```bash
+btcctl generate 400
+```
+
+Check that segwit is active:
+```bash
+btcctl getblockchaininfo | grep -A 1 segwit
+```
+
+Check Alice's wallet balance. `--witness_only=true` specifies that we only want
+to consider witness outputs when calculating the wallet balance.
+```bash
+alice$ lncli-alice walletbalance --witness_only=true
+```
+
+It's no fun if only Alice any money. Let's give some to Charlie as well:
+```bash
+# Quit btcd
+btcd --simnet --txindex --rpcuser=kek --rpcpass=kek --miningaddr=<BOB_ADDRESS>
+
+# Generate more blocks
+btcctl generate 50
+
+# Check Charlie's balance
+charlie$ lncli-charlie walletbalance --witness_only=true
+```
+
+### Creating the P2P Network
+Now that Alice and Charlie have some simnet Bitcoin, let's start connecting
+them together.
+
+Connect Alice to Bob:
+```bash
+# Get Bob's identity pubkey:
+bob$ lncli-bob getinfo
+{
+    ----->"identity_pubkey": <BOB_PUBKEY>,
+    "alias": "",
+    "num_pending_channels": 0,
+    "num_active_channels": 0,
+    "num_peers": 0,
+    "block_height": 1215,
+    "block_hash": "7d0bc86ea4151ed3b5be908ea883d2ac3073263537bcf8ca2dca4bec22e79d50",
+    "synced_to_chain": true,
+    "testnet": false
+    "chains": [
+        "bitcoin"
+    ]
+}
+
+# Connect Alice and Bob together
+alice$ lncli-alice connect <BOB_PUBKEY>@localhost:10012
+```
+Notice that `localhost:10012` corresponds to the `--peerport=10012` flag we set when
+starting the Bob `lnd` node.
+
+Let's check that Alice and Bob are now aware of each other.
+```bash
+# Check that Alice has added Bob as a peer:
+alice$ lncli-alice listpeers
+{
+    "peers": [
+        {
+            "pub_key": <BOB_PUBKEY>,
+            "peer_id": 1,
+            "address": "172.19.0.4:5656",
+            "bytes_sent": "357",
+            "bytes_recv": "357",
+            "sat_sent": "0",
+            "sat_recv": "0",
+            "inbound": true,
+            "ping_time": "0"
+        }
+    ]
+}
+
+# Check that Bob has added Alice as a peer:
+bob$ lncli-bob listpeers
+{
+    "peers": [
+        {
+            "pub_key": <ALICE_PUBKEY>,
+            "peer_id": 1,
+            "address": "172.19.0.3:51932",
+            "bytes_sent": "357",
+            "bytes_recv": "357",
+            "sat_sent": "0",
+            "sat_recv": "0",
+            "inbound": false,
+            "ping_time": "0"
+        }
+    ]
+}
+```
+
+Finish up the P2P network by connecting Bob to Charlie:
+```bash
+charlie$ lncli-charlie connect <BOB_PUBKEY>@localhost:10012
+```
+
+### Setting up Lightning Network
+
+Before we can send payment, we will need to set up payment channels from Alice
+to Bob, and Bob to Charlie.
+
+First, let's open the Alice<-->Bob channel.
+```bash
+alice$ lncli-alice openchannel --node_key=<BOB_PUBKEY> --num_confs=1 --local_amt=1000000
+```
+- `--num_confs` specifies that we will only wait one confirmation before we
+consider the channel to be 'open', and therefore functional.
+- `--local_amt` specifies the amount of money that Alice will commit to the channel.
+To see the full list of options, you can try `lncli openchannel --help`.
+
+We now need to mine one block so that the channel is considered valid:
+```bash
+btcctl generate 1
+```
+
+Check that Alice<-->Bob channel was created:
+```bash
+alice$ lncli-alice listchannels
+{
+    "channels": [
+        {
+            "active": true,
+            "remote_pubkey": <BOB_PUBKEY>,
+            "channel_point": "3511ae8a52c97d957eaf65f828504e68d0991f0276adff94c6ba91c7f6cd4275:0",
+            "chan_id": "1337006139441152",
+            "capacity": "1005000",
+            "local_balance": "1000000",
+            "remote_balance": "0",
+            "unsettled_balance": "0",
+            "total_satoshis_sent": "0",
+            "total_satoshis_received": "0",
+            "num_updates": "0"
+        }
+    ]
+}
+``` 
+
+### Sending single hop payments
+
+Finally, to the exciting part - sending payments! Let's send a payment from
+Alice to Bob.
+
+First, Bob will need to generate an invoice:
+```bash
+bob$ lncli-bob addinvoice --value=10000
+{
+        "r_hash": "<a_random_rhash_value>", 
+        "pay_req": "<encoded_invoice>", 
+}
+```
+
+Send the payment from Alice to Bob:
+```bash
+alice$ lncli-alice sendpayment --pay_req=<encoded_invoice>
+
+# Check that Alice's channel balance was decremented accordingly:
+alice$ lncli-alice listchannels
+
+# Check that Bob's channel was credited with the payment amount:
+bob$ lncli-bob listchannels
+```
+
+### Multi-hop payments
+
+Now that we know how to send single-hop payments, sending multi hop payments is not that much more difficult. Let's set up a channel from Bob<-->Charlie:
+```bash
+charlie$ lncli-charlie openchannel --node_key=<BOB_PUBKEY> --num_confs=1 --local_amt=1000000
+```
+
+Let's make a payment from Alice to Charlie by routing through Bob:
+```bash
+charlie$ lncli-charlie addinvoice --value=10000
+alice$ lncli-alice sendpayment --pay_req=<encoded_invoice>
+
+# Check that Charlie's channel was credited with the payment amount:
+charlie$ lncli-charlie listchannels
+```
+
+### Closing channels
+
+For practice, let's try closing a channel. You can always reopen it again later.
+
+```bash
+alice$ lncli-alice listchannels
+{
+    "channels": [
+        {
+            "active": true,
+            "remote_pubkey": "0343bc80b914aebf8e50eb0b8e445fc79b9e6e8e5e018fa8c5f85c7d429c117b38",
+       ---->"channel_point": "3511ae8a52c97d957eaf65f828504e68d0991f0276adff94c6ba91c7f6cd4275:0",
+            "chan_id": "1337006139441152",
+            "capacity": "1005000",
+            "local_balance": "990000",
+            "remote_balance": "10000",
+            "unsettled_balance": "0",
+            "total_satoshis_sent": "10000",
+            "total_satoshis_received": "0",
+            "num_updates": "2"
+        }
+    ]
+}
+```
+
+The Channel point consists of two numbers separated by a colon, which uniquely
+identifies the channel. The first number is `funding_txid` and the second
+number is `output_index`.
+```bash
+# Close the Alice<-->Bob channel from Alice's side.
+alice$ lncli closechannel --funding_txid=<funding_txid> --output_index=<output_index>
+
+# Mine a block including the channel close transaction to close the channel:
+btcctl generate 1
+
+# Check that Bob's on-chain balance was credited by his settled amount in the
+# channel. Recall that Bob previously had no on-chain Bitcoin:
+alice$ lncli-alice walletbalance
+{
+    "balance": 0.0001
+}
+```
+
+At this point, you've learned how to work with `btcd`, `btcctl`, `lnd`, and
+`lncli`. In Stage 2, we will learn how to set up and interact with `lnd` using
+a web GUI client. Click [here](/tutorial/02-web-client) to proceed.
+
+_In the future, you can try running through this workflow on `testnet` instead
+of `simnet`, where you can interact with and send payments through the testnet
+Lightning Faucet node. For more information, see the "Connect to faucet
+lightning node" section in the [Docker guide](/docker-guide/) or check out the
+[Lightning Network faucet
+repository](https://github.com/lightninglabs/lightning-faucet)._
+
+[//]: # (TODO Max: Replace the link to Github LN Faucet to an internal guide for interacting with the Lightning Faucet)
 
 ### Questions
 [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)]
