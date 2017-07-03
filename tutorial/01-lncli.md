@@ -480,7 +480,8 @@ charlie$ lncli-charlie listchannels
 
 ### Closing channels
 
-For practice, let's try closing a channel. You can always reopen it again later.
+For practice, let's try closing a channel. We will reopen it in the next stage
+of the tutorial.
 
 ```bash
 alice$ lncli-alice listchannels

@@ -24,12 +24,12 @@ wherever you want below!
     - How to set up a local environment with three nodes that can make payments
       with and through one another.
     - Gain experience interacting with `lnd` from the command line.
-- **[Stage 2 - Web client](/tutorial/02-web-client)**
+- **[Stage 2 - LND Web Client](/tutorial/02-web-client)**
     - How to run and use a `lnd` web GUI.
 - **[Stage 3 - RPC Client](/tutorial/03-rpc-client)**
     - How to set up and interact with `lnd` from an RPC client, specifically
       `gRPC`.
-- **[Stage 4 - Webapp integration](/tutorial/04-rpc-client)**
+- **[Stage 4 - Webapp Integration](/tutorial/04-rpc-client)**
     - Authenticating into a server using `lnd`
     - Exposure to `lnrpc` documentation
     - Adding a micropayments paywall.
