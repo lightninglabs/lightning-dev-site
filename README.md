@@ -19,14 +19,19 @@ repo](https://github.com/laurilehmijoki/s3_website) for more information.
 
 ### Steps
 
-1. Add the deployment credentials for `s3_config.yml`
-```
-$ export LN_S3_ID="YOUR_S3_ID"
-$ export LN_S3_SECRET="YOUR_S3_SECRET"
-$ export LN_CLOUDFRONT_DISTRIBUTION_ID="YOUR_CLOUDFRONT_DISTRIBUTION_ID"
+1. Install `s3_website`
+```bash
+gem install s3_website
 ```
 
-2. Deploy the site from local changes:
+2. Add the deployment credentials for `s3_config.yml`
+```
+export LN_S3_ID="YOUR_S3_ID"
+export LN_S3_SECRET="YOUR_S3_SECRET"
+export LN_CLOUDFRONT_DISTRIBUTION_ID="YOUR_CLOUDFRONT_DISTRIBUTION_ID"
+```
+
+3. Deploy the site from local changes:
 
 ```
 s3_website push
