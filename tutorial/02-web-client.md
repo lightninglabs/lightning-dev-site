@@ -46,7 +46,7 @@ of our [community page](https://lightning.community#mc-embedded-subscribe-form)
 ### Moving on to Step 3
 
 By now, you should have gained familiarity with the web client.
-In [Stage 3](/tutorial/03-rpc-client), we will learn how to set up an gRPC
+In [Stage 3](/tutorial/03-rpc-client), we will learn how to set up a gRPC
 client for programmatic access to our `lnd` nodes.
 
 [Proceed to Stage 3 - Web Client](/tutorial/03-rpc-client)
