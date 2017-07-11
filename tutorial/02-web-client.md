@@ -49,7 +49,10 @@ By now, you should have gained familiarity with the web client.
 In [Stage 3](/tutorial/03-rpc-client), we will learn how to set up a gRPC
 client for programmatic access to our `lnd` nodes.
 
-[Proceed to Stage 3 - Web Client](/tutorial/03-rpc-client)
+#### Navigation
+- [Proceed to Stage 3 - RPC Client](/tutorial/03-rpc-client)
+- [Return to Stage 1 - Setting up a local cluster](/tutorial/01-lncli)
+- [Return to main tutorial page](/tutorial/)
 
 ### Questions
 [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lnd)

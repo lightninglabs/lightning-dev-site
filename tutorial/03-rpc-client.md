@@ -172,10 +172,9 @@ of Bob's first channel with `listchannels_resp.channels[0].chan_id`.
 
 ### Playing with gRPC
 
-To get a hang of the API documentation, try running a slightly more complex
+To get a hang of the RPC documentation, try running a slightly more complex
 command like `GetChanInfo`, which requires passing in some parameters. The API
-docs are not yet complete, but you can refer to the [RPC
-documentation in
+docs are not yet complete, but you can refer to the [RPC documentation in
 lnd](https://github.com/lightningnetwork/lnd/blob/master/lnrpc/rpc.proto).
 
 Hint: look at the `GetChanInfo` object and the associated requests and
@@ -186,7 +185,10 @@ responses.
 By now, you should have at least a basic understanding of how to work with lnd from a gRPC client.
 In [Stage 4](/tutorial/04-webapp-integration), we will finally integrate `lnd` into our news site.
 
-[Proceed to Stage 4 - Webapp Integration](/tutorial/04-webapp-integration)
+#### Navigation
+- [Proceed to Stage 4 - Webapp Integration](/tutorial/04-webapp-integration)
+- [Return to Stage 2 - Web Client](/tutorial/02-web-client)
+- [Return to main tutorial page](/tutorial/)
 
 ### Questions
 [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lnd)

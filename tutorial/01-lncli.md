@@ -556,8 +556,6 @@ At this point, you've learned how to work with `btcd`, `btcctl`, `lnd`, and
 `lncli`. In [Stage 2](/tutorial/02-web-client), we will learn how to set up and interact with `lnd` using
 a web GUI client.
 
-[Proceed to Stage 2 - Web Client](/tutorial/02-web-client)
-
 _In the future, you can try running through this workflow on `testnet` instead
 of `simnet`, where you can interact with and send payments through the testnet
 Lightning Faucet node. For more information, see the "Connect to faucet
@@ -566,6 +564,10 @@ lightning node" section in the [Docker guide](/docker-guide/) or check out the
 repository](https://github.com/lightninglabs/lightning-faucet)._
 
 [//]: # (TODO Max: Replace the link to Github LN Faucet to an internal guide for interacting with the Lightning Faucet)
+
+#### Navigation
+- [Proceed to Stage 2 - Web Client](/tutorial/02-web-client)
+- [Return to main tutorial page](/tutorial/)
 
 ### Questions
 [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lnd)

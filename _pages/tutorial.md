@@ -29,7 +29,7 @@ wherever you want below!
     - How to set up and interact with `lnd` from an RPC client, specifically
       `gRPC`.
     - Exposure to `lnrpc` documentation
+    - Set up web development workspace
 - **[Stage 4 - Webapp Integration](/tutorial/04-webapp-integration)**
-    - Authenticating into a server using `lnd`
-    - Adding a micropayments paywall.
+    - Adding a micropayments paywall
     - Recommended next steps
