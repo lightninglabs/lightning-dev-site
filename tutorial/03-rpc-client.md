@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Stage 3 - Setup RPC Client
+title: Stage 3 - RPC Client
 ---
 
 In this section, we will run the finished tutorial app and set up a gRPC client

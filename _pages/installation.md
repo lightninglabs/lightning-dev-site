@@ -27,11 +27,7 @@ permalink: /installation/
     export GOPATH=~/projects/lightning
     ```
     It is recommended to add `$GOPATH/bin` to your `PATH` at this point.
-    **Note:** If you are building with `Go 1.5`, then you'll need to enable the
-    vendor experiment by setting the `GO15VENDOREXPERIMENT` environment
-    variable to `1`. If you're using `Go 1.6` or later, then it is safe to skip
-    this step.
-
+    
   * **Glide:** This project uses `Glide` to manage dependencies as well 
     as to provide *reproducible builds*. To install `Glide`, execute the
     following command (assumes you already have Go properly installed):

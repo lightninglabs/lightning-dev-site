@@ -12,8 +12,8 @@ baseline understanding of the different components that must work together as
 part of developing on `lnd`.
 
 This tutorial assumes you have completed installation of Go, `btcd`, and `lnd`
-on simnet.  If not, you can find the installation instructions
-[here](/installation/).
+on simnet. If not, please refer to the [installation
+instructions](/installation/).
 
 The schema will be the following. Keep in mind that you can easily extend this
 network to include additional nodes `David`, `Eve`, etc. by simply running more
@@ -167,7 +167,7 @@ Keep in mind that for each additional terminal window you set, you will need to
 set `$GOPATH` and include `$GOPATH/bin` in your `PATH`. Consider creating a
 setup script that includes the following lines:
 ```bash
-export GOPATH=~/github/ln-lnd
+export GOPATH=~/projects/lightning # if you exactly followed the install guide
 export PATH=$PATH:$GOPATH/bin
 ```
 and run it every time you start a new terminal window working on `lnd`.
@@ -203,8 +203,8 @@ debuglevel=info
 debughtlc=true
 
 [Bitcoin]
-bitcoin.simnet
-bitcoin.active
+bitcoin.simnet=1
+bitcoin.active=1
 bitcoin.rpcuser=kek
 bitcoin.rpcpass=kek
 ```
