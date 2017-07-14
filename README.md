@@ -1,5 +1,5 @@
 # Lightning Network Daemon Developer Site
-Documentation for the Lightning Network Daemon
+Developer guides and resources for the Lightning Network Daemon
 
 ## Running the site locally
 

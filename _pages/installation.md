@@ -26,7 +26,13 @@ permalink: /installation/
     ```
     export GOPATH=~/projects/lightning
     ```
-    It is recommended to add `$GOPATH/bin` to your `PATH` at this point.
+    It is recommended to add `$GOPATH/bin` to your `PATH` at this point, like
+    so:
+    ```bash
+    export PATH=$PATH:$GOPATH/bin
+    ```
+    This will ensure that your shell will be able to detect the binaries that
+    were just installed.
     
   * **Glide:** This project uses `Glide` to manage dependencies as well 
     as to provide *reproducible builds*. To install `Glide`, execute the
