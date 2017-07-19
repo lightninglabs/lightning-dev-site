@@ -198,7 +198,6 @@ for Litecoin accordingly.
   docker](/docker-guide/):** This
   guide describes how to package `lnd` with `btcd` together to make deployment
   easier.
-* **[Resources](/resources/):** Learn more about the Lightning Network
-* **[Reference Documentation](/docs/):** Read the docs.
+* **[Reference Documentation](http://api.lightning.community.s3-website-us-east-1.amazonaws.com):** Read the docs.
 * **[Code Contribution Guidelines](/contribute/):** Contribute to `lnd` itself.
 
