@@ -14,7 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Lightning Network Developers
-email: maxfangx@gmail.com
+email: max@lightning.engineering
 description: > # this means to ignore newlines until "baseurl:"
   Developer resources, documentation, and education for the Lightning Network
   Daemon.
