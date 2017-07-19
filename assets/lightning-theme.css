@@ -1,0 +1,33 @@
+---
+---
+
+/* Basic Styles for Lightning Jekyll pages */
+
+/* FONT */
+/*<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">*/
+
+body {
+    font-family:'Poppins', sans-serif;
+    line-height: 30px; /*adjust as needed, slightly higher than default line-height will help with readability */
+}
+
+/* Colors */
+
+a, .purple {
+    color: #6a33e2;
+}
+    /* Purple used for <a>, buttons and occasionally text */
+
+.dkpurple {
+    color: #17062d;
+}
+    /* Dark Purple used for backgrounds and instead of solid black text */
+
+a:visited, .blue {
+    color: #3a8aff;
+}
+    /* Blue used for a:visited and text */
+
+
+
+
