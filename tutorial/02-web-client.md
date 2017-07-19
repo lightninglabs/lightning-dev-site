@@ -18,11 +18,8 @@ cd lncli-web
 # Install dependencies
 npm install
 
-# Fetch and install all the front end dependencies
-"./node_modules/.bin/bower" install --allow-root
-
 # Setup default configuration files
-"./node_modules/.bin/gulp" install
+"./node_modules/.bin/gulp" bundle
 
 # Start the server to point to our Alice node:
 node server --lndhost=localhost:10001
@@ -31,7 +28,7 @@ node server --lndhost=localhost:10001
 node server --help
 ```
 
-Open up `http://localhost:8280/` in your browser to see the web dashboard.
+Open up [`http://localhost:8280/`](http://localhost:8280/) in your browser to see the web dashboard.
 
 ### Poking around
 
