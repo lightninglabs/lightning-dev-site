@@ -104,11 +104,13 @@ Community Slack.
   Osuntokun at Scaling Bitcoin Milan 2016 (starts at 2:47)
   * A way to preserve privacy in the Lightning
     Network
+  * [Video](https://youtu.be/Gzg_u9gHc5Q?t=2m47s), [transcript](https://scalingbitcoin.org/transcript/milan2016/onion-routing-in-lightning)
 
 * [Outsourced Channel Monitoring](https://youtu.be/Gzg_u9gHc5Q?t=48m12s) - Tadge
   Dryja at Scaling Bitcoin Milan 2016 (starts at 48:12)
   * Outsourced channel monitoring: delegating the task of channel monitoring to
     a semi-trusted peer
+  * [Video](https://youtu.be/Gzg_u9gHc5Q?t=48m12s), [slides](https://scalingbitcoin.org/milan2016/presentations/D1%20-%208%20-%20Tadge%20Dryja.pdf), [transcript](https://scalingbitcoin.org/transcript/milan2016/unlinkable-outsourced-channel-monitoring)
 
 ### LND Developer Tools
 
