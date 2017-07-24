@@ -18,7 +18,7 @@ Community Slack.
 
 ### Lightning: Beginner
 
-* [What is the Lightning Network and how can it help Bitcoin scale?](https://coincenter.org/entry/what-is-the-lightning-networkk) article by Elizabeth Stark/
+* [What is the Lightning Network and how can it help Bitcoin scale?](https://coincenter.org/entry/what-is-the-lightning-network) article by Elizabeth Stark/
   * Accessible article explanation of the Lightning Network by Elizabeth Stark,
     the CEO of Lightning Labs.
 
