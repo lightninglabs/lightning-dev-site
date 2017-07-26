@@ -62,11 +62,12 @@ Community Slack.
   * Explains how the Lightning Network is represented in Bitcoin transaction
     based contracts, and how the Lightning Network works with the UTXO model.
 
-### Lightning: Advanced
-
 * [Lightning Network Community Blog](http://lightning.community), managed by
   Lightning Labs.
   * Stay up to date with the latest about LND and the Lightning Network!
+
+### Lightning: Advanced
+
 * [Basis Of Lightning
   Technology (BOLTs)](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md)
   * Full technical specification of the Lightning Network. BOLTs are the
