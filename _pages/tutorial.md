@@ -7,8 +7,8 @@ permalink: /tutorial/
 # Overview
 
 This tutorial will get you up to speed with all the skills necessary to work
-with `lnd`. We will be building a Bitcoin micropayments paywell into a news
-site!
+with [`lnd`](https://github.com/lightningnetwork/lnd). We will be building a
+Bitcoin micropayments paywell into a news site!
 
 This tutorial assumes you have completed installation of Go, `btcd`, and `lnd`
 on simnet.  If not, please see the [installation instructions](/installation/).

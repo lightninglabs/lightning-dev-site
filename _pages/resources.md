@@ -68,6 +68,9 @@ Community Slack.
 
 ### Lightning: Advanced
 
+* Read the code on Github:
+  [`lnd`](https://github.com/lightningnetwork/lnd)
+
 * [Basis Of Lightning
   Technology (BOLTs)](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md)
   * Full technical specification of the Lightning Network. BOLTs are the

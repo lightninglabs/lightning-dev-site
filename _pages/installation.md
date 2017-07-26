@@ -5,7 +5,7 @@ permalink: /installation/
 ---
 
 ### Preliminaries
-  In order to work with `lnd`, the following build dependencies are required:
+  In order to work with [`lnd`](https://github.com/lightningnetwork/lnd), the following build dependencies are required:
   
   * **Go:** `lnd` is written in Go. To install, run one of the following commands:
   
@@ -33,7 +33,7 @@ permalink: /installation/
     ```
     This will ensure that your shell will be able to detect the binaries that
     were just installed.
-    
+
   * **Glide:** This project uses `Glide` to manage dependencies as well 
     as to provide *reproducible builds*. To install `Glide`, execute the
     following command (assumes you already have Go properly installed):
@@ -198,5 +198,6 @@ for Litecoin accordingly.
   docker](/docker-guide/):** This
   guide describes how to package `lnd` with `btcd` together to make deployment
   easier.
+* **[Resources](/resources/):** Learn about the Lightning Network 
 * **[Code Contribution Guidelines](/contribute/):** Contribute to `lnd` itself.
 

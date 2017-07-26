@@ -570,4 +570,7 @@ repository](https://github.com/lightninglabs/lightning-faucet)._
 - [Return to main tutorial page](/tutorial/)
 
 ### Questions
-[![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lnd)
+- Join the #dev-help channel on our [Community
+  Slack](https://join.slack.com/t/lightningcommunity/shared_invite/MjE0NDkzNDM5NzQ3LTE1MDA0MjE0NzctODNlZDlmNWYzOA)
+- Join IRC:
+  [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lnd)
