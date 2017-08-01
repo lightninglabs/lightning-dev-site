@@ -1,14 +1,14 @@
 ---
 layout: page
 title: Working with LND and Docker
+
 ---
 
-This document is written for people who are interested in working with the
-Lightning Network Daemon (`lnd`) under a docker workflow. We use
-`docker-compose` to package `lnd` and `btcd` together to make deploying the two
-daemons as easy as typing a few commands. All configuration between `lnd` and
-`btcd` are handled automatically by their `docker-compose` config file found
-[here](https://github.com/lightningnetwork/lnd/tree/master/docker).
+This document is written for people who are eager to do something with 
+the Lightning Network Daemon (`lnd`). This folder uses `docker-compose` to
+package `lnd` and `btcd` together to make deploying the two daemons as easy as
+typing a few commands. All configuration between `lnd` and `btcd` are handled
+automatically by their `docker-compose` config file.
 
 ### Prerequisites
     Name  | Version 
@@ -67,23 +67,17 @@ Start `btcd`, and then create an address for `Alice` that we'll directly mine
 bitcoin into.
 ```bash
 # Init bitcoin network env variable:
-$ export BITCOIN_NETWORK="simnet" 
-
-# Run all commands from the Docker directory:
-$ cd $GOPATH/src/github.com/lightningnetwork/lnd/docker
-
-# Run "btcd" node:
-$ docker-compose up -d "btcd"
+$ export NETWORK="simnet" 
 
 # Run the "Alice" container and log into it:
-$ docker-compose up -d "alice"
-$ docker exec -i -t "alice" bash
+$ docker-compose run -d --name alice lnd_btc
+$ docker exec -i -t alice bash
 
 # Generate a new backward compatible nested p2sh address for Alice:
 alice$ lncli newaddress np2wkh 
 
 # Recreate "btcd" node and set Alice's address as mining address:
-$ MINING_ADDRESS=<alice_address> docker-compose up -d "btcd"
+$ MINING_ADDRESS=<alice_address> docker-compose up -d btcd
 
 # Generate 400 block (we need at least "100 >=" blocks because of coinbase 
 # block maturity and "300 ~=" in order to activate segwit):
@@ -102,8 +96,8 @@ Connect `Bob` node to `Alice` node.
 
 ```bash
 # Run "Bob" node and log into it:
-$ docker-compose up --no-recreate -d "bob"
-$ docker exec -i -t "bob" bash
+$ docker-compose up --no-recreate -d --name bob lnd_btc
+$ docker exec -i -t bob bash
 
 # Get the identity pubkey of "Bob" node:
 bob$ lncli getinfo
@@ -124,7 +118,7 @@ bob$ lncli getinfo
 }
 
 # Get the IP address of "Bob" node:
-$ docker inspect "bob" | grep IPAddress
+$ docker inspect bob | grep IPAddress
 
 # Connect "Alice" to the "Bob" node:
 alice$ lncli connect <bob_pubkey>@<bob_host>
@@ -207,12 +201,11 @@ bob$ lncli addinvoice --value=10000
 # Send payment from "Alice" to "Bob":
 alice$ lncli sendpayment --pay_req=<encoded_invoice>
 
-# Check "Alice"'s channel balance was decremented accordingly by the payment
-# amount
-alice$ lncli listchannels
+# Check "Alice"'s channel balance
+alice$ lncli channelbalance
 
-# Check "Bob"'s channel balance was credited with the payment amount
-bob$ lncli listchannels
+# Check "Bob"'s channel balance
+bob$ lncli channelbalance
 ```
 
 Now we have open channel in which we sent only one payment, let's imagine
@@ -259,13 +252,12 @@ bob$ lncli walletbalance
 ```
 
 ### Connect to faucet lightning node
-In order to be more confident with `lnd` commands perhaps try to create a mini
-lightning network cluster ([Create lightning network
-cluster](#create-lightning-network-cluster)).
+In order to be more confident with `lnd` commands I suggest you to try 
+to create a mini lightning network cluster ([Create lightning network cluster](#create-lightning-network-cluster)).
 
-In this section we will try to connect our node to the faucet/hub node which
-will create with as the channel and send as some amount of bitcoins. The schema
-will be following:
+In this section we will try to connect our node to the faucet/hub node 
+which will create with as the channel and send as some amount of 
+bitcoins. The schema will be following:
 
 ```
 + ----- +                   + ------ +         (1)        + --- +
@@ -293,10 +285,10 @@ will be following:
 ```
 
 First of all you need to run `btcd` node in `testnet` and wait it to be 
-synced with test network (`May the Force and Patience be with you` ᕦ(ò_óˇ)ᕤ).
+synced with test network (`May the Force and Patience be with you`).
 ```bash 
 # Init bitcoin network env variable:
-$ export BITCOIN_NETWORK="testnet"
+$ export NETWORK="testnet"
 
 # Run "btcd" node:
 $ docker-compose up -d "btcd"

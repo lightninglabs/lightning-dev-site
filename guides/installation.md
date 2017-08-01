@@ -195,7 +195,7 @@ for Litecoin accordingly.
 
 * **[Tutorial](/tutorial/):** Get acquainted with the skills necessary for `lnd` development.
 * **[Step-by-step send payment guide with
-  docker](/guides/docker-guide/):** This
+  docker](/docker-guide/):** This
   guide describes how to package `lnd` with `btcd` together to make deployment
   easier.
 * **[Resources](/resources/):** Learn about the Lightning Network 
