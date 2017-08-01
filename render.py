@@ -7,11 +7,10 @@ def read_file_without_title(filename):
     Takes filename of markdown as input and returns the file contents as a
     utf-8 encoded string after stripping out the title
     """
-
     file_lines = open(filename).readlines()
 
     while True:
-        line = file_lines[0].strip()
+        line = file_lines[0].decode('utf-8').strip()
 
         # If the line is empty or begins with a `# ` denoting a h1 md header
         if line == '' or line[:2] == '# ':
@@ -48,6 +47,17 @@ def render():
     with open(installation_output, "wb") as file_out:
         file_out.write(installation_guide)
     print "Rendered {}".format(installation_output)
+
+    # Read DOCKER-README.md and output guides/docker.md
+    docker_guide = template.render(
+        title='Working with LND and Docker',
+        permalink=None,
+        content=read_file_without_title('DOCKER-README.md'),
+    ).encode('utf-8')
+    docker_output = 'guides/docker.md'
+    with open(docker_output, "wb") as file_out:
+        file_out.write(docker_guide)
+    print "Rendered {}".format(docker_output)
 
     # Read python.md and output guides/python-grpc.md
     python_grpc_guide = template.render(
