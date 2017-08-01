@@ -1,7 +1,6 @@
 ---
 layout: page
 title: Working with LND and Docker
-permalink: /docker-guide/
 ---
 
 This document is written for people who are interested in working with the

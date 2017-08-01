@@ -13,7 +13,7 @@ part of developing on `lnd`.
 
 This tutorial assumes you have completed installation of Go, `btcd`, and `lnd`
 on simnet. If not, please refer to the [installation
-instructions](/installation/).
+instructions](/guides/installation/).
 
 The schema will be the following. Keep in mind that you can easily extend this
 network to include additional nodes `David`, `Eve`, etc. by simply running more
@@ -96,7 +96,7 @@ as possible, open up a new terminal window, ensure you have `$GOPATH` set and
 `dev` that will represent our development space. We will create separate
 folders to store the state for alice, bob, and charlie, and run all of our
 `lnd` nodes on different `localhost` ports instead of using
-[Docker](/docker-guide/) to make our networking a bit easier.
+[Docker](/guides/docker-guide/) to make our networking a bit easier.
 
 ```bash
 # Create our development space
@@ -559,7 +559,7 @@ a web GUI client.
 _In the future, you can try running through this workflow on `testnet` instead
 of `simnet`, where you can interact with and send payments through the testnet
 Lightning Faucet node. For more information, see the "Connect to faucet
-lightning node" section in the [Docker guide](/docker-guide/) or check out the
+lightning node" section in the [Docker guide](/guides/docker-guide/) or check out the
 [Lightning Network faucet
 repository](https://github.com/lightninglabs/lightning-faucet)._
 
