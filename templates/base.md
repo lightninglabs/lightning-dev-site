@@ -5,3 +5,7 @@ title: {{ title }}
 ---
 
 {{ content }}
+
+{% if footer %}
+{{ footer }}
+{% endif %}

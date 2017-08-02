@@ -35,13 +35,14 @@ def render():
         loader=FileSystemLoader('./templates'),
         autoescape=select_autoescape(['html', 'xml'])
     )
-    template = env.get_template('jekyll_header.md')
+    template = env.get_template('base.md')
 
     # Read INSTALL.md and output guides/installation.md
     installation_guide = template.render(
         title='Installation',
         permalink=None,
         content=read_file_without_title('INSTALL.md'),
+        footer=open('templates/installation_footer.md').read(),
     ).encode('utf-8')
     installation_output = 'guides/installation.md'
     with open(installation_output, "wb") as file_out:
