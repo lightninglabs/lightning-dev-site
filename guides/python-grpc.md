@@ -62,7 +62,7 @@ stub = lnrpc.LightningStub(channel)
 
 ### Examples
 
-Let's walk through some simple examples of Python gRPC clients.
+Let's walk through some examples of Python gRPC clients.
 
 #### Simple RPC
 
@@ -79,6 +79,9 @@ request = ln.InvoiceSubscription()
 for invoice in stub.SubscribeInvoices(request);
     print invoice
 ```
+Now, create an invoice for your node at `localhost:10009` and send a payment to
+it. Your Python console should display the details of the recently satisfied
+invoice.
 
 #### Bidirectional-streaming RPC
 
@@ -88,6 +91,7 @@ import codecs
 
 def request_generator(dest, amt):
       # Initialization code here
+      counter = 0
       print("Starting up")
       while True:
           request = ln.SendRequest(
@@ -96,18 +100,21 @@ def request_generator(dest, amt):
           )
           yield request
           # Alter parameters here
+          counter += 1
           sleep(2)
 
 # Outputs from lncli are hex-encoded
 dest_hex = <RECEIVER_ID_PUBKEY>
 dest_bytes = codecs.decode(dest_hex, 'hex')
 
-# This example will send a payment of 100 satoshis every 2 seconds.
 request_iterable = request_generator(dest=dest_bytes, amt=100)
 
-for payment in stub.SendPayment(request_iterator):
+for payment in stub.SendPayment(request_iterable):
     print payment
 ```
+This example will send a payment of 100 satoshis every 2 seconds.
+
+### Conclusion
 
 With the above, you should have all the `lnd` related `gRPC` dependencies
 installed locally into your virtual environment. In order to get up to speed
