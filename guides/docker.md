@@ -319,3 +319,5 @@ and send some amount of bitcoins to `Alice`.
 ```bash
 docker-compose logs <alice|bob|btcd>
 ```
+
+

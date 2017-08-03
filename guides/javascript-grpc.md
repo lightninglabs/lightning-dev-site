@@ -22,7 +22,7 @@ at least somewhere reachable by your Javascript code).
 The `rpc.proto` file is [located in the `lnrpc` directory of the `lnd`
 sources](https://github.com/lightningnetwork/lnd/blob/master/lnrpc/rpc.proto).
 
-In order to allow the auto code generated to compile the protos succucsfully,
+In order to allow the auto code generated to compile the protos successfully,
 you'll need to comment out the following line:
 ```
 //import "google/api/annotations.proto";
@@ -75,3 +75,5 @@ Additionally, [this official gRPC
 resource](http://www.grpc.io/docs/tutorials/basic/node.html) details how to
 drive `gRPC` from `node.js` including the basics of making RPC calls, streaming
 RPC's (bi-directional and uni-directional), etc.
+
+

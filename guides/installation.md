@@ -187,11 +187,14 @@ at the same time), so when working with Litecoin be sure to set to parameters
 for Litecoin accordingly.
 
 # Accurate as of:
-- _roasbeef/btcd commit:_ `54362e17a5b80643ef1e12edc08895a2e2a1202b` 
-- _roasbeef/btcutil commit:_ `d347e49` 
+- _roasbeef/btcd commit:_ `f8c02aff4e7a807ba0c1349e2db03695d8e790e8` 
+- _roasbeef/btcutil commit:_ `a259eaf2ec1b54653cdd67848a41867f280797ee` 
 - _lightningnetwork/lnd commit:_ `d7b36c6`
 
-## Next Steps
+
+
+
+### Next Steps
 
 * **[Tutorial](/tutorial/):** Get acquainted with the skills necessary for `lnd` development.
 * **[Step-by-step send payment guide with

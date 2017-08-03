@@ -1,5 +1,5 @@
 
-## Next Steps
+### Next Steps
 
 * **[Tutorial](/tutorial/):** Get acquainted with the skills necessary for `lnd` development.
 * **[Step-by-step send payment guide with
