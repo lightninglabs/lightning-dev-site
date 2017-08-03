@@ -409,10 +409,8 @@ to Bob, and Bob to Charlie.
 
 First, let's open the Alice<-->Bob channel.
 ```bash
-alice$ lncli-alice openchannel --node_key=<BOB_PUBKEY> --num_confs=1 --local_amt=1000000
+alice$ lncli-alice openchannel --node_key=<BOB_PUBKEY> --local_amt=1000000
 ```
-- `--num_confs` specifies that we will only wait one confirmation before we
-consider the channel to be 'open', and therefore functional.
 - `--local_amt` specifies the amount of money that Alice will commit to the channel.
 To see the full list of options, you can try `lncli openchannel --help`.
 
@@ -489,7 +487,7 @@ bob$ lncli-bob listchannels
 
 Now that we know how to send single-hop payments, sending multi hop payments is not that much more difficult. Let's set up a channel from Bob<-->Charlie:
 ```bash
-charlie$ lncli-charlie openchannel --node_key=<BOB_PUBKEY> --num_confs=1 --local_amt=800000 --push_amt=200000
+charlie$ lncli-charlie openchannel --node_key=<BOB_PUBKEY> --local_amt=800000 --push_amt=200000
 
 # Mine the channel funding tx
 btcctl --simnet --rpcuser=kek --rpcpass=kek generate 1
