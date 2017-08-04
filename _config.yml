@@ -43,3 +43,6 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - templates
+  - render.py
+  - update_and_render.sh
+  - s3_website.yml
