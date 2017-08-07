@@ -118,6 +118,11 @@ Community Slack.
 
 ### LND Developer Tools
 
+* [Developer Guides](/guides/)
+  * Guides walking you through installation, docker setup, Python / Javascript
+    gRPC, and more
+* [API documentation](https://api.lightning.community)
+  * API Reference documentation for the Lightning Network Daemon
 * Lightning Faucet for [Bitcoin testnet](https://faucet.lightning.community/) or [Litecoin testnet](https://ltc.faucet.lightning.community/)
   * To read more, build from source, or deploy your own faucet see the [Github
     repository](https://github.com/lightninglabs/lightning-faucet)
