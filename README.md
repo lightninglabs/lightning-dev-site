@@ -1,6 +1,27 @@
 # Lightning Network Daemon Developer Site
 Developer guides and resources for the Lightning Network Daemon
 
+## Overview
+
+This repository contains functionality for programmatically pulling guides from
+the lnd repo, using a Python script and Jinja2 templates to output markdown
+files, which are the corresponding pages in the fully rendered Jekyll static
+site. 
+
+Pay special attention to these files:
+- `templates/base.md`: The Jinja2 template fed into the Python
+  script, holding the Jeykll header to be prepended to the guide content pulled
+  from Github. The `templates` dir also holds the templates for special cases
+  where for example a dev site-specific footer needs to be appended
+- `update_and_render.sh`: Update local guides to the latest version available
+- `render.py`: The Python script that uses local guides and Jinja template to
+  strip out redundant titles, add page headers/footers, and output Jekyll
+  markdown
+- `deploy.sh`: Build static site from Jekyll markdown and deploy to Google Cloud
+  Platform
+
+The rest of the files in this repo are the standard Jekyll site files.
+
 ## Running the site locally
 
 Install Jekyll:
@@ -12,7 +33,7 @@ Run the site and watch for changes:
 $ bundle exec jekyll serve
 ```
 
-### Regenerating documentation
+## Regenerating documentation
 
 ```shell
 # Install Jinja for python templating
@@ -32,12 +53,13 @@ python render.py
 ```
 
 Now that you're all set up, you can just run `./update_and_render.sh` to
-automatically pull the latest markdown files and render the local Jekyll docs
+automatically pull the latest markdown files and render the local Jekyll docs.
 
 ## Deployment
 
-The Lightning Dev Site is deployed with `s3_website`. Visit their [github
-repo](https://github.com/laurilehmijoki/s3_website) for more information.
+The Lightning API is deployed with Google Cloud Platform. Visit [this blog
+post](https://little418.com/2015/07/jekyll-google-cloud-storage.html) for more
+information.
 
 ### Steps
 
