@@ -21,18 +21,16 @@ title: Installation
 
     At this point, you should set your `$GOPATH` environment variable, which
     represents the path to your workspace. By default, `$GOPATH` is set to
-    `~/go`. Be sure to set your `$GOPATH` every time you open a new terminal
-    window.
-    ```
-    export GOPATH=~/projects/lightning
-    ```
-    It is recommended to add `$GOPATH/bin` to your `PATH` at this point, like
-    so:
+    `~/go`. You wll also need to add `$GOPATH/bin` to your `PATH`. This ensures
+    that your shell will be able to detect the binaries you install.
+
     ```bash
+    export GOPATH=~/projects/lightning
     export PATH=$PATH:$GOPATH/bin
     ```
-    This will ensure that your shell will be able to detect the binaries that
-    were just installed.
+    We recommend placing the above in your .bashrc or in a setup
+    script so that you can avoid typing this every time you open a new terminal
+    window.
 
   * **Glide:** This project uses `Glide` to manage dependencies as well 
     as to provide *reproducible builds*. To install `Glide`, execute the
@@ -135,7 +133,7 @@ If you are doing local development, such as for the tutorial, you'll want to
 start both `btcd` and `lnd` in the `simnet` mode. Simnet is similar to regtest
 in that you'll be able to instantly mine blocks as needed to test `lnd`
 locally. In order to start either daemon in the `simnet` mode use `simnet`
-instead of `testnet`, such as adding the `--bitcoin.simnet` flag instead of the
+instead of `testnet`, adding the `--bitcoin.simnet` flag instead of the
 `--bitcoin.testnet` flag.
 
 Another relevant command line flag for local testing of new `lnd` developments

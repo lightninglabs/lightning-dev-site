@@ -48,7 +48,7 @@ Python gRPC.
 
 #### Imports and Client
 
-Everytime you use Python gRPC, you will have to import the generated rpc modeuls
+Everytime you use Python gRPC, you will have to import the generated rpc modules
 and set up a channel and stub to your connect to your `lnd` node:
 
 ```python
@@ -62,7 +62,9 @@ stub = lnrpc.LightningStub(channel)
 
 ### Examples
 
-Let's walk through some examples of Python gRPC clients.
+Let's walk through some examples of Python gRPC clients. These examples assume
+that you have at least two `lnd` nodes running, the RPC location of one of which
+is at the default `localhost:10009`, with an open channel between the two nodes.
 
 #### Simple RPC
 
@@ -79,8 +81,19 @@ request = ln.InvoiceSubscription()
 for invoice in stub.SubscribeInvoices(request);
     print invoice
 ```
-Now, create an invoice for your node at `localhost:10009` and send a payment to
-it. Your Python console should display the details of the recently satisfied
+
+Now, create an invoice for your node at `localhost:10009`and send a payment to
+it from another node.
+```bash
+$ lncli addinvoice --value=100
+{
+	"r_hash": <R_HASH>,
+	"pay_req": <PAY_REQ>
+}
+$ lncli sendpayment --pay_req=<PAY_REQ>
+```
+
+Your Python console should now display the details of the recently satisfied
 invoice.
 
 #### Bidirectional-streaming RPC
