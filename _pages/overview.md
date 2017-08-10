@@ -159,3 +159,19 @@ We have shown how to make a payment across the Lightning Network using only
 off-chain transactions, without requiring direct channel links or trusting any
 intermediaries. As long as there is a path from the payer to the payee, payments
 can be routed, just like the Internet.
+
+### Network Topology
+
+The expected shape / network topology of the Lightning Network will depend on
+behavior implemented in the varying Lightning implementations as well as actual
+usage. Users do not have to manually manage their channels, since `lnd` has an
+'autopilot' feature including settings optimizing for both everyday use and fee
+revenue. And of course, channels can be opened on demand via the standard
+command line, gRPC, and REST interfaces. 
+
+### Key Management and Security
+
+### Channel Lifecycle
+
+The `lnd` implementation allows you to specify
+
