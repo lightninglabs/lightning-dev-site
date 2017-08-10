@@ -105,9 +105,7 @@ mkdir dev
 cd dev
 
 # Create folders for each of our nodes
-mkdir alice
-mkdir bob
-mkdir charlie
+mkdir alice bob charlie
 ```
 
 The directory structure should now look like this:

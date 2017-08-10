@@ -146,7 +146,9 @@ of your `sendpayment` commands.
 ### Running LND
 
 If you are on testnet, run this command after `btcd` has finished syncing.
-Otherwise, replace `--bitcoin.testnet` with `--bitcoin.simnet`
+Otherwise, replace `--bitcoin.testnet` with `--bitcoin.simnet`. If you
+installing `lnd` in preparation for the
+[tutorial](//dev.lightning.community/tutorial), you may skip this step.
 ```
 lnd --bitcoin.active --bitcoin.testnet --debuglevel=debug --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --externalip=X.X.X.X
 ```
