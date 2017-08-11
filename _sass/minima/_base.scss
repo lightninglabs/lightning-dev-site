@@ -24,7 +24,7 @@ body {
           font-feature-settings: "kern" 1;
   font-kerning: normal;
 
-  line-height: 30px; /*adjust as needed, slightly higher than default line-height will help with readability */
+  line-height: 23px; /*adjust as needed, slightly higher than default line-height will help with readability */
 }
 
 
@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6,
 p, blockquote, pre,
 ul, ol, dl, figure,
 %vertical-rhythm {
-  margin-bottom: $spacing-unit / 2;
+  margin-bottom: $spacing-unit;
 }
 
 
