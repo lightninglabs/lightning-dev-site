@@ -169,9 +169,199 @@ usage. Users do not have to manually manage their channels, since `lnd` has an
 revenue. And of course, channels can be opened on demand via the standard
 command line, gRPC, and REST interfaces. 
 
-### Key Management and Security
+### Integration guidelines 
+
+When integrating `lnd`, hot and cold storage must be considered. To maximize our
+security, we generally want to keep as little as possible in hot wallets, and as
+much as possible in cold wallets.
+
+We can construct Lightning channels where they keys are cold, but would
+need to bring them back online anytime you conduct a channel update. Only with
+hot wallets can the Lightning Network attain a high volume of transactions.
+
+This is only a surface level introduction to Lightning integration. For a more
+illustrative example of how Lightning Network may work in production, check out
+the "Integration Components" and "Security Considerations" sections of the 
+[Exchange Integration Document](https://docs.google.com/document/d/1r38-_IgtfOkhJh4QbN7l6bl7Rol05qS-i7BjM3AjKOQ/edit)
+maintained by Bryan Vu.
+
+### Components
+
+#### Network Layers
+
+The Lightning Network is an *overlay* network on top of another blockchain. To
+avoid confusion it is crucial to differentiate between the following network
+layers we encounter when reasoning about `lnd`: 
+- Bitcoin/Litecoin Network: This is the underlying blockchain that `lnd` rests
+  on top of. `lnd` needs a way to communicate with the underlying blockchain in
+  order to send on-chain payments, create channel open/close transactions, and
+  watch for events on the blockchain.
+- P2P Network: This is the peer layer where `lnd` nodes add each other as peers
+  so they can send messages between one another via an [encrypted
+  connection](https://github.com/lightningnetwork/lightning-rfc/blob/master/08-transport.md).
+  For example, the `lncli connect` adds a peer, which are identified by identity
+  pubkey and IP address.
+- Payment channel network: This is the layer where nodes are connected by
+  payment channels. For example, the `lncli openchannel` command opens a
+  channel with a node that was already connected at the peer layer, and the
+  `lncli describegraph` command returns the list of edges and vertices of the
+  payment channel graph. 
+
+#### Software Components
+
+There are distinct software components we should be aware of when developing on
+- `btcd` / `btcutil`: `lnd` currently uses [`btcd` roasbeef
+  fork](https://github.com/roasbeef/btcd) to interface with the underlying
+  blockchain. `btcd` comes with `btcutil`, also [roasbeef
+  fork](https://github.com/Roasbeef/btcutil), that allows us to drive `btcd`
+  from the command line.
+- `lnd` / `lncli`: LND stands for Lightning Network Daemon and serves as the
+  main software component driving the Lightning Network. It manages a database,
+  connects to peers, opens / closes channels, generates payment invoices, sends,
+  forwards, and revokes payments, responds to potential breaches, and more.
+  `lncli` opens up a command line interface for driving `lnd`.
+- [Neutrino](https://github.com/lightninglabs/neutrino) is an experimental
+  Bitcoin light client designed to support Lightning mobile clients. This is a
+  wallet UI usable with `lnd`. Neutrino is not required from an application
+  development standpoint, but can be regarded as the primary way the LND end
+  user interacts with the Lightning Network and thus and applications built on
+  top of it.
+
+#### LND Interfaces
+
+There are several ways to drive `lnd`.
+
+- `lncli` is the `lnd` command line tool. All commands are executed
+  instantaneously. A full list of commands can be viewed with `lncli --help`.
+  To see a breakdown of the parameters for a particular command, run `lncli
+  <command> --help`
+- gRPC is the preferred programmatic way interact with `lnd`. It includes simple
+  methods that return a response immediately, as well as response-streaming and
+  bidrectional streaming methods. Check out the guides for working with gRPC for
+  [Python](/guides/python-grpc/) and [Javascript](/guides/javascript-grpc/)
+- LND also features a REST proxy someone can use if they are accustomed to
+  standard RESTful APIs. However, gRPC is higher performance and can provide
+  real-time notifications.
+
+All of these LND interfaces are documented in the [API
+Reference](//api.lightning.community), featuring a description of the
+parameters, responses, and code examples for Python, Javascript, and command
+line arguments if it exists.
 
 ### Channel Lifecycle
 
-The `lnd` implementation allows you to specify
+To better understand the development workflow around Lightning channels, it is
+worthwhile to examine step by step the lifecycle of a payment channel. It
+contains roughly 4 steps:
 
+1. **Adding a peer.** Before a channel can be opened between two Lightning
+   nodes, they must first be able to securely communicate with each other. This
+   is accomplished with the `ConnectPeer` RPC method or `connect` on `lncli`.
+   ```shell
+   lncli connect <PUBKEY>@<HOST>:<PORT>
+   ```
+2. **Initiating Channel Opening.** The `OpenChannel` method begins the channel
+   opening process with a connected peer. Lightning assumes that this is led by
+   a single party. The opening party can specify a local amount, representing
+   the funds they would like to commit to the channel, and a "push" amount, the
+   amount of money that they would like to give to the other side as part of an
+   initial commitment state. One could imagine that instead of sending a
+   standard Bitcoin transaction to pay a merchant, they could instead open a
+   channel with the push amount representing the amount they want to pay, and
+   optionally add some funds of their own, so that both parties can benefit from
+   having a channel available for payments in the future.
+3. **Wait for confirmations.** To prevent double spending attacks on the channel
+   opening transaction, users should specify the `--block` `lncli` command line
+   argument. So after initializing the channel opening process, it is often
+   required to mine a few blocks:
+   ```shell
+   btcctl generate 6
+   ```
+4. **Close Channel.** If either party in a channel no longer wants to keep it
+   open, they can close it at any time with the `CloseChannel` method.
+   ```shell
+   lncli closechannel --funding_txid=<funding_txid> --output_index=<output_index>
+   ```
+
+### Payment Lifecycle
+
+Because Lightning payments are instant, its API tends to be much simpler, since
+there is no need to wait for block confirmations before a payment is considered
+accepted. It resembles a fairly standard payment flow, but there are a few
+additional things to keep in mind.
+
+#### Payment Requests
+
+Payment requests, often also referred to as Invoices, are a simple, extensible
+protocol compatible with QR-codes. It includes a 6-character checksum in case
+there is a mistake with copy/paste or manual entry.
+
+Payment requests are composed of two sections:
+1. **Human readable part:** Contains a prefix `ln` followed by an optional
+   amount.
+2. **Data part**: Contains a UTC Unix timestamp and optionally some tagged
+   parts, as well as a signature over the human readable and data parts.
+   - Tagged parts include a payment hash, the pubkey of the payee node, a
+     description of the purpose of payment, an expiration time (default to 1
+     hour if not specified), and extra routing information. Some tagged parts
+     are required and others are not.
+
+Because the payment request contains the payment hash, **payment requests must
+be strictly single use**. After an invoices is fulfilled, the hash preimage
+becomes publically known. An attacker could save the preimages they've seen and
+reuse it for another payment that is reusing the invoice. Therefore, **failure
+to generate new payment requests means that an on-path attacker can steal the
+payment en route.**
+
+Another detail worth noting is that payees should not accept payments after the
+payment request has expired (`timestemp` + `expiry`), and payers likewise should
+not attempt them. This will affect any web application with `lnd` integration,
+since if an invoice for a good or service is not fulfilled within the given
+timeframe, a new one should be generated.
+
+Other possibly unexpected rules include that the payee should accept up the
+twice the amount encoded in the transaction, so that the payer can make payments
+harder to track by adding in small variations.
+
+A full specification of the payment request data format, required and optional
+parts, and required behavior can be found in [BOLT
+11](https://github.com/lightningnetwork/lightning-rfc/blob/master/11-payment-encoding.md).
+
+#### Payment flow
+
+Let's now see what an ideal payment flow looks like.
+
+1. **Create Invoice:** The recipient creates an invoice with a specified value,
+   expiration time, and an optional memo. If there was already an invoice
+   created for this good and it expired, or a sufficient amount of time has
+   elapsed, a fresh invoice should be generated.
+   ```shell
+   lncli addinvoice --value=6969 --memo="A coffee for Roger"
+   ```
+2. **Check invoice:** The payer decodes the invoice to see the destination,
+   amount and payment hash. This way, they can validate that the invoice was
+   legitimate, and that they aren't being defrauded or overcharged. At this
+   stage, the user should also check that the expiration time of the invoice has
+   not passed
+   ```shell
+   lncli decodepayreq --pay_req=<PAY_REQ>
+   ```
+3. **Send payment:** The payer sends their payment, possibly routed through the
+   Lightning Network. Developers can do this through an LND interface and end
+   users can use the desktop or mobile app.
+   ```shell
+   lncli sendpayment --pay_req=<PAY_REQ>
+   ```
+4. **Check payment:** The recipient checks that their invoice has been
+   fulfilled. They make a call to the `LookupInvoice` command, which returns
+   this information in the `settled` field.
+   ```shell
+   lncli lookupinvoice --rhash=<R_HASH>
+   ```
+
+We have now covered the basic workflow for generating invoices and
+sending/receiving payments.
+
+### Advanced Features
+
+### FAQs
