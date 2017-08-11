@@ -3,16 +3,24 @@ layout: page
 title: Tutorial
 ---
 
-# Overview
+### Overview
 
 This tutorial will get you up to speed with all the skills necessary to work
 with [`lnd`](https://github.com/lightningnetwork/lnd). We will be building a
 Bitcoin micropayments paywell into a news site!
 
-This tutorial assumes you have completed installation of Go, `btcd`, and `lnd`
-on simnet.  If not, please see the [installation instructions](/guides/installation/).
+Those seeking more conceptual familiarity with the Lightning Network can read
+through the [LND Overview and Developer Guide](/overview/). It also contains a
+more in-depth explanation of the components covered in this tutorial, and
+includes best practices for integrating LND. It is not required knowledge for
+completing this tutorial, but we recommend that you at least skim through the
+guide before attempting to build your own app.
 
-# Stages
+The tutorial assumes you have completed installation of Go, `btcd`, and `lnd`
+on simnet. If not, the [installation instructions](/guides/installation/) will
+guide you through the process.
+
+### Stages
 
 Each of the different stages of this tutorial is oriented towards a specific
 skill. Beginners should start at [stage 1](/tutorial/01-lncli). Otherwise, jump

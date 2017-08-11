@@ -1,15 +1,24 @@
 ---
 layout: page
-title: Lightning Network Overview
+title: LND Overview and Developer Guide
 permalink: /overview/
 ---
 
 ### Introduction
 
-This page aims to provide *just* enough information about the Lightning Network
-to enable readers to build applications. This page assumes basic knowledge of
-Bitcoin mechanics. If terms like "UTXO" and "locktime" are unfamiliar to you,
-you should refer to the [Bitcoin developer
+The LND Overview and Developer Guide aims to provide *just* enough information
+about LND to enable readers to build applications. It start with a conceptual
+review of the Lightning Network, before jumping into the important aspects of
+working with specifically LND. If you are already comfortable with how the
+Lightning Network works, feel free to skip down to the [Components](Components)
+section. The command line examples are for illustrative purposes only and will
+be covered in more depth in the [installation guide](/guides/installation/) and
+[tutorial](/tutorial/).
+
+#### Preliminaries
+
+This overview assumes basic knowledge of Bitcoin mechanics. If terms like "UTXO"
+and "locktime" are unfamiliar to you, you should refer to the [Bitcoin developer
 guide](https://bitcoin.org/en/developer-guide), which serves a similar purpose.
 
 ### Lightning Network
@@ -104,11 +113,11 @@ do so.
 Single channels work well if you have a financial relationship with some entity
 where you make payments frequently or in metered amounts. But most payments,
 like purchasing an umbrella from a corner store because you lost it again, are
-one-off. For Lightning to help Bitcoin scale in general use cases, there needs
+one-off. For Lightning to help Bitcoin scale for general use cases, there needs
 to be a way for the whole network to forward payments through channels that
-already exist. Furthermore, we want it such that this process retains the
-trustless nature of individual channels, otherwise it becomes too hard to
-identify dishonest actors amongst a large number of hops.
+already exist. Furthermore, this process should retain the trustless nature of
+individual channels, otherwise it becomes too hard to identify dishonest actors
+amongst a large number of hops.
 
 Once you don't have to trust the intermediaries, you no longer even care who
 they are. This allows Lightning nodes to be fully anonymous, which is a huge win
@@ -171,13 +180,13 @@ command line, gRPC, and REST interfaces.
 
 ### Integration guidelines 
 
-When integrating `lnd`, hot and cold storage must be considered. To maximize our
+When integrating `lnd`, hot and cold storage must be considered. To maximize
 security, we generally want to keep as little as possible in hot wallets, and as
 much as possible in cold wallets.
 
-We can construct Lightning channels where they keys are cold, but would
-need to bring them back online anytime you conduct a channel update. Only with
-hot wallets can the Lightning Network attain a high volume of transactions.
+It is possible to construct Lightning channels where the keys are cold, but they
+would need to be brought back online you conduct a channel update. Only with hot
+wallets can the Lightning Network attain a high volume of transactions.
 
 This is only a surface level introduction to Lightning integration. For a more
 illustrative example of how Lightning Network may work in production, check out
@@ -362,6 +371,8 @@ Let's now see what an ideal payment flow looks like.
 We have now covered the basic workflow for generating invoices and
 sending/receiving payments.
 
-### Advanced Features
+### Next Steps
 
-### FAQs
+You have completed the conceptual overview of LND and a high level primer on the
+components and workflows. To get started on developing, check out the
+[installation guide](/guides/installation/) and [tutorial](/tutorial/).

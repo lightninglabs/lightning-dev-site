@@ -392,8 +392,16 @@ more of the following:
   and deploying your webapp online
 - Allow the server to accept Litecoin in addition to Bitcoin.
 
-At this point, you're completely ready to build with `lnd`. Go forth and bring
+At this point, you're ready to build with `lnd`. Go forth and bring
 Bitcoin to the masses!
+
+#### Next Steps
+
+Read through the [LND Overview and Developer Guide](/overview/) to see best
+practices and guidelines for implementing LND in your own webapp, or for a
+conceptual brushup of the Lightning Network.
+
+Check out the accessible dev manuals available on our [Guides page](/guides/).
 
 #### Navigation
 - [Return to Stage 3 - RPC Client](/tutorial/03-rpc-client)

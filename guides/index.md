@@ -1,7 +1,15 @@
 ---
 layout: page
-title: Developer Guides
+title: Guides
 ---
+
+This page lists the writeups available on specific skills in and around LND.
+
+#### LND Overview and Developer Guide
+
+Modeled after the Bitcoin Developer Guide, the [LND Overview and Developer
+Guide](/overview/) will provide the necessary conceptual background for
+developers looking to build on LND.
 
 #### Installation
 
@@ -10,9 +18,10 @@ run `lnd` from the command line.
 
 #### Tutorial
 
-The tutorial is a holistic tour that is intended to teach all the
-skills necessary to work with `lnd`, by walking through a setup of `lnd`, a lnd
-client, RPC, and integration into a web application.
+The [tutorial](/tutorial/) is a holistic tour that is intended to teach all the
+dev-specific skills necessary to work with `lnd`, by walking through a setup of
+`lnd`, a lnd client, RPC, and integration into a web application. This should be
+completed in tandem with the [LND Overview and Developer Guide](/overview/).
 
 #### gRPC Guides
 
