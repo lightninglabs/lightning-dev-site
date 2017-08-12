@@ -51,7 +51,8 @@ If everything went smoothly, you should now have a web server exposed at port
 8000. 
 ![lightning coindesk homepage](http://i.imgur.com/D2LgBUi.png)
 
-Feel free to click around the site. You will soon find that you need to log in and make a payment to view the articles.
+Feel free to click around the site. You will soon find that you need to log in
+and make a payment to view the articles.
 
 ![login page](http://i.imgur.com/zLTEYfk.png)
 
@@ -126,14 +127,18 @@ python manage.py shell
 In [1]: from coindesk import rpc_pb2 as ln, rpc_pb2_grpc as lnrpc
 In [2]: import grpc
 
-# Create a new 'stub' object that will allow us to interact with our "Bob" lnd
-# node
-In [3]: channel = grpc.insecure_channel('localhost:10002')
-In [4]: stub = lnrpc.LightningStub(channel)
+# Establish a secure connection with our RPC server. We will first have to
+# gather our cert. Lnd cert is at ~/.lnd/tls.cert on Linux and
+# ~/Library/Application Support/Lnd/tls.cert on Mac
+In [3]: cert = open('~/.lnd/tls.cert').read()
+In [4]: creds = grpc.ssl_channel_credentials(cert)
+In [5]: channel = grpc.secure_channel('localhost:10009', creds)
+# Create a new 'stub' object that will allow us to interact with our "Bob" lnd node.
+In [6]: stub = lnrpc.LightningStub(channel)
 
 # Make a call to the ListChannels API.
-In [5]: listchannels_resp = stub.ListChannels(ln.ListChannelsRequest())
-Out[5]:
+In [7]: listchannels_resp = stub.ListChannels(ln.ListChannelsRequest())
+Out[7]:
 channels {
   active: true
   remote_pubkey: "02244b8eff01be9f7b4ec1d73ab10fc36da48b01a685ac90ed09a63fe94ec08d0a"
@@ -163,7 +168,9 @@ channels {
   num_updates: 2
 }
 ```
-What happened here? We constructed the request object for the list channels command with `ln.ListChannelsRequest()`, and passed it into the `ListChannels` function exposed by our stub. 
+What happened here? We constructed the request object for the list channels
+command with `ln.ListChannelsRequest()`, and passed it into the `ListChannels`
+function exposed by our stub. 
 
 The response was saved into a `listchannels_resp` variable that holds all the
 information returned by the `listchannels` command. You can now access the
@@ -182,8 +189,9 @@ responses.
 
 ### Moving on to Step 4
 
-By now, you should have at least a basic understanding of how to work with lnd from a gRPC client.
-In [Stage 4](/tutorial/04-webapp-integration), we will finally integrate `lnd` into our news site.
+By now, you should have at least a basic understanding of how to work with lnd
+from a gRPC client.  In [Stage 4](/tutorial/04-webapp-integration), we will
+finally integrate `lnd` into our news site.
 
 #### Navigation
 - [Proceed to Stage 4 - Webapp Integration](/tutorial/04-webapp-integration)
