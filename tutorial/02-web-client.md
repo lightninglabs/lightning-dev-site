@@ -6,7 +6,8 @@ title: Stage 2 - Web Client
 In this section we will learn how to set up and interact with `lnd` using a
 [web client](https://github.com/mably/lncli-web) built by [Francois
 Mably](https://github.com/mably). Setup instructions are courtesy of the
-creator himself.
+creator himself. Before beginning this step make sure you have `node` and `npm`
+installed.
 
 ### Setting up the LND web client
 

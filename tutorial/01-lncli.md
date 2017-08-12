@@ -535,7 +535,7 @@ identifies the channel. The first number is `funding_txid` and the second
 number is `output_index`.
 ```bash
 # Close the Alice<-->Bob channel from Alice's side.
-alice$ lncli closechannel --funding_txid=<funding_txid> --output_index=<output_index>
+alice$ lncli-alice closechannel --funding_txid=<funding_txid> --output_index=<output_index>
 
 # Mine a block including the channel close transaction to close the channel:
 btcctl --simnet --rpcuser=kek --rpcpass=kek generate 1
@@ -544,7 +544,7 @@ btcctl --simnet --rpcuser=kek --rpcpass=kek generate 1
 # channel. Recall that Bob previously had no on-chain Bitcoin:
 alice$ lncli-bob walletbalance
 {
-    "balance": 0.0002
+    "balance": "20001"
 }
 ```
 
