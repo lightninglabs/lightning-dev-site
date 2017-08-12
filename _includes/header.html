@@ -20,7 +20,17 @@
 
         <div class="trigger">
           <a class="page-link" href="/">Home</a>
-          <a class="page-link" href="/guides">Guides</a>
+          <div class="dropdown">
+            <a class="page-link" href="/guides"><button class="dropbtn">Guides</button></a>
+            <div class="dropdown-content">
+              <a href="/overview/">Overview</a>
+              <a href="/guides/installation/">Installation</a>
+              <a href="/tutorial/">Tutorial</a>
+              <a href="/guides/python-grpc/">Python</a>
+              <a href="/guides/javascript-grpc/">Javascript</a>
+              <a href="/guides/docker/">Docker</a>
+            </div>
+          </div>
           <a class="page-link" href="//api.lightning.community">API</a>
         </div>
       </nav>
