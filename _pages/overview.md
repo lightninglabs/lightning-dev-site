@@ -10,7 +10,7 @@ The LND Overview and Developer Guide aims to provide *just* enough information
 about LND to enable readers to build applications. It start with a conceptual
 review of the Lightning Network, before jumping into the important aspects of
 working with specifically LND. If you are already comfortable with how the
-Lightning Network works, feel free to skip down to the [Components](Components)
+Lightning Network works, feel free to skip down to the [Components](#components)
 section. The command line examples are for illustrative purposes only and will
 be covered in more depth in the [installation guide](/guides/installation/) and
 [tutorial](/tutorial/).
@@ -20,6 +20,25 @@ be covered in more depth in the [installation guide](/guides/installation/) and
 This overview assumes basic knowledge of Bitcoin mechanics. If terms like "UTXO"
 and "locktime" are unfamiliar to you, you should refer to the [Bitcoin developer
 guide](https://bitcoin.org/en/developer-guide), which serves a similar purpose.
+
+### Table of Contents
+ * [Lightning Network](#lightning-network)
+ * [Payment Channels](#payment-channels)
+   * [Channel Updates](#channel-updates)
+ * [Multihop payments](#multihop-payments)
+ * [Network Topology](#network-topology)
+ * [Integration Guidelines](#integration-guidelines)
+ * [Components](#components)
+   * [Network Layers](#network-layers)
+   * [Software Components](#software-components)
+   * [LND Interfaces](#lnd-interfaces)
+ * [Channel Lifecycle](#channel-lifecycle)
+ * [Payment Lifecycle](#payment-lifecycle)
+   * [Payment Requests](#payment-requests)
+   * [Payment flow](#payment-flow)
+ * [Conclusion](#conclusion)
+
+![Lightning Network Graph](http://imgur.com/xqfllBI.png)
 
 ### Lightning Network
 
@@ -67,6 +86,8 @@ last transaction in the channel.
   address spends the funds back to Alice and Bob according to their agreed-upon
   channel amount.
 
+![Commitment transaction Alice 5BTC Bob 5BTC](http://imgur.com/rqHWEoC.png)
+
 In the case where either party attempts to defraud the other, a third
 transaction, which punishes the attacker, will end up being broadcasted
 on-chain. Let's investigate how this is possible by the way Lightning does
@@ -85,6 +106,8 @@ Alice is credited with 4BTC and Bob with 6BTC. Alice will give the signed
 transaction to Bob, which is equivalent to payment, because Bob can broadcast it
 at any time to claim his portion of the funds. Similarly, Alice is also able to
 broadcast the closing transaction at any time to claim her funds.
+
+![Channel Update Alice 4BTC Bob 6BTC](http://imgur.com/auACasH.png)
 
 To prevent an attack where Alice voids her payment by broadcasting the initial
 state of 5BTC/5BTC, there needs to be a way to revoke prior closing
@@ -132,6 +155,8 @@ Alice first notifies Dave that she wants to send him some money.
 In order for Dave to accept this payment, he must generate a random number `R`.
 He keeps `R` secret, but hashes it and gives the hash `H` to Alice.
 
+![Dave gives hash H to Alice](http://imgur.com/sXuL8Tn.png)
+
 Alice tells Bob: "I will pay you if you can produce the preimage of `H` within 3
 days." In particular, she signs a transaction where for the first three days
 after it is broadcast, only Bob can redeem it with knowledge of R, and
@@ -140,6 +165,8 @@ Time-Locked Contract (HTLC) and allows Alice to make a conditional promise to
 Bob while ensuring that her funds will not be accidentally burned if Bob never
 learns what R is. She gives this signed transaction to Bob, but neither of them
 broadcast it, because they are expecting to clear it out later.
+
+![Alice creates HTLC with Bob](http://imgur.com/aNQoA9Z.png)
 
 Bob, knowing that he can pull funds from Alice if he knows R, now has no issue
 telling Charlie: "I will pay you if you can produce the preimage of H within *2*
@@ -151,6 +178,8 @@ the desired amount from Charlie, Dave can consider the payment from Alice
 completed. Now, he has no problem telling R to Charlie and Bob so that they are
 able to collect their funds as well.
 
+![Dave distributes R](http://imgur.com/nTLWBbm.png)
+
 Now, everyone can clear out, because they have a guaranteed way to pull their
 deserved funds by broadcasting these HTLCs off chain. They would prefer not to
 do that though, since broadcasting on-chain is more expensive, and instead
@@ -158,6 +187,8 @@ settle each of these hops off chain. Alice knows that Bob can pull funds from
 her since he has `R`, so she tells Bob: "I'll pay you, regardless of `R`, and in
 doing so we'll terminate the HTLC so we can forget about R." Bob does the same
 with Charlie, and Charlie with David.
+
+![Everyone terminates their HTLCs](http://imgur.com/iRx4bf5.png)
 
 Now, what if Dave is uncooperative and refuses to give `R` to Bob and Charlie?
 Note that Dave must broadcast the transaction from Charlie within 1 day, and in
@@ -279,6 +310,10 @@ contains roughly 4 steps:
    channel with the push amount representing the amount they want to pay, and
    optionally add some funds of their own, so that both parties can benefit from
    having a channel available for payments in the future.
+   ```shell
+   lncli openchannel --node_key=<ID_PUBKEY> --local_amt=<AMOUNT>
+   ```
+   <img src="http://i.imgur.com/d5a7DBn.png" alt="Lightning Wallet App Open Channel" style="max-width: 60%;"/>
 3. **Wait for confirmations.** To prevent double spending attacks on the channel
    opening transaction, users should specify the `--block` `lncli` command line
    argument. So after initializing the channel opening process, it is often
@@ -347,6 +382,7 @@ Let's now see what an ideal payment flow looks like.
    ```shell
    lncli addinvoice --value=6969 --memo="A coffee for Roger"
    ```
+   <img src="http://i.imgur.com/1xYB9Yq.png" alt="Lightning Wallet Generate Payment Request" style="max-width: 60%;"/>
 2. **Check invoice:** The payer decodes the invoice to see the destination,
    amount and payment hash. This way, they can validate that the invoice was
    legitimate, and that they aren't being defrauded or overcharged. At this
@@ -361,17 +397,19 @@ Let's now see what an ideal payment flow looks like.
    ```shell
    lncli sendpayment --pay_req=<PAY_REQ>
    ```
+   <img src="http://i.imgur.com/AQMRsZ3.png" alt="Lightning Wallet send payment screen" style="max-width: 60%;"/>
 4. **Check payment:** The recipient checks that their invoice has been
    fulfilled. They make a call to the `LookupInvoice` command, which returns
    this information in the `settled` field.
    ```shell
    lncli lookupinvoice --rhash=<R_HASH>
    ```
+   <img src="http://i.imgur.com/Yu8EaBf.png" alt="Lightning Wallet 5BTC Received" style="max-width: 60%;"/>
 
 We have now covered the basic workflow for generating invoices and
 sending/receiving payments.
 
-### Next Steps
+### Conclusion
 
 You have completed the conceptual overview of LND and a high level primer on the
 components and workflows. To get started on developing, check out the
