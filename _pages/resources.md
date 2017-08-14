@@ -61,8 +61,9 @@ Community Slack.
 
 * [Lightning Network Paper](https://lightning.network/lightning-network-paper.pdf)
   published January 2016
-  * The original change, but covers the mid-level mechanics of the Lightning
-    Network, including the smart contracts that make it trustless
+  * The protocol has changed since this original paper, but covers the mid-level
+    mechanics of the Lightning Network with an emphasis on the smart contracts
+    that make it trustless
   * Combines the HTLC and channel update concepts together
   * Explains how the Lightning Network is represented in Bitcoin transaction
     based contracts, and how the Lightning Network works with the UTXO model.
