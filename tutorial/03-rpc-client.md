@@ -200,6 +200,6 @@ finally integrate `lnd` into our news site.
 
 ### Questions
 - Join the #dev-help channel on our [Community
-  Slack](https://join.slack.com/t/lightningcommunity/shared_invite/MjE0NDkzNDM5NzQ3LTE1MDA0MjE0NzctODNlZDlmNWYzOA)
+  Slack](https://join.slack.com/t/lightningcommunity/shared_invite/MjI4OTg3MzQ4MjI2LTE1MDMxNzM1NTMtNjlmOGYzOTI1Ng)
 - Join IRC:
   [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lnd)

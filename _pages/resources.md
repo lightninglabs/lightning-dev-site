@@ -159,8 +159,7 @@ Community Slack.
 
 * LND Community Slack
   * Come here to meet the Lightning community, ask for help, and hang out!
-  * [invite link](https://join.slack.com/t/lightningcommunity/shared_invite/MjE0NDkzNDM5NzQ3LTE1MDA0MjE0NzctODNlZDlmNWYzOA)
-    (expires 8/17/17)
+  * [invite link](https://join.slack.com/t/lightningcommunity/shared_invite/MjI4OTg3MzQ4MjI2LTE1MDMxNzM1NTMtNjlmOGYzOTI1Ng)
 
 * [#lnd](https://webchat.freenode.net/?channels=lnd) IRC
   * [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lnd)
