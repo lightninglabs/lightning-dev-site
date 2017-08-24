@@ -181,7 +181,8 @@ able to collect their funds as well.
 ![Dave distributes R](http://imgur.com/nTLWBbm.png)
 
 Now, everyone can clear out, because they have a guaranteed way to pull their
-deserved funds by broadcasting these HTLCs off chain. They would prefer not to
+deserved funds by broadcasting these HTLCs onto Bitcoin's network
+(i.e. on-chain).  They would prefer not to
 do that though, since broadcasting on-chain is more expensive, and instead
 settle each of these hops off chain. Alice knows that Bob can pull funds from
 her since he has `R`, so she tells Bob: "I'll pay you, regardless of `R`, and in
