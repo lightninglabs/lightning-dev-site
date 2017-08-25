@@ -5,18 +5,28 @@ title: Installation
 ---
 
 ### Preliminaries
-  In order to work with [`lnd`](https://github.com/lightningnetwork/lnd), the following build dependencies are required:
+  In order to work with [`lnd`](https://github.com/lightningnetwork/lnd), the
+  following build dependencies are required:
   
   * **Go:** `lnd` is written in Go. To install, run one of the following commands:
-  
-    ```
-    # On Linux:
-    sudo apt-get install golang-go
 
-    # On Mac OS X
+  
+    **Note**: The minimum version of Go supported is Go 1.7.
+
+    
+    On Linux:
+    ```
+    sudo apt-get install golang-1.8-go
+    ```
+
+    On Mac OS X
+    ```
     brew install go
     ```
-    More detailed installation instructions can be found
+
+    Alternatively, one can download the pre-compiled binaries hosted on the
+    [golang download page](https://golang.org/dl/). If one seeks to install
+    from source, then more detailed installation instructions can be found
     [here](http://golang.org/doc/install). 
 
     At this point, you should set your `$GOPATH` environment variable, which
@@ -25,12 +35,12 @@ title: Installation
     that your shell will be able to detect the binaries you install.
 
     ```bash
-    export GOPATH=~/projects/lightning
+    export GOPATH=~/gocode
     export PATH=$PATH:$GOPATH/bin
     ```
-    We recommend placing the above in your .bashrc or in a setup
-    script so that you can avoid typing this every time you open a new terminal
-    window.
+
+    We recommend placing the above in your .bashrc or in a setup script so that
+    you can avoid typing this every time you open a new terminal window.
 
   * **Glide:** This project uses `Glide` to manage dependencies as well 
     as to provide *reproducible builds*. To install `Glide`, execute the
@@ -39,7 +49,7 @@ title: Installation
     go get -u github.com/Masterminds/glide
     ```
 
-### Installing LND
+### Installing lnd
 
 With the preliminary steps completed, to install `lnd`, `lncli`, and all
 related dependencies run the following commands:
@@ -67,20 +77,16 @@ To check that `lnd` was installed properly run the following command:
 go install; go test -v -p 1 $(go list ./... | grep -v  '/vendor/')
 ```
 
-### Installing BTCD
+### Installing btcd
 
 `lnd` currently requires `btcd` with segwit support, which is not yet merged
 into the master branch. Instead, [roasbeef](https://github.com/roasbeef/btcd)
 maintains a fork with his segwit implementation applied. To install, run the
 following commands:
 
-Install **btcutil**: (must be from roasbeef fork, not from btcsuite)
-```
-go get -u github.com/roasbeef/btcutil
-```
-
 Install **btcd**: (must be from roasbeef fork, not from btcsuite)
 ```
+git clone https://github.com/roasbeef/btcd $GOPATH/src/github.com/roasbeef/btcd
 cd $GOPATH/src/github.com/roasbeef/btcd
 glide install
 go install . ./cmd/...
@@ -125,7 +131,7 @@ You can test your `btcd` node's connectivity using the `getpeerinfo` command:
 btcctl --testnet --rpcuser=kek --rpcpass=kek getpeerinfo | more
 ```
 
-### LND
+### lnd
 
 #### Simnet vs. Testnet Development
 
@@ -143,7 +149,28 @@ won't need to manually insert invoices in order to test payment connectivity.
 To send this "special" HTLC type, include the `--debugsend` command at the end
 of your `sendpayment` commands.
 
-### Running LND
+
+There are currently two primary ways to run `lnd`, one requires a local `btcd`
+instance with the RPC service exposed, and the other uses a fully integrate
+light client powered by [neutrino](https://github.com/lightninglabs/neutrino).
+
+#### Running lnd in light client mode
+
+In order to run `lnd` in its light client mode, you'll need to locate a
+full-node which is capable of serving this new light client mode. A [BIP
+draft](https://github.com/Roasbeef/bips/blob/master/gcs_light_client.mediawiki)
+exists, and will be finalized in the near future, but for now you'll need to be
+running `roasbeef`'s fork of btcd. A public instance of such a node can be
+found at `faucet.lightning.community`.
+
+To run lnd in neutrino mode, run `lnd` with the following arguments, (swapping
+in `--bitcoin.simnet` for `simnet` mode if needed), and also your own `btcd`
+node if available:
+```
+lnd --bitcoin.active --bitcoin.testnet --debuglevel=debug --neutrino.active --neutrino.connect=faucet.lightning.community
+```
+
+#### Running lnd using the btcd backend
 
 If you are on testnet, run this command after `btcd` has finished syncing.
 Otherwise, replace `--bitcoin.testnet` with `--bitcoin.simnet`. If you
@@ -152,6 +179,8 @@ installing `lnd` in preparation for the
 ```
 lnd --bitcoin.active --bitcoin.testnet --debuglevel=debug --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --externalip=X.X.X.X
 ```
+
+#### Network Reachability 
 
 If you'd like to signal to other nodes on the network that you'll accept
 incoming channels (as peers need to connect inbound to initiate a channel
@@ -189,7 +218,7 @@ for Litecoin accordingly.
 # Accurate as of:
 - _roasbeef/btcd commit:_ `f8c02aff4e7a807ba0c1349e2db03695d8e790e8` 
 - _roasbeef/btcutil commit:_ `a259eaf2ec1b54653cdd67848a41867f280797ee` 
-- _lightningnetwork/lnd commit:_ `d7b36c6`
+- _lightningnetwork/lnd commit:_ `08de2becf8d77fae192205172c4fb17bb09bd0dbf49e64aa323b2fcbf9fe2a35`
 
 
 
