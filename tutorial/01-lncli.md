@@ -318,7 +318,7 @@ It's no fun if only Alice any money. Let's give some to Charlie as well:
 btcd --txindex --simnet --rpcuser=kek --rpcpass=kek --miningaddr=<CHARLIE_ADDRESS>
 
 # Generate more blocks
-btcctl --simnet --rpcuser=kek --rpcpass=kek generate 50
+btcctl --simnet --rpcuser=kek --rpcpass=kek generate 100
 
 # Check Charlie's balance
 charlie$ lncli-charlie walletbalance --witness_only=true
