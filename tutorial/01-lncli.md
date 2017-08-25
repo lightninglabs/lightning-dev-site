@@ -129,7 +129,7 @@ $ tree $GOPATH -L 2
 Start up the Alice node from within the `alice` directory:
 ```bash
 cd $GOPATH/dev/alice
-alice$ lnd --rpcport=10001 --peerport=10011 --restport=8001 --datadir=test_data --logdir=test_log --debuglevel=info --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+alice$ lnd --rpcport=10001 --peerport=10011 --restport=8001 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
 ```
 The Alice node should now be running and displaying output.
 
@@ -148,6 +148,7 @@ Breaking down the components:
   * `--logdir`: The directory to log output.
   * `--debuglevel`: The logging level for all subsystems. Can be set to
     `trace`, `debug`, `info`, `warn`, `error`, `critical`.
+  * `--no-macaroons`: Disable macaroon authentication for tutorial purposes.
   * `--bitcoin.rpcuser` and `--bitcoin.rpcpass`: The username and password for
     the `btcd` instance
   * `--bitcoin.simnet`: Specifies whether to use `simnet` or `testnet`
@@ -174,11 +175,11 @@ Run Bob and Charlie:
 ```bash
 # In a new terminal window
 cd $GOPATH/dev/bob
-bob$ lnd --rpcport=10002 --peerport=10012 --restport=8002 --datadir=test_data --logdir=test_log --debuglevel=info --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+bob$ lnd --rpcport=10002 --peerport=10012 --restport=8002 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
 
 # In another terminal window
 cd $GOPATH/dev/charlie
-charlie$ lnd --rpcport=10003 --peerport=10013 --restport=8003 --datadir=test_data --logdir=test_log --debuglevel=info --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+charlie$ lnd --rpcport=10003 --peerport=10013 --restport=8003 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
 ```
 
 ### Configuring lnd.conf
@@ -199,6 +200,7 @@ datadir=test_data
 logdir=test_log
 debuglevel=info
 debughtlc=true
+no-macaroons=true
 
 [Bitcoin]
 bitcoin.simnet=1
@@ -224,7 +226,7 @@ Open up a new terminal window, set `$GOPATH` and include `$GOPATH/bin` in your
 `PATH` as usual. Let's test that we can connect to Alice by requesting basic information:
 ```bash
 cd $GOPATH/dev/alice
-alice$ lncli --rpcserver=localhost:10001 getinfo
+alice$ lncli --rpcserver=localhost:10001 --no-macaroons getinfo
 ```
 
 `lncli` just made an RPC call to the Alice `lnd` node. Notice that we had to
@@ -240,7 +242,7 @@ To see all the commands available for `lncli`, simply type `lncli --help` or
 Let's create a new Bitcoin address for Alice. This will be the address that
 stores Alice's on-chain balance.
 ```bash
-alice$ lncli --rpcserver=localhost:10001 newaddress np2wkh
+alice$ lncli --rpcserver=localhost:10001 --no-macaroons newaddress np2wkh
 {
     "address": <ALICE_ADDRESS>
 }
@@ -252,14 +254,14 @@ respectively.
 ```bash
 # In a new terminal window, setting $GOPATH, etc.
 cd $GOPATH/dev/bob
-bob$ lncli --rpcserver=localhost:10002 newaddress np2wkh
+bob$ lncli --rpcserver=localhost:10002 --no-macaroons newaddress np2wkh
 {
     "address": <BOB_ADDRESS>
 }
 
 # In a new terminal window:
 cd $GOPATH/dev/charlie
-charlie$ lncli --rpcserver=localhost:10003 newaddress np2wkh
+charlie$ lncli --rpcserver=localhost:10003 --no-macaroons newaddress np2wkh
 {
     "address": <CHARLIE_ADDRESS>
 }
@@ -268,9 +270,9 @@ charlie$ lncli --rpcserver=localhost:10003 newaddress np2wkh
 To avoid typing the `--rpcserver=localhost:1000X` flag every time, we can set
 some aliases. Add the following to your `.bashrc`:
 ```bash
-alias lncli-alice="lncli --rpcserver=localhost:10001"
-alias lncli-bob="lncli --rpcserver=localhost:10002"
-alias lncli-charlie="lncli --rpcserver=localhost:10003"
+alias lncli-alice="lncli --rpcserver=localhost:10001 --no-macaroons"
+alias lncli-bob="lncli --rpcserver=localhost:10002 --no-macaroons"
+alias lncli-charlie="lncli --rpcserver=localhost:10003 --no-macaroons"
 ```
 
 To make sure this was applied to all of your current terminal windows, rerun
