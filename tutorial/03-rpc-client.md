@@ -15,8 +15,8 @@ Python 2.7 and that you have
 ```bash
 # Create a new workspace which will hold both the repo and the virtualenv. We
 # recommend running this in a new terminal window.
-mkdir ln-coindesk
-cd ln-coindesk
+mkdir ln-workspace
+cd ln-workspace
 
 # Clone the repo
 git clone https://github.com/MaxFangX/lightning-coindesk
@@ -79,7 +79,7 @@ username. You should now be logged in as Alice.
 ![logged in homepage](http://imgur.com/BGSunzy.png)
 
 Navigate to the sweet article and make a payment from the Alice node (you can
-use either the command line or the web GUI. Clicking "Complete" will prompt the
+use either the command line or the web GUI). Clicking "Complete" will prompt the
 webserver to check that the payment has been complete, and you can now enjoy
 reading through this sweet article.
 
@@ -89,7 +89,7 @@ Let's practice running some commands on gRPC. Open up a new terminal window then
 
 ```bash
 # Enter the development environment
-cd ln-coindesk
+cd ln-workspace
 
 # Activate Python virtualenv
 source deskenv/bin/activate
