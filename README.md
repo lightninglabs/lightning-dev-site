@@ -41,11 +41,15 @@ pip install Jinja2
 ```
 
 # Get the latest INSTALL.md
+```shell
 curl -o INSTALL.md -s https://raw.githubusercontent.com/lightningnetwork/lnd/master/docs/INSTALL.md
+```
 
 # Get the latest gRPC guides
+```shell
 curl -o python.md -s https://raw.githubusercontent.com/lightningnetwork/lnd/master/docs/grpc/python.md
 curl -o javascript.md -s https://raw.githubusercontent.com/lightningnetwork/lnd/master/docs/grpc/javascript.md
+```
 
 Let's run the script to render the guides:
 ```shell

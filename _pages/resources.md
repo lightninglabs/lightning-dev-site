@@ -55,7 +55,7 @@ Community Slack.
   Rusty Russell's Technical Explainer Series
   * In-depth explanation of Lightning, oriented towards developers.
   * [Part I](https://rusty.ozlabs.org/?p=450): Revocable Transactions
-  * [Part II](https://rusty.ozlabs.org/?p=462): Hashed Timelock COntracts (HTLCs)
+  * [Part II](https://rusty.ozlabs.org/?p=462): Hashed Timelock Contracts (HTLCs)
   * [Part III](https://rusty.ozlabs.org/?p=467): Channeling Contracts
   * [Part IV](https://rusty.ozlabs.org/?p=477): Summary
 
