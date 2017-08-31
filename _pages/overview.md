@@ -146,9 +146,8 @@ Once you don't have to trust the intermediaries, you no longer even care who
 they are. This allows Lightning nodes to be fully anonymous, which is a huge win
 for privacy.
 
-Concretely, Suppose Alice has a channel with Bob, who has a channel with
-Charlie, who has a channel with Dave: `A<->B<->C<->D`. How can
-Alice pay Dave? 
+Concretely, Suppose Alice has a channel with Bob, who has a channel with Carol,
+who has a channel with Dave: `A<->B<->C<->D`. How can Alice pay Dave? 
 
 Alice first notifies Dave that she wants to send him some money.
 
@@ -169,31 +168,30 @@ broadcast it, because they are expecting to clear it out later.
 ![Alice creates HTLC with Bob](http://imgur.com/aNQoA9Z.png)
 
 Bob, knowing that he can pull funds from Alice if he knows R, now has no issue
-telling Charlie: "I will pay you if you can produce the preimage of H within *2*
+telling Carol: "I will pay you if you can produce the preimage of H within *2*
 days."
 
-Charlie does the same, making an HTLC that will pay Dave if Dave can produce R
+Carol does the same, making an HTLC that will pay Dave if Dave can produce R
 within 1 day. However, Dave does in fact know R. Because Dave is able to pull
-the desired amount from Charlie, Dave can consider the payment from Alice
-completed. Now, he has no problem telling R to Charlie and Bob so that they are
+the desired amount from Carol, Dave can consider the payment from Alice
+completed. Now, he has no problem telling R to Carol and Bob so that they are
 able to collect their funds as well.
 
 ![Dave distributes R](http://imgur.com/nTLWBbm.png)
 
 Now, everyone can clear out, because they have a guaranteed way to pull their
-deserved funds by broadcasting these HTLCs onto Bitcoin's network
-(i.e. on-chain).  They would prefer not to
-do that though, since broadcasting on-chain is more expensive, and instead
-settle each of these hops off chain. Alice knows that Bob can pull funds from
-her since he has `R`, so she tells Bob: "I'll pay you, regardless of `R`, and in
-doing so we'll terminate the HTLC so we can forget about R." Bob does the same
-with Charlie, and Charlie with David.
+deserved funds by broadcasting these HTLCs onto Bitcoin's network (i.e.
+on-chain). They would prefer not to do that though, since broadcasting on-chain
+is more expensive, and instead settle each of these hops off chain. Alice knows
+that Bob can pull funds from her since he has `R`, so she tells Bob: "I'll pay
+you, regardless of `R`, and in doing so we'll terminate the HTLC so we can
+forget about R." Bob does the same with Carol, and Carol with Dave.
 
 ![Everyone terminates their HTLCs](http://imgur.com/iRx4bf5.png)
 
-Now, what if Dave is uncooperative and refuses to give `R` to Bob and Charlie?
-Note that Dave must broadcast the transaction from Charlie within 1 day, and in
-doing so must reveal R in order to redeem the funds. Bob and Charlie can simply
+Now, what if Dave is uncooperative and refuses to give `R` to Bob and Carol?
+Note that Dave must broadcast the transaction from Carol within 1 day, and in
+doing so must reveal R in order to redeem the funds. Bob and Carol can simply
 look at the blockchain to determine what R is and settle off-chain as well.
 
 We have shown how to make a payment across the Lightning Network using only
