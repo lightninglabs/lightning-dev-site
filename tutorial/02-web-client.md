@@ -39,7 +39,7 @@ try this on your own - the web dashboard is intuitive enough that we don't need
 step by step instructions for it.
 
 Note: The LND wallet is coming soon! Sign up for our newsletter at the bottom
-of our [community page](https://lightning.community#mc-embedded-subscribe-form)
+of our [community page](//lightning.community#mc-embedded-subscribe-form)
 
 ### Moving on to Step 3
 
