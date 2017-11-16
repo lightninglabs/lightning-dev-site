@@ -51,7 +51,7 @@ Community Slack.
   * Spoken in-depth mechanics of bidirectional payment channels and multi-hop
     payments
 
-* [Lightning Network](https://bitcoinmagazine.com/articles/understanding-the-lightning-network-part-building-a-bidirectional-payment-channel-1464710791/):
+* [Lightning Networks](https://rusty.ozlabs.org/?p=450):
   Rusty Russell's Technical Explainer Series
   * In-depth explanation of Lightning, oriented towards developers.
   * [Part I](https://rusty.ozlabs.org/?p=450): Revocable Transactions
