@@ -60,7 +60,7 @@ Community Slack.
   * [Part IV](https://rusty.ozlabs.org/?p=477): Summary
 
 * [Lightning Network Paper](https://lightning.network/lightning-network-paper.pdf)
-  published January 2016
+  published February 2015, last updated January 2016
   * The protocol has changed since this original paper, but covers the mid-level
     mechanics of the Lightning Network with an emphasis on the smart contracts
     that make it trustless
