@@ -43,6 +43,10 @@ Community Slack.
   * [Part 3](https://bitcoinmagazine.com/articles/understanding-the-lightning-network-part-completing-the-puzzle-and-closing-the-channel-1466178980/):
     Completing the Puzzle and Closing the Channel
 
+* [#bitcoin-lightning - Things to Know](https://medium.com/@rusty_lightning/bitcoin-lightning-things-to-know-e5ea8d84369f):
+  Rusty Russell addresses FAQs about Lightning, including its requirements,
+  limitations, segwit, and expected network dynamics.
+
 ### Lightning: Intermediate
 
 * [Lightning Network Tech
