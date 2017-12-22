@@ -151,11 +151,11 @@ To send this "special" HTLC type, include the `--debugsend` command at the end
 of your `sendpayment` commands.
 
 
-There are currently two primary ways to run `lnd`, one requires a local `btcd`
-instance with the RPC service exposed, and the other uses a fully integrate
+There are currently two primary ways to run `lnd`: one requires a local `btcd`
+instance with the RPC service exposed, and the other uses a fully integrated
 light client powered by [neutrino](https://github.com/lightninglabs/neutrino).
 
-#### Running lnd in light client mode
+#### Running lnd in Light Client Mode
 
 In order to run `lnd` in its light client mode, you'll need to locate a
 full-node which is capable of serving this new light client mode. A [BIP
@@ -165,8 +165,7 @@ running `roasbeef`'s fork of btcd. A public instance of such a node can be
 found at `faucet.lightning.community`.
 
 To run lnd in neutrino mode, run `lnd` with the following arguments, (swapping
-in `--bitcoin.simnet` for `simnet` mode if needed), and also your own `btcd`
-node if available:
+in `--bitcoin.simnet` if needed), and also your own `btcd` node if available:
 ```
 lnd --bitcoin.active --bitcoin.testnet --debuglevel=debug --neutrino.active --neutrino.connect=faucet.lightning.community
 ```
@@ -180,6 +179,29 @@ installing `lnd` in preparation for the
 ```
 lnd --bitcoin.active --bitcoin.testnet --debuglevel=debug --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --externalip=X.X.X.X
 ```
+
+#### Disabling Wallet Encryption
+
+To disable encryption of the wallet files, pass the `--noencryptwallet` argument
+to `lnd`. Obviously beware the security implications of running an unencrypted
+wallet - this argument must only be used for testing purposes.
+
+#### Macaroons
+
+`lnd`'s authentication system is called **macaroons**, which are decentralized
+bearer credentials allowing for delegation, attenuation, and other cool
+features. You can learn more about them in Alex Akselrod's [writeup on
+Github](https://github.com/lightningnetwork/lnd/issues/20).
+
+Running `lnd` for the first time will by default generate the `admin.macaroon`,
+`read_only.macaroon`, and `macaroons.db` files that are used to authenticate
+into `lnd`. They will be stored in the default `lnd` data directory. Note that
+if you specified an alternative data directory (via the `--datadir` argument),
+you will have to additionally pass the updated location of the `admin.macaroon`
+file into `lncli` using the `--macaroonpath` argument.
+
+To disable macaroons for testing, pass the `--no-macaroons` flag into *both*
+`lnd` and `lncli`.
 
 #### Network Reachability 
 
@@ -206,6 +228,7 @@ Here's a sample `lnd.conf` to get you started:
 debuglevel=trace
 debughtlc=true
 maxpendingchannels=10
+noencryptwallet=true
 
 [Bitcoin]
 bitcoin.active=1
