@@ -166,7 +166,7 @@ Keep in mind that for each additional terminal window you set, you will need to
 set `$GOPATH` and include `$GOPATH/bin` in your `PATH`. Consider creating a
 setup script that includes the following lines:
 ```bash
-export GOPATH=~/projects/lightning # if you exactly followed the install guide
+export GOPATH=~/gocode # if you exactly followed the install guide
 export PATH=$PATH:$GOPATH/bin
 ```
 and run it every time you start a new terminal window working on `lnd`.
