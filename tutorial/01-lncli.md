@@ -223,9 +223,18 @@ Now that we have our `lnd` nodes up and running, let's interact with them! To
 control `lnd` we will need to use `lncli`, the command line interface.
 
 Open up a new terminal window, set `$GOPATH` and include `$GOPATH/bin` in your
-`PATH` as usual. Let's test that we can connect to Alice by requesting basic information:
+`PATH` as usual.
+
+Let's test that we can connect to Alice by first creating her wallet and then requesting basic information:
+
 ```bash
 cd $GOPATH/dev/alice
+alice$ lncli --rpcserver=localhost:10001 --no-macaroons create
+```
+
+You'll be asked to input the wallet password twice. You can now start requesting some basic information as follow:
+
+```bash
 alice$ lncli --rpcserver=localhost:10001 --no-macaroons getinfo
 ```
 
@@ -241,6 +250,7 @@ To see all the commands available for `lncli`, simply type `lncli --help` or
 ### Setting up Bitcoin addresses
 Let's create a new Bitcoin address for Alice. This will be the address that
 stores Alice's on-chain balance.
+
 ```bash
 alice$ lncli --rpcserver=localhost:10001 --no-macaroons newaddress np2wkh
 {
@@ -251,9 +261,12 @@ alice$ lncli --rpcserver=localhost:10001 --no-macaroons newaddress np2wkh
 Open up new terminal windows and do the same for Bob and Charlie. `alice$` or
 `bob$` denotes running the command from the Alice or Bob `lncli` window
 respectively.
+
 ```bash
 # In a new terminal window, setting $GOPATH, etc.
 cd $GOPATH/dev/bob
+bob$ lncli --rpcserver=localhost:10002 --no-macaroons create
+
 bob$ lncli --rpcserver=localhost:10002 --no-macaroons newaddress np2wkh
 {
     "address": <BOB_ADDRESS>
@@ -261,6 +274,8 @@ bob$ lncli --rpcserver=localhost:10002 --no-macaroons newaddress np2wkh
 
 # In a new terminal window:
 cd $GOPATH/dev/charlie
+charlie$ lncli --rpcserver=localhost:10003 --no-macaroons create
+
 charlie$ lncli --rpcserver=localhost:10003 --no-macaroons newaddress np2wkh
 {
     "address": <CHARLIE_ADDRESS>
@@ -442,7 +457,7 @@ alice$ lncli-alice listchannels
         }
     ]
 }
-``` 
+```
 
 ### Sending single hop payments
 
@@ -453,8 +468,8 @@ First, Bob will need to generate an invoice:
 ```bash
 bob$ lncli-bob addinvoice --value=10000
 {
-        "r_hash": "<a_random_rhash_value>", 
-        "pay_req": "<encoded_invoice>", 
+        "r_hash": "<a_random_rhash_value>",
+        "pay_req": "<encoded_invoice>",
 }
 ```
 
