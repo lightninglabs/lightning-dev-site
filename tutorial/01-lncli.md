@@ -193,7 +193,8 @@ overwrite the `lnd.conf` option if applicable.
 - On MacOS, `lnd.conf` is located at: `/Users/[username]/Library/Application\ Support/Lnd/lnd.conf`
 - On Linux: `~/.lnd/lnd.conf`
 
-Here is an example `lnd.conf` that can save us from re-specifying a bunch of command line options:
+Here is an example `lnd.conf` that can save us from re-specifying a bunch of
+command line options:
 ```bash
 [Application Options]
 datadir=test_data
@@ -225,14 +226,16 @@ control `lnd` we will need to use `lncli`, the command line interface.
 Open up a new terminal window, set `$GOPATH` and include `$GOPATH/bin` in your
 `PATH` as usual.
 
-Let's test that we can connect to Alice by first creating her wallet and then requesting basic information:
+Let's test that we can connect to Alice by first creating her wallet and then
+requesting basic information:
 
 ```bash
 cd $GOPATH/dev/alice
 alice$ lncli --rpcserver=localhost:10001 --no-macaroons create
 ```
 
-You'll be asked to input the wallet password twice. You can now start requesting some basic information as follow:
+You'll be asked to input the wallet password twice. You can now start requesting
+some basic information as follows:
 
 ```bash
 alice$ lncli --rpcserver=localhost:10001 --no-macaroons getinfo
@@ -297,7 +300,8 @@ alice$ source ~/.bashrc
 bob$ source ~/.bashrc
 charlie$ source ~/.bashrc
 ```
-For simplicity, the rest of the tutorial will assume that this step was complete.
+For simplicity, the rest of the tutorial will assume that this step was
+complete.
 
 ### Funding Alice
 
@@ -370,8 +374,8 @@ alice$ lncli-alice connect <BOB_PUBKEY>@localhost:10012
     "peer_id": 0
 }
 ```
-Notice that `localhost:10012` corresponds to the `--peerport=10012` flag we set when
-starting the Bob `lnd` node.
+Notice that `localhost:10012` corresponds to the `--peerport=10012` flag we set
+when starting the Bob `lnd` node.
 
 Let's check that Alice and Bob are now aware of each other.
 ```bash
@@ -426,8 +430,9 @@ First, let's open the Alice<-->Bob channel.
 ```bash
 alice$ lncli-alice openchannel --node_key=<BOB_PUBKEY> --local_amt=1000000
 ```
-- `--local_amt` specifies the amount of money that Alice will commit to the channel.
-To see the full list of options, you can try `lncli openchannel --help`.
+- `--local_amt` specifies the amount of money that Alice will commit to the
+  channel.  To see the full list of options, you can try `lncli openchannel
+  --help`.
 
 We now need to mine one block so that the channel is considered valid:
 ```bash
@@ -500,7 +505,8 @@ bob$ lncli-bob listchannels
 
 ### Multi-hop payments
 
-Now that we know how to send single-hop payments, sending multi hop payments is not that much more difficult. Let's set up a channel from Bob<-->Charlie:
+Now that we know how to send single-hop payments, sending multi hop payments is
+not that much more difficult. Let's set up a channel from Bob<-->Charlie:
 ```bash
 charlie$ lncli-charlie openchannel --node_key=<BOB_PUBKEY> --local_amt=800000 --push_amt=200000
 
@@ -566,8 +572,8 @@ alice$ lncli-bob walletbalance
 ```
 
 At this point, you've learned how to work with `btcd`, `btcctl`, `lnd`, and
-`lncli`. In [Stage 2](/tutorial/02-web-client), we will learn how to set up and interact with `lnd` using
-a web GUI client.
+`lncli`. In [Stage 2](/tutorial/02-web-client), we will learn how to set up and
+interact with `lnd` using a web GUI client.
 
 _In the future, you can try running through this workflow on `testnet` instead
 of `simnet`, where you can interact with and send payments through the testnet
