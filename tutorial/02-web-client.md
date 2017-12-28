@@ -25,7 +25,7 @@ npm install
 
 ### Setting up LND and BTCD
 
-`lnd` should be started with the wallet encryption and macaroons options disabled, but in the previous [Stage 1 Tutorial]() we only disabled macaroons. This means that we have to edit the `lnd.conf` we previously configured in [Stage 1](). Considering we're using the local `simnet` blockchain, the suggestion is to start over from the beginning. Be forgiving, because the setting up procedure is going to be long and a little bit boring. Take it as a way to review most of what you learnt in Stage 1 tutorial.
+`lnd` should be started with the wallet encryption and macaroons options disabled, but in the previous [Stage 1 Tutorial](/tutorial/01-lncli) we only disabled macaroons. This means that we have to edit the `lnd.conf` we previously configured in Stage 1 tutorial. Considering we're using the local `simnet` blockchain, the suggestion is to start over from the beginning. Be forgiving, because the setting up procedure is going to be long and a little bit boring. Take it as a way to review most of what you learnt in Stage 1 tutorial.
 
 First, delete any content from Alice, Bob and Charlie directories:
 
@@ -83,7 +83,7 @@ cp tls.cert <lncli-web_directory>/lnd.cert
 
 #### Configure btcd.conf and btcctl.conf
 
-Let's now configure `btcd` and `btcctl` to make things simpler. First delete any generated content during the [Stage 1]() from the `~/.btcd` directory (or `~/Library/Application Support/Btcd` on Mac OS X):
+Let's now configure `btcd` and `btcctl` to make things simpler. First delete any generated content during the Stage 1 from the `~/.btcd` directory (or `~/Library/Application Support/Btcd` on Mac OS X):
 
 ```bash
 # delete the .btcd directory
