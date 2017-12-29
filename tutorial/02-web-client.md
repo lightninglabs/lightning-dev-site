@@ -166,7 +166,7 @@ As we did in Stage 1 tutorial, we can now lunch the cluster of `lnd`s nodes for 
 
 ```bash
 # from a new terminal window
-cd $GOPATH/dev/alice
+cd $HOME # could be any directory
 lnd --rpcport=10001 --peerport=10011 --restport=8001
 2017-12-28 12:42:21.305 [INF] LTND: Version 0.3.0-alpha
 ...
@@ -195,7 +195,7 @@ As you should remember from Stage 1 tutorial, before funding the peers we need t
 
 ```bash
 # from a new terminal window
-cd $GOPATH/dev/alice
+cd $HOME # could be any directory
 lncli-alice newaddress np2wkh
 {
     "address": "rX4mANQmUzoTADdQ4htinMJoTQPaexYvGe"
@@ -208,7 +208,6 @@ lncli-alice walletbalance
     "unconfirmed_balance": "0"
 }
 
-cd $GOPATH/dev/bob
 lncli-bob newaddress np2wkh
 {
     "address": "rtpCLSQqEdNPwNoj9zFvXzy5Ej1qqPuv9e"
@@ -221,7 +220,6 @@ lncli-bob walletbalance
     "unconfirmed_balance": "0"
 }
 
-cd $GOPATH/dev/charlie
 lncli-charlie newaddress np2wkh
 {
     "address": "rWaEQ1yTGMyfeeVVE9RrLCPoHnuFchzBKr"
@@ -293,7 +291,7 @@ btcctl generate 100
 ]
 ```
 
-You can now restart the three LND nodes from the terminal windows you have previously started them
+You can now restart the three LND nodes using the terminal windows you have previously started them from
 
 ```bash
 # from alice's terminal window
