@@ -117,7 +117,7 @@ rpcpass=kek
 txindex=1
 ```
 
-Peocede by configuring `btcctl`
+Proceed by configuring `btcctl`
 
 ```bash
 mkdir ~/.btcctl
@@ -237,7 +237,7 @@ lncli-charlie walletbalance
 
 ### Fund Alice and Charlie
 
-As we did in Stage 1 tutorial, to fund peers we need to stop the running `btcd` and to rerun it with the `--miningaddr` option set to the address of each peer we want to fund. If you're not quick in re-running the `btcd` node after having stopped if, the running lnd nodes for Alice, Bob and Charlie will timeout. We strongly suggest to stop them all before stopping the `btcd` node.
+As we did in Stage 1 tutorial, to fund peers we need to stop the running `btcd` and to rerun it with the `--miningaddr` option set to the address of each peer we want to fund. If you're not quick in re-running the `btcd` node after having stopped it, the running lnd nodes for Alice, Bob and Charlie will timeout. We strongly suggest to stop them all before stopping the `btcd` node.
 
 ```bash
 # stop alice's lnd node
@@ -293,7 +293,7 @@ btcctl generate 100
 ]
 ```
 
-You can now restart the three LND nodes from the terminal windows you previously started them
+You can now restart the three LND nodes from the terminal windows you have previously started them
 
 ```bash
 # from alice's terminal window
