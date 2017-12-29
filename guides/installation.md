@@ -71,13 +71,6 @@ git pull && glide install
 go install . ./cmd/...
 ```
 
-**Tests**
-
-To check that `lnd` was installed properly run the following command:
-```
-go install; go test -v -p 1 $(go list ./... | grep -v  '/vendor/')
-```
-
 ### Installing btcd
 
 `lnd` currently requires `btcd` with segwit support, which is not yet merged
@@ -91,6 +84,13 @@ git clone https://github.com/roasbeef/btcd $GOPATH/src/github.com/roasbeef/btcd
 cd $GOPATH/src/github.com/roasbeef/btcd
 glide install
 go install . ./cmd/...
+```
+
+### Testing lnd and btcd
+
+To check that `lnd` and btcd was installed properly run the following command:
+```
+go install; go test -v -p 1 $(go list ./... | grep -v  '/vendor/')
 ```
 
 ### Starting btcd
