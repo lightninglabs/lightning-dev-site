@@ -436,7 +436,7 @@ alice$ lncli-alice openchannel --node_key=<BOB_PUBKEY> --local_amt=1000000
 
 We now need to mine three blocks so that the channel is considered valid:
 ```bash
-btcctl --simnet --rpcuser=kek --rpcpass=kek generate 3
+btcctl --simnet --rpcuser=kek --rpcpass=kek generate 6
 ```
 
 Check that Alice<-->Bob channel was created:
@@ -511,7 +511,7 @@ not that much more difficult. Let's set up a channel from Bob<-->Charlie:
 charlie$ lncli-charlie openchannel --node_key=<BOB_PUBKEY> --local_amt=800000 --push_amt=200000
 
 # Mine the channel funding tx
-btcctl --simnet --rpcuser=kek --rpcpass=kek generate 3
+btcctl --simnet --rpcuser=kek --rpcpass=kek generate 6
 ```
 
 Note that this time, we supplied the `--push_amt` argument, which specifies the
@@ -561,7 +561,7 @@ number is `output_index`.
 alice$ lncli-alice closechannel --funding_txid=<funding_txid> --output_index=<output_index>
 
 # Mine a block including the channel close transaction to close the channel:
-btcctl --simnet --rpcuser=kek --rpcpass=kek generate 1
+btcctl --simnet --rpcuser=kek --rpcpass=kek generate 6
 
 # Check that Bob's on-chain balance was credited by his settled amount in the
 # channel. Recall that Bob previously had no on-chain Bitcoin:
