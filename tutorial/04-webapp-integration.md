@@ -409,6 +409,6 @@ Check out the accessible dev manuals available on our [Guides page](/guides/).
 
 ### Questions
 - Join the #dev-help channel on our [Community
-  Slack](https://join.slack.com/t/lightningcommunity/shared_invite/MjI4OTg3MzQ4MjI2LTE1MDMxNzM1NTMtNjlmOGYzOTI1Ng)
+  Slack](https://lightningcommunity.slack.com/join/shared_invite/enQtMjk0OTYxNzI4NzExLTFhZDA5YTYxZDU2YWQyOTQzN2ZkMzk3ZGUwNGM0NjE2NzQyNjAyZTkwOTFkZjJmMmMyNzlmNmE5YTRmMGFhM2Q)
 - Join IRC:
   [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lnd)
