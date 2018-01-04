@@ -561,7 +561,7 @@ number is `output_index`.
 alice$ lncli-alice closechannel --funding_txid=<funding_txid> --output_index=<output_index>
 
 # Mine a block including the channel close transaction to close the channel:
-btcctl --simnet --rpcuser=kek --rpcpass=kek generate 6
+btcctl --simnet --rpcuser=kek --rpcpass=kek generate 1
 
 # Check that Bob's on-chain balance was credited by his settled amount in the
 # channel. Recall that Bob previously had no on-chain Bitcoin:
