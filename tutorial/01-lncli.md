@@ -434,9 +434,9 @@ alice$ lncli-alice openchannel --node_key=<BOB_PUBKEY> --local_amt=1000000
   channel.  To see the full list of options, you can try `lncli openchannel
   --help`.
 
-We now need to mine one block so that the channel is considered valid:
+We now need to mine three blocks so that the channel is considered valid:
 ```bash
-btcctl --simnet --rpcuser=kek --rpcpass=kek generate 1
+btcctl --simnet --rpcuser=kek --rpcpass=kek generate 3
 ```
 
 Check that Alice<-->Bob channel was created:
@@ -511,7 +511,7 @@ not that much more difficult. Let's set up a channel from Bob<-->Charlie:
 charlie$ lncli-charlie openchannel --node_key=<BOB_PUBKEY> --local_amt=800000 --push_amt=200000
 
 # Mine the channel funding tx
-btcctl --simnet --rpcuser=kek --rpcpass=kek generate 1
+btcctl --simnet --rpcuser=kek --rpcpass=kek generate 3
 ```
 
 Note that this time, we supplied the `--push_amt` argument, which specifies the
