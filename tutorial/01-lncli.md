@@ -511,7 +511,7 @@ not that much more difficult. Let's set up a channel from Bob<-->Charlie:
 charlie$ lncli-charlie openchannel --node_key=<BOB_PUBKEY> --local_amt=800000 --push_amt=200000
 
 # Mine the channel funding tx
-btcctl --simnet --rpcuser=kek --rpcpass=kek generate 3
+btcctl --simnet --rpcuser=kek --rpcpass=kek generate 6
 ```
 
 Note that this time, we supplied the `--push_amt` argument, which specifies the
