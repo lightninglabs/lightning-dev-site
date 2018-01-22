@@ -129,17 +129,17 @@ $ tree $GOPATH -L 2
 Start up the Alice node from within the `alice` directory:
 ```bash
 cd $GOPATH/dev/alice
-alice$ lnd --rpcport=10001 --peerport=10011 --restport=8001 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+alice$ lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --btcd.rpcuser=kek --btcd.rpcpass=kek --bitcoin.simnet --bitcoin.active
 ```
 The Alice node should now be running and displaying output.
 
 Breaking down the components:
-  * `--rpcport`: The port to listen for the RPC server. This is the primary way
+  * `--rpclisten`: The host:port to listen for the RPC server. This is the primary way
     an application will communicate with `lnd`
-  * `--peerport`: The port to listen on for incoming P2P
+  * `--listen`: The host:port to listen on for incoming P2P
     connections. This is at the networking level, and is distinct from the
     Lightning channel networks and Bitcoin/Litcoin network itself.
-  * `--restport`: The port exposing a REST api for interacting with `lnd` over
+  * `--restlisten`: The host:port exposing a REST api for interacting with `lnd` over
     HTTP. For example, you can get Alice's channel balance by making a GET
     request to `localhost:8001/v1/channels`. This is not needed for this
     tutorial, but you can see some examples
@@ -149,7 +149,7 @@ Breaking down the components:
   * `--debuglevel`: The logging level for all subsystems. Can be set to
     `trace`, `debug`, `info`, `warn`, `error`, `critical`.
   * `--no-macaroons`: Disable macaroon authentication for tutorial purposes.
-  * `--bitcoin.rpcuser` and `--bitcoin.rpcpass`: The username and password for
+  * `--btcd.rpcuser` and `--btcd.rpcpass`: The username and password for
     the `btcd` instance
   * `--bitcoin.simnet`: Specifies whether to use `simnet` or `testnet`
   * `--bitcoin.active`: Specifies that bitcoin is active. Can also include
@@ -175,11 +175,11 @@ Run Bob and Charlie:
 ```bash
 # In a new terminal window
 cd $GOPATH/dev/bob
-bob$ lnd --rpcport=10002 --peerport=10012 --restport=8002 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+bob$ lnd --rpclisten=localhost:10002 --listen=localhost:10012 --restlisten=localhost:8002 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --btcd.rpcuser=kek --btcd.rpcpass=kek --bitcoin.simnet --bitcoin.active
 
 # In another terminal window
 cd $GOPATH/dev/charlie
-charlie$ lnd --rpcport=10003 --peerport=10013 --restport=8003 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+charlie$ lnd --rpclisten=localhost:10003 --listen=localhost:10013 --restlisten=localhost:8003 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --btcd.rpcuser=kek --btcd.rpcpass=kek --bitcoin.simnet --bitcoin.active
 ```
 
 ### Configuring lnd.conf
@@ -212,9 +212,9 @@ bitcoin.rpcpass=kek
 
 Now, when we start nodes, we only have to type
 ```bash
-alice$ lnd --rpcport=10001 --peerport=10011 --restport=8001
-bob$ lnd --rpcport=10002 --peerport=10012 --restport=8002
-charlie$ lnd --rpcport=10003 --peerport=10013 --restport=8003
+alice$ lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001
+bob$ lnd --rpclisten=localhost:10002 --listen=localhost:10012 --restlisten=localhost:8002
+charlie$ lnd --rpclisten=localhost:10003 --listen=localhost:10013 --restlisten=localhost:8003
 ```
 etc.
 
