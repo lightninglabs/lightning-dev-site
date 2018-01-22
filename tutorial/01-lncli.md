@@ -206,8 +206,10 @@ no-macaroons=true
 [Bitcoin]
 bitcoin.simnet=1
 bitcoin.active=1
-bitcoin.rpcuser=kek
-bitcoin.rpcpass=kek
+
+[btcd]
+btcd.rpcuser=kek
+btcd.rpcpass=kek
 ```
 
 Now, when we start nodes, we only have to type
