@@ -41,7 +41,7 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
 * [lnd.fun](lnd.fun): Panel for webmasters to manage their full lightning node.
 * [kibana](https://stats.preimage.net/): Visualization of the Lightning Network
 
-### Lapps
+### LND Lapps
 
 * [Y'alls](http://yalls.org/): Read and write articles, with Lightning Network
   micropayments
@@ -70,3 +70,26 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
 * [adWatcher Microservice](http://adwatcher.hopto.org:7777/): Earn satoshis by
   watching ads or video content
 * [Bard](https://www.bard.fun/): Simple paywall for watching a music visualizer
+
+### Eclair Lapps
+
+Eclair is a Scala implementation of the Lightning Network.
+
+* [Eclair desktop app](https://github.com/ACINQ/eclair/releases)
+* [Eclair mobile app](https://play.google.com/store/apps/details?id=fr.acinq.eclair.wallet): on Android. Read the
+  [announcement](https://medium.com/@ACINQ/announcing-eclair-wallet-a8d8c136fc7e)
+* [Starblocks](https://starblocks.acinq.co/#/): Buy a virtual coffee
+* [Strike](https://strike.acinq.co/#/): Stripe-like Lightning payment aggregator
+  API (custodial). [Announcement](https://medium.com/@ACINQ/introducing-strike-a-stripe-like-api-for-lightning-c84762f4f634)
+
+### c-Lightning Lapps / tools
+
+c-lightning is a specification-compliant LN implementation in C.
+
+* [Blockstream store](https://store.blockstream.com/): Bitcoin paraphernalia
+  that can only be purchased over LN.
+* [Elaine Ou's Twitter bot](https://elaineou.com/shop/): Pay for likes,
+  retweets, and follows
+* [Lightning Charge](https://github.com/ElementsProject/lightning-charge): A
+  drop-in solution for accepting lightning payments
+* [WooCommerce Gateway Plugin for Lightning](https://github.com/ElementsProject/woocommerce-gateway-lightning)
