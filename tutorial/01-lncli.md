@@ -23,15 +23,15 @@ local `lnd` instances.
 ```
    (1)                        (1)                         (1)
 + ----- +                   + --- +                   + ------- +
-| Alice | <--- channel ---> | Bob | <--- channel ---> | Charlie |    
-+ ----- +                   + --- +                   + ------- +        
-    |                          |                           |           
+| Alice | <--- channel ---> | Bob | <--- channel ---> | Charlie |
++ ----- +                   + --- +                   + ------- +
     |                          |                           |
-    + - - - -  - - - - - - - - + - - - - - - - - - - - - - +            
+    |                          |                           |
+    + - - - -  - - - - - - - - + - - - - - - - - - - - - - +
                                |
                       + --------------- +
                       | BTC/LTC network | <--- (2)
-                      + --------------- +        
+                      + --------------- +
 ```
 
 ### Understanding the components
@@ -113,15 +113,15 @@ The directory structure should now look like this:
 $ tree $GOPATH -L 2
 
 ├── bin
-│   └── ...
+│   └── ...
 ├── dev
-│   ├── alice
-│   ├── bob
-│   └── charlie
+│   ├── alice
+│   ├── bob
+│   └── charlie
 ├── pkg
-│   └── ...
+│   └── ...
 ├── rpc
-│   └── ...
+│   └── ...
 └── src
     └── ...
 ```
@@ -129,17 +129,17 @@ $ tree $GOPATH -L 2
 Start up the Alice node from within the `alice` directory:
 ```bash
 cd $GOPATH/dev/alice
-alice$ lnd --rpcport=10001 --peerport=10011 --restport=8001 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+alice$ lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
 ```
 The Alice node should now be running and displaying output.
 
 Breaking down the components:
-  * `--rpcport`: The port to listen for the RPC server. This is the primary way
+  * `--rpclisten`: The host:port to listen for the RPC server. This is the primary way
     an application will communicate with `lnd`
-  * `--peerport`: The port to listen on for incoming P2P
+  * `--listen`: The host:port to listen on for incoming P2P
     connections. This is at the networking level, and is distinct from the
     Lightning channel networks and Bitcoin/Litcoin network itself.
-  * `--restport`: The port exposing a REST api for interacting with `lnd` over
+  * `--restlisten`: The host:port exposing a REST api for interacting with `lnd` over
     HTTP. For example, you can get Alice's channel balance by making a GET
     request to `localhost:8001/v1/channels`. This is not needed for this
     tutorial, but you can see some examples
@@ -149,11 +149,14 @@ Breaking down the components:
   * `--debuglevel`: The logging level for all subsystems. Can be set to
     `trace`, `debug`, `info`, `warn`, `error`, `critical`.
   * `--no-macaroons`: Disable macaroon authentication for tutorial purposes.
-  * `--bitcoin.rpcuser` and `--bitcoin.rpcpass`: The username and password for
-    the `btcd` instance
   * `--bitcoin.simnet`: Specifies whether to use `simnet` or `testnet`
   * `--bitcoin.active`: Specifies that bitcoin is active. Can also include
-    `--litecoin.active` to activate Litecoin
+    `--litecoin.active` to activate Litecoin.
+  * `--bitcoin.node=btcd`: Use the `btcd` full node to interface with the blockchain.
+    Note that when using Litecoin, the option is `--litecoin.node=btcd`.
+  * `--btcd.rpcuser` and `--btcd.rpcpass`: The username and password for
+    the `btcd` instance. Note that when using Litecoin, the options are `--ltcd.rpcuser`
+    and `--ltcd.rpcpass`.
 
 ### Running Bob and Charlie
 
@@ -175,11 +178,11 @@ Run Bob and Charlie:
 ```bash
 # In a new terminal window
 cd $GOPATH/dev/bob
-bob$ lnd --rpcport=10002 --peerport=10012 --restport=8002 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+bob$ lnd --rpclisten=localhost:10002 --listen=localhost:10012 --restlisten=localhost:8002 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
 
 # In another terminal window
 cd $GOPATH/dev/charlie
-charlie$ lnd --rpcport=10003 --peerport=10013 --restport=8003 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.rpcuser=kek --bitcoin.rpcpass=kek --bitcoin.simnet --bitcoin.active
+charlie$ lnd --rpclisten=localhost:10003 --listen=localhost:10013 --restlisten=localhost:8003 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek
 ```
 
 ### Configuring lnd.conf
@@ -206,15 +209,18 @@ no-macaroons=true
 [Bitcoin]
 bitcoin.simnet=1
 bitcoin.active=1
-bitcoin.rpcuser=kek
-bitcoin.rpcpass=kek
+bitcoin.node=btcd
+
+[btcd]
+btcd.rpcuser=kek
+btcd.rpcpass=kek
 ```
 
 Now, when we start nodes, we only have to type
 ```bash
-alice$ lnd --rpcport=10001 --peerport=10011 --restport=8001
-bob$ lnd --rpcport=10002 --peerport=10012 --restport=8002
-charlie$ lnd --rpcport=10003 --peerport=10013 --restport=8003
+alice$ lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001
+bob$ lnd --rpclisten=localhost:10002 --listen=localhost:10012 --restlisten=localhost:8002
+charlie$ lnd --rpclisten=localhost:10003 --listen=localhost:10013 --restlisten=localhost:8003
 ```
 etc.
 
@@ -452,7 +458,6 @@ alice$ lncli-alice openchannel --node_key=<BOB_PUBKEY> --local_amt=1000000
   --help`.
 
 We now need to mine six blocks so that the channel is considered valid:
-
 ```bash
 btcctl --simnet --rpcuser=kek --rpcpass=kek generate 6
 ```
@@ -614,6 +619,6 @@ repository](https://github.com/lightninglabs/lightning-faucet)._
 
 ### Questions
 - Join the #dev-help channel on our [Community
-  Slack](https://join.slack.com/t/lightningcommunity/shared_invite/MjI4OTg3MzQ4MjI2LTE1MDMxNzM1NTMtNjlmOGYzOTI1Ng)
+  Slack](https://lightningcommunity.slack.com/join/shared_invite/enQtMjk0OTYxNzI4NzExLTFhZDA5YTYxZDU2YWQyOTQzN2ZkMzk3ZGUwNGM0NjE2NzQyNjAyZTkwOTFkZjJmMmMyNzlmNmE5YTRmMGFhM2Q)
 - Join IRC:
   [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lnd)
