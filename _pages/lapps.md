@@ -38,6 +38,8 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
   Bitcoin and Litecoin
 * [Lightning Faucet](httos://faucet.lightning.community/): Receive free testnet
   Bitcoin (or [Litecoin](https://ltc.faucet.lightning.community/))
+* [lnd.fun](lnd.fun): Panel for webmasters to manage their full lightning node.
+* [kibana](https://stats.preimage.net/): Visualization of the Lightning Network
 
 ### Lapps
 
@@ -58,6 +60,13 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
   article](https://coinjournal.net/you-can-go-on-a-digital-treasure-hunt-for-bitcoin-in-minecraft/)
 * [Lightning Gem](https://lightninggem.com/): Betting game using Lightning for
   payments
-* [Light-weight LND Dashboard](https://github.com/mably/lncli-web) by François
-  Masurel: A lightweight web client for LND.
-* [Slack tipbot](https://github.com/CryptoFR/ln-tip-slack) by François Masurel
+* [Light-weight LND Dashboard](https://github.com/mably/lncli-web): A
+  lightweight web client for LND.
+* [Slack tipbot](https://github.com/CryptoFR/ln-tip-slack): Custodial Slack
+  tipbot
+* [Thunderdice](http://thunderdice.ws/): Off-chain SatoshiDice
+* [Free DNS Demo](http://freedns.lightning-network.ro/): Purchase subdomains
+  with off-chain payments.
+* [adWatcher Microservice](http://adwatcher.hopto.org:7777/): Earn satoshis by
+  watching ads or video content
+* [Bard](https://www.bard.fun/): Simple paywall for watching a music visualizer
