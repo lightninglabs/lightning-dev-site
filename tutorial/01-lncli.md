@@ -477,7 +477,7 @@ Alice to Bob.
 
 First, Bob will need to generate an invoice:
 ```bash
-bob$ lncli-bob addinvoice --value=10000
+bob$ lncli-bob addinvoice 10000
 {
         "r_hash": "<a_random_rhash_value>",
         "pay_req": "<encoded_invoice>",
