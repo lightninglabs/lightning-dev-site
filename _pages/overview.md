@@ -379,7 +379,7 @@ Let's now see what an ideal payment flow looks like.
    created for this good and it expired, or a sufficient amount of time has
    elapsed, a fresh invoice should be generated.
    ```shell
-   lncli addinvoice --value=6969 --memo="A coffee for Roger"
+   lncli addinvoice --amt=6969 --memo="A coffee for Roger"
    ```
    <img src="http://i.imgur.com/1xYB9Yq.png" alt="Lightning Wallet Generate Payment Request" style="max-width: 60%;"/>
 2. **Check invoice:** The payer decodes the invoice to see the destination,

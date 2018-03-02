@@ -477,7 +477,7 @@ Alice to Bob.
 
 First, Bob will need to generate an invoice:
 ```bash
-bob$ lncli-bob addinvoice --value=10000
+bob$ lncli-bob addinvoice --amt=10000
 {
         "r_hash": "<a_random_rhash_value>",
         "pay_req": "<encoded_invoice>",
@@ -525,7 +525,7 @@ amount of money we want to other party to have at the first channel state.
 
 Let's make a payment from Alice to Charlie by routing through Bob:
 ```bash
-charlie$ lncli-charlie addinvoice --value=10000
+charlie$ lncli-charlie addinvoice --amt=10000
 alice$ lncli-alice sendpayment --pay_req=<encoded_invoice>
 
 # Check that Charlie's channel was credited with the payment amount (e.g. that
