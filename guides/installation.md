@@ -11,14 +11,16 @@ title: Installation
   * **Go:** `lnd` is written in Go. To install, run one of the following commands:
 
   
-    **Note**: The minimum version of Go supported is Go 1.8.
+    **Note**: The minimum version of Go supported is Go 1.8. We recommend that
+    users use the latest version of Go, which at the time of writing is
+    [`1.10`](https://blog.golang.org/go1.10).
 
     
     On Linux:
     ```
-    sudo apt-get install golang-1.8-go
+    sudo apt-get install golang-1.10-go
     ```
-    > Note that golang-1.8-go puts binaries in /usr/lib/go-1.8/bin. If you want them on your PATH, you need to make that change yourself.
+    > Note that golang-1.10-go puts binaries in /usr/lib/go-1.8/bin. If you want them on your PATH, you need to make that change yourself.
 
     On Mac OS X
     ```
@@ -71,12 +73,18 @@ git pull && glide install
 go install . ./cmd/...
 ```
 
+**Tests**
+
+To check that `lnd` was installed properly run the following command:
+```
+go install; go test -v -p 1 $(go list ./... | grep -v  '/vendor/')
+```
+
 ### Installing btcd
 
-`lnd` currently requires `btcd` with segwit support, which is not yet merged
-into the master branch. Instead, [roasbeef](https://github.com/roasbeef/btcd)
-maintains a fork with his segwit implementation applied. To install, run the
-following commands:
+`lnd` currently requires the [roasbeef](https://github.com/roasbeef/btcd) fork
+of `btcd` due to neutrino additions that are not yet available in the master
+branch. To install, run the following commands:
 
 Install **btcd**: (must be from roasbeef fork, not from btcsuite)
 ```
@@ -84,13 +92,6 @@ git clone https://github.com/roasbeef/btcd $GOPATH/src/github.com/roasbeef/btcd
 cd $GOPATH/src/github.com/roasbeef/btcd
 glide install
 go install . ./cmd/...
-```
-
-### Testing lnd and btcd
-
-To check that `lnd` and btcd was installed properly run the following command:
-```
-go install; go test -v -p 1 $(go list ./... | grep -v  '/vendor/')
 ```
 
 ### Starting btcd
@@ -191,6 +192,16 @@ be configured with `--txindex` just like `btcd` above
 (the latter is optional but allows you to see unconfirmed transactions in your
 wallet). They must be combined in the same ZMQ socket address (e.g. `--zmqpubrawblock=tcp://127.0.0.1:28332` and `--zmqpubrawtx=tcp://127.0.0.1:28332`).
 - Start `bitcoind` running against testnet, and let it complete a full sync with the testnet chain (alternatively, use `--bitcoind.regtest` instead).
+
+Here's a sample `bitcoin.conf` for use with lnd:
+```
+testnet=1
+txindex=1
+server=1
+daemon=1
+zmqpubrawblock=tcp://127.0.0.1:18501
+zmqpubrawtx=tcp://127.0.0.1:18501
+```
 
 Once all of the above is complete, and you've confirmed `bitcoind` is fully updated with the latest blocks on testnet, run the command below to launch `lnd` with `bitcoind` as your backend (as with `bitcoind`, you can create an `lnd.conf` to save these options, more info on that is described further below):
 
