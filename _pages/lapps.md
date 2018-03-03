@@ -39,6 +39,7 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
 * [lnd.fun](http://lnd.fun/): Panel for webmasters to manage their full lightning node.
   <img src="/assets/lapps/lnd.fun.png" alt="Screenshot of lnd.fun dashboard home view" style="max-width: 50%;"/>
 * [kibana](https://stats.preimage.net/): Visualization of the Lightning Network
+* [1ML](https://1ml.com/): Lightning Network search and analysis engine
 
 ### LND Lapps
 
@@ -60,8 +61,6 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
   article](https://coinjournal.net/you-can-go-on-a-digital-treasure-hunt-for-bitcoin-in-minecraft/)
 * [Lightning Gem](https://lightninggem.com/): Betting game using Lightning for
   payments
-* [Light-weight LND Dashboard](https://github.com/mably/lncli-web): A
-  lightweight web client for LND.
 * [Slack tipbot](https://github.com/CryptoFR/ln-tip-slack): Custodial Slack
   tipbot
 * [Thunderdice](http://thunderdice.ws/): Off-chain SatoshiDice
@@ -72,6 +71,21 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
 * [adWatcher Microservice](http://adwatcher.hopto.org:7777/): Earn satoshis by
   watching ads or video content
 * [Bard](https://www.bard.fun/): Simple paywall for watching a music visualizer
+* [Block & Jerry's](http://www.blockandjerrys.fun/): Ice cream shop
+* [CoinMall](https://coinmall.com/): Buy & sell digital products with
+  cryptocurrencies. 
+* [CoinTippy](http://cointippy.com/): Custodial tip bot available on
+  multiple platforms, including Reddit, Twitter, and Telegram.
+
+### Developer Tools
+
+* [LND Explorer](https://demo1.lndexplorer.com/): demo for a web interface for
+  LND. Code on [Github](https://github.com/altangent/lnd-explorer)
+* [Light-weight LND Dashboard](https://github.com/mably/lncli-web): A
+  lightweight web client for LND.
+* [LightningJ](http://www.lightningj.org/): A project intending to simplify the
+  integration of Lightning implementations for Java developers, containing
+  simple to use API implementations and converters between JSON and XML.
 
 ### Eclair Lapps
 
@@ -88,8 +102,8 @@ Eclair is a Scala implementation of the Lightning Network.
 
 c-lightning is a specification-compliant LN implementation in C.
 
-* [Blockstream store](https://store.blockstream.com/): Bitcoin paraphernalia
-  that can only be purchased over LN.
+* [Blockstream store](https://store.blockstream.com/) (mainnet): Bitcoin
+  paraphernalia that can only be purchased over LN.
 * [Elaine Ou's Twitter bot](https://elaineou.com/shop/): Pay for likes,
   retweets, and follows
 * [Lightning Charge](https://github.com/ElementsProject/lightning-charge): A
