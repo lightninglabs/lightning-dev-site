@@ -89,6 +89,10 @@ call.on('data', function(invoice) {
 .on('status', function(status) {
   // Process status
   console.log("Current status" + status);
+})
+.on('error', function(err) {
+  // Lnd terminated unexpectedly
+  console.error(err);
 });
 ```
 
