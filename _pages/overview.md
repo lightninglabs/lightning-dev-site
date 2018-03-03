@@ -272,8 +272,8 @@ There are several ways to drive `lnd`.
 
 - `lncli` is the `lnd` command line tool. All commands are executed
   instantaneously. A full list of commands can be viewed with `lncli --help`.
-  To see a breakdown of the parameters for a particular command, run `lncli
-  <command> --help`
+  To see a breakdown of the parameters for a particular command, run
+  `lncli <command> --help`
 - gRPC is the preferred programmatic way interact with `lnd`. It includes simple
   methods that return a response immediately, as well as response-streaming and
   bidrectional streaming methods. Check out the guides for working with gRPC for
