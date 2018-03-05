@@ -13,7 +13,7 @@ It's time to recreate the micropayments ourselves. Get the starter code:
 ```bash
 # Clear any local changes first and checkout the start tag
 git checkout -- .
-git checkout start
+git checkout starter
 ```
 
 The starter code has stripped out all micropayments code, and we just also just
