@@ -13,7 +13,9 @@ part of developing on `lnd`.
 
 This tutorial assumes you have completed installation of Go, `btcd`, and `lnd`
 on simnet. If not, please refer to the [installation
-instructions](/guides/installation/).
+instructions](/guides/installation/). Note that for the purposes of this
+tutorial it is not necessary to sync testnet, and the last section of the
+installation instructions you'll need to complete is "Installing btcd."
 
 The schema will be the following. Keep in mind that you can easily extend this
 network to include additional nodes `David`, `Eve`, etc. by simply running more
@@ -78,6 +80,9 @@ terminal window, ensure you have your `$GOPATH` set, and run:
 ```bash
 btcd --txindex --simnet --rpcuser=kek --rpcpass=kek
 ```
+(Note: this tutorial requires opening quite a few terminal windows. It may be
+convenient to use multiplexers such as tmux or screen if you're familiar with
+them.)
 
 Breaking down the components:
   * `--txindex` is required so that the `lnd` client is able to query
@@ -88,7 +93,7 @@ Breaking down the components:
   * `--rpcuser` and `rpcpass` sets a default password for authenticating to the
     `btcd` instance.
 
-#### Running lnd
+#### Starting lnd (Alice's node)
 
 Now, let's set up the three `lnd` nodes. To keep things as clean and separate
 as possible, open up a new terminal window, ensure you have `$GOPATH` set and
@@ -131,7 +136,8 @@ Start up the Alice node from within the `alice` directory:
 cd $GOPATH/dev/alice
 alice$ lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
 ```
-The Alice node should now be running and displaying output.
+The Alice node should now be running and displaying output ending with a line
+beginning with "Waiting for wallet encryption password."
 
 Breaking down the components:
   * `--rpclisten`: The host:port to listen for the RPC server. This is the primary way
@@ -158,7 +164,7 @@ Breaking down the components:
     the `btcd` instance. Note that when using Litecoin, the options are `--ltcd.rpcuser`
     and `--ltcd.rpcpass`.
 
-### Running Bob and Charlie
+### Starting Bob's node and Charlie's node
 
 Just as we did with Alice, start up the Bob node from within the `bob`
 directory, and the Charlie node from within the `charlie` directory. Doing so
@@ -240,8 +246,11 @@ cd $GOPATH/dev/alice
 alice$ lncli --rpcserver=localhost:10001 --no-macaroons create
 ```
 
-You'll be asked to input the wallet password twice. You can now start requesting
-some basic information as follows:
+You'll be asked to input and confirm a wallet password for Alice. Note that
+this password must be longer than 8 characters. Enter "n" when prompted about
+whether you have an existing mnemonic, and press enter to proceed without an
+additional cipher seed passphrase. You can now start requesting some basic
+information as follows:
 
 ```bash
 alice$ lncli --rpcserver=localhost:10001 --no-macaroons getinfo
@@ -275,6 +284,7 @@ respectively.
 # In a new terminal window, setting $GOPATH, etc.
 cd $GOPATH/dev/bob
 bob$ lncli --rpcserver=localhost:10002 --no-macaroons create
+# Note that you'll have to enter an 8+ character password and "n" for the mnemonic.
 
 bob$ lncli --rpcserver=localhost:10002 --no-macaroons newaddress np2wkh
 {
@@ -284,6 +294,7 @@ bob$ lncli --rpcserver=localhost:10002 --no-macaroons newaddress np2wkh
 # In a new terminal window:
 cd $GOPATH/dev/charlie
 charlie$ lncli --rpcserver=localhost:10003 --no-macaroons create
+# Note that you'll have to enter an 8+ character password and "n" for the mnemonic.
 
 charlie$ lncli --rpcserver=localhost:10003 --no-macaroons newaddress np2wkh
 {
@@ -333,22 +344,22 @@ Check that segwit is active:
 btcctl --simnet --rpcuser=kek --rpcpass=kek getblockchaininfo | grep -A 1 segwit
 ```
 
-Check Alice's wallet balance. `--witness_only=true` specifies that we only want
-to consider witness outputs when calculating the wallet balance.
+Check Alice's wallet balance.
 ```bash
-alice$ lncli-alice walletbalance --witness_only=true
+alice$ lncli-alice walletbalance
 ```
 
 It's no fun if only Alice any money. Let's give some to Charlie as well:
 ```bash
-# Quit btcd
+# Quit the btcd process that was previously started with Alice's mining
+address, and then restart it with:
 btcd --txindex --simnet --rpcuser=kek --rpcpass=kek --miningaddr=<CHARLIE_ADDRESS>
 
 # Generate more blocks
 btcctl --simnet --rpcuser=kek --rpcpass=kek generate 100
 
 # Check Charlie's balance
-charlie$ lncli-charlie walletbalance --witness_only=true
+charlie$ lncli-charlie walletbalance
 ```
 
 ### Creating the P2P Network
@@ -377,7 +388,7 @@ bob$ lncli-bob getinfo
 # Connect Alice and Bob together
 alice$ lncli-alice connect <BOB_PUBKEY>@localhost:10012
 {
-    "peer_id": 0
+
 }
 ```
 Notice that `localhost:10012` corresponds to the `--peerport=10012` flag we set
@@ -391,13 +402,12 @@ alice$ lncli-alice listpeers
     "peers": [
         {
             "pub_key": <BOB_PUBKEY>,
-            "peer_id": 1,
             "address": "127.0.0.1:10012",
-            "bytes_sent": "292",
-            "bytes_recv": "292",
+            "bytes_sent": "7",
+            "bytes_recv": "7",
             "sat_sent": "0",
             "sat_recv": "0",
-            "inbound": true,
+            "inbound": false,
             "ping_time": "0"
         }
     ]
@@ -409,13 +419,12 @@ bob$ lncli-bob listpeers
     "peers": [
         {
             "pub_key": <ALICE_PUBKEY>,
-            "peer_id": 1,
             "address": "127.0.0.1:60104",
             "bytes_sent": "318",
             "bytes_recv": "318",
             "sat_sent": "0",
             "sat_recv": "0",
-            "inbound": false,
+            "inbound": true,
             "ping_time": "5788"
         }
     ]

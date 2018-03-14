@@ -8,7 +8,8 @@ title: Installation
   In order to work with [`lnd`](https://github.com/lightningnetwork/lnd), the
   following build dependencies are required:
   
-  * **Go:** `lnd` is written in Go. To install, run one of the following commands:
+  * **Go:** `lnd` is written in Go. To install, run one of the following
+    commands:
 
   
     **Note**: The minimum version of Go supported is Go 1.8. We recommend that
@@ -18,24 +19,33 @@ title: Installation
     
     On Linux:
     ```
+    sudo add-apt-repository ppa:gophers/archive
+    sudo apt-get update
     sudo apt-get install golang-1.10-go
     ```
-    > Note that golang-1.10-go puts binaries in /usr/lib/go-1.8/bin. If you want them on your PATH, you need to make that change yourself.
+    Go 1.10 will install the go binaries at /usr/lib/go-1.10/bin. Add this to
+    your path with:
+
+    ```
+    export PATH=$PATH:/usr/lib/go-1.10/bin
+    ```
 
     On Mac OS X
     ```
     brew install go
     ```
 
-    Alternatively, one can download the pre-compiled binaries hosted on the
-    [golang download page](https://golang.org/dl/). If one seeks to install
-    from source, then more detailed installation instructions can be found
+    Alternatively, there are pre-compiled binaries hosted on the
+    [golang download page](https://golang.org/dl/). To install
+    from source, detailed installation instructions can be found
     [here](http://golang.org/doc/install). 
 
-    At this point, you should set your `$GOPATH` environment variable, which
-    represents the path to your workspace. By default, `$GOPATH` is set to
-    `~/go`. You will also need to add `$GOPATH/bin` to your `PATH`. This ensures
-    that your shell will be able to detect the binaries you install.
+
+*   **Environment variables:** At this point, you should set your `$GOPATH`
+    environment variable, which represents the path to your workspace. By
+    default, `$GOPATH` is set to `~/go`. You will also need to add
+    `$GOPATH/bin` to your `PATH`. This ensures that your shell will be able to
+    detect the binaries you install.
 
     ```bash
     export GOPATH=~/gocode
@@ -45,11 +55,11 @@ title: Installation
     We recommend placing the above in your .bashrc or in a setup script so that
     you can avoid typing this every time you open a new terminal window.
 
-  * **Glide:** This project uses `Glide` to manage dependencies as well 
-    as to provide *reproducible builds*. To install `Glide`, execute the
+  * **dep:** This project uses `dep` to manage dependencies as well 
+    as to provide *reproducible builds*. To install `dep`, execute the
     following command (assumes you already have Go properly installed):
     ```
-    go get -u github.com/Masterminds/glide
+    go get -u github.com/golang/dep/cmd/dep
     ```
 
 ### Installing lnd
@@ -59,7 +69,7 @@ related dependencies run the following commands:
 ```
 git clone https://github.com/lightningnetwork/lnd $GOPATH/src/github.com/lightningnetwork/lnd
 cd $GOPATH/src/github.com/lightningnetwork/lnd
-glide install
+dep ensure
 go install . ./cmd/...
 ```
 
@@ -69,7 +79,7 @@ To update your version of `lnd` to the latest version run the following
 commands:
 ```
 cd $GOPATH/src/github.com/lightningnetwork/lnd
-git pull && glide install
+git pull && dep ensure
 go install . ./cmd/...
 ```
 
@@ -88,6 +98,7 @@ branch. To install, run the following commands:
 
 Install **btcd**: (must be from roasbeef fork, not from btcsuite)
 ```
+go get -u github.com/Masterminds/glide
 git clone https://github.com/roasbeef/btcd $GOPATH/src/github.com/roasbeef/btcd
 cd $GOPATH/src/github.com/roasbeef/btcd
 glide install
