@@ -1,8 +1,7 @@
 ---
 layout: page
 title: Stage 1 - Setting up a local cluster
----
-
+--- 
 ### Introduction
 
 In this stage of the tutorial, we will learn how to set up a local cluster of
@@ -134,7 +133,7 @@ $ tree $GOPATH -L 2
 Start up the Alice node from within the `alice` directory:
 ```bash
 cd $GOPATH/dev/alice
-alice$ lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
+alice$ lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
 ```
 The Alice node should now be running and displaying output ending with a line
 beginning with "Waiting for wallet encryption password."
@@ -154,7 +153,6 @@ Breaking down the components:
   * `--logdir`: The directory to log output.
   * `--debuglevel`: The logging level for all subsystems. Can be set to
     `trace`, `debug`, `info`, `warn`, `error`, `critical`.
-  * `--no-macaroons`: Disable macaroon authentication for tutorial purposes.
   * `--bitcoin.simnet`: Specifies whether to use `simnet` or `testnet`
   * `--bitcoin.active`: Specifies that bitcoin is active. Can also include
     `--litecoin.active` to activate Litecoin.
@@ -184,11 +182,11 @@ Run Bob and Charlie:
 ```bash
 # In a new terminal window
 cd $GOPATH/dev/bob
-bob$ lnd --rpclisten=localhost:10002 --listen=localhost:10012 --restlisten=localhost:8002 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
+bob$ lnd --rpclisten=localhost:10002 --listen=localhost:10012 --restlisten=localhost:8002 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
 
 # In another terminal window
 cd $GOPATH/dev/charlie
-charlie$ lnd --rpclisten=localhost:10003 --listen=localhost:10013 --restlisten=localhost:8003 --datadir=test_data --logdir=test_log --debuglevel=info --no-macaroons --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek
+charlie$ lnd --rpclisten=localhost:10003 --listen=localhost:10013 --restlisten=localhost:8003 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek
 ```
 
 ### Configuring lnd.conf
@@ -206,11 +204,10 @@ Here is an example `lnd.conf` that can save us from re-specifying a bunch of
 command line options:
 ```bash
 [Application Options]
-datadir=test_data
-logdir=test_log
+datadir=data
+logdir=log
 debuglevel=info
 debughtlc=true
-no-macaroons=true
 
 [Bitcoin]
 bitcoin.simnet=1
@@ -230,84 +227,70 @@ charlie$ lnd --rpclisten=localhost:10003 --listen=localhost:10013 --restlisten=l
 ```
 etc.
 
-### Working with lncli
+### Working with lncli and authentication
 
 Now that we have our `lnd` nodes up and running, let's interact with them! To
 control `lnd` we will need to use `lncli`, the command line interface.
 
+`lnd` uses [macaroons](https://github.com/lightningnetwork/lnd/issues/20) for
+authentication to the rpc server. `lncli` typically looks for an
+`admin.macaroon` file in the Lnd home directory, but since we changed the
+location of our application data, we have to set `--macaroonpath` in the
+following command. To disable macaroons, pass the `--no-macaroons` flag into
+both `lncli` and `lnd`.
+
+`lnd` allows you to encrypt your wallet with a passphrase and optionally encrypt
+your cipher seed passphrase as well. This can be turned off by passing
+`--noencryptwallet` into `lnd` or `lnd.conf`. We recommend going through this
+process at least once to familiarize yourself with the security and
+authentication features around `lnd`.
+
+We will test our rpc connection to the Alice node. Notice that in the following command we specify the
+`--rpcserver` here, which corresponds to `--rpcport=10001` that we set when
+starting the Alice `lnd` node.
+
 Open up a new terminal window, set `$GOPATH` and include `$GOPATH/bin` in your
-`PATH` as usual.
-
-Let's test that we can connect to Alice by first creating her wallet and then
-requesting basic information:
-
+`PATH` as usual. Let's create Alice's wallet and set her passphrase:
 ```bash
 cd $GOPATH/dev/alice
-alice$ lncli --rpcserver=localhost:10001 --no-macaroons create
+alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon create
 ```
+You'll be asked to input and confirm a wallet password for Alice, which must be
+longer than 8 characters. You also have the option to add a passphrase to your
+cipher seed. For now, just skip this step by entering "n" when prompted about
+whether you have an existing mnemonic, and pressing enter to proceed without the
+passphrase.
 
-You'll be asked to input and confirm a wallet password for Alice. Note that
-this password must be longer than 8 characters. Enter "n" when prompted about
-whether you have an existing mnemonic, and press enter to proceed without an
-additional cipher seed passphrase. You can now start requesting some basic
-information as follows:
-
+You can now request some basic information as follows:
 ```bash
-alice$ lncli --rpcserver=localhost:10001 --no-macaroons getinfo
+alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon getinfo
 ```
-
-`lncli` just made an RPC call to the Alice `lnd` node. Notice that we had to
-specify the `--rpcserver` here, which corresponds to `--rpcport=10001` that we
-set when starting the Alice `lnd` node.
-
-#### lncli options
-
-To see all the commands available for `lncli`, simply type `lncli --help` or
-`lncli -h`.
-
-### Setting up Bitcoin addresses
-Let's create a new Bitcoin address for Alice. This will be the address that
-stores Alice's on-chain balance.
-
-```bash
-alice$ lncli --rpcserver=localhost:10001 --no-macaroons newaddress np2wkh
-{
-    "address": <ALICE_ADDRESS>
-}
-```
+`lncli` just made an RPC call to the Alice `lnd` node. This is a good way to
+test if your nodes are up and running and `lncli` is functioning properly. Note
+that in future sessions you may need to call `lncli unlock` to unlock the node
+with the password you just set.
 
 Open up new terminal windows and do the same for Bob and Charlie. `alice$` or
 `bob$` denotes running the command from the Alice or Bob `lncli` window
 respectively.
-
 ```bash
 # In a new terminal window, setting $GOPATH, etc.
 cd $GOPATH/dev/bob
-bob$ lncli --rpcserver=localhost:10002 --no-macaroons create
+bob$ lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon create
 # Note that you'll have to enter an 8+ character password and "n" for the mnemonic.
-
-bob$ lncli --rpcserver=localhost:10002 --no-macaroons newaddress np2wkh
-{
-    "address": <BOB_ADDRESS>
-}
 
 # In a new terminal window:
 cd $GOPATH/dev/charlie
-charlie$ lncli --rpcserver=localhost:10003 --no-macaroons create
+charlie$ lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon create
 # Note that you'll have to enter an 8+ character password and "n" for the mnemonic.
-
-charlie$ lncli --rpcserver=localhost:10003 --no-macaroons newaddress np2wkh
-{
-    "address": <CHARLIE_ADDRESS>
-}
 ```
 
-To avoid typing the `--rpcserver=localhost:1000X` flag every time, we can set
-some aliases. Add the following to your `.bashrc`:
+To avoid typing the `--rpcserver=localhost:1000X` and `--macaroonpath` flag
+every time, we can set some aliases. Add the following to your `.bashrc`:
 ```bash
-alias lncli-alice="lncli --rpcserver=localhost:10001 --no-macaroons"
-alias lncli-bob="lncli --rpcserver=localhost:10002 --no-macaroons"
-alias lncli-charlie="lncli --rpcserver=localhost:10003 --no-macaroons"
+alias lncli-alice="lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon"
+alias lncli-bob="lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon"
+alias lncli-charlie="lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon"
 ```
 
 To make sure this was applied to all of your current terminal windows, rerun
@@ -320,11 +303,41 @@ charlie$ source ~/.bashrc
 For simplicity, the rest of the tutorial will assume that this step was
 complete.
 
+#### lncli options
+
+To see all the commands available for `lncli`, simply type `lncli --help` or
+`lncli -h`.
+
+### Setting up Bitcoin addresses
+Let's create a new Bitcoin address for Alice. This will be the address that
+stores Alice's on-chain balance. `np2wkh` specifes the type of address and
+stands for Pay to Nested Witness Key Hash.
+
+```bash
+alice$ lncli-alice newaddress np2wkh
+{
+    "address": <ALICE_ADDRESS>
+}
+```
+
+And for Bob and Charlie:
+```bash
+bob$ lncli-bob newaddress np2wkh
+{
+    "address": <BOB_ADDRESS>
+}
+
+charlie$ lncli-charlie newaddress np2wkh
+{
+    "address": <CHARLIE_ADDRESS>
+}
+```
+
 ### Funding Alice
 
-That's a lot of configuration! Recall that at this point, we've generated
-onchain addresses for Alice, Bob, and Charlie. Now, we will get some practice
-working with `btcd` and fund these addresses with some `simnet` Bitcoin.
+That's a lot of configuration! At this point, we've generated onchain addresses
+for Alice, Bob, and Charlie. Now, we will get some practice working with `btcd`
+and fund these addresses with some `simnet` Bitcoin.
 
 Quit btcd and re-run it, setting Alice as the recipient of all mining rewards:
 ```bash
@@ -332,9 +345,8 @@ btcd --simnet --txindex --rpcuser=kek --rpcpass=kek --miningaddr=<ALICE_ADDRESS>
 ```
 
 Generate 400 blocks, so that Alice gets the reward. We need at least 100 blocks
-because coinbase funds can't be spent until after 100 confirmations, and we
-need about 300 to activate segwit.
-window with `$GOPATH` and `$PATH` set.
+because coinbase funds can't be spent until after 100 confirmations, and we need
+about 300 to activate segwit. In a new window with `$GOPATH` and `$PATH` set:
 ```bash
 alice$ btcctl --simnet --rpcuser=kek --rpcpass=kek generate 400
 ```
@@ -349,10 +361,10 @@ Check Alice's wallet balance.
 alice$ lncli-alice walletbalance
 ```
 
-It's no fun if only Alice any money. Let's give some to Charlie as well:
+It's no fun if only Alice has money. Let's give some to Charlie as well.
 ```bash
-# Quit the btcd process that was previously started with Alice's mining
-address, and then restart it with:
+# Quit the btcd process that was previously started with Alice's mining address,
+# and then restart it with:
 btcd --txindex --simnet --rpcuser=kek --rpcpass=kek --miningaddr=<CHARLIE_ADDRESS>
 
 # Generate more blocks
