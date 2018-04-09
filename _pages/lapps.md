@@ -77,6 +77,8 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
   simple to use API implementations and converters between JSON and XML.
 
 ### Tipping
+* [LightningTip](https://github.com/michael1011/lightningtip): Library to accept
+  tips via the Lightning Network
 * [Slack tipbot](https://github.com/CryptoFR/ln-tip-slack): Custodial Slack
   tipbot
 * [CoinTippy](http://cointippy.com/): Custodial tip bot available on
