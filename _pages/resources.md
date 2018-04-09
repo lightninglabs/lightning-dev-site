@@ -11,11 +11,6 @@ understanding of the Lightning Network and associated technologies. It is not
 comprehensive, but a careful study of the materials below should be sufficient
 for anyone's needs.
 
-If something important is missing, or you feel that additional resources or
-links would be helpful, please email [Max
-Fang](mailto:max@lightning.engineering) or message him on the Lightning
-Community Slack.
-
 ### Lightning: Beginner
 
 * [What is the Lightning Network and how can it help Bitcoin scale?](https://coincenter.org/entry/what-is-the-lightning-network)
@@ -163,10 +158,17 @@ Community Slack.
 
 * LND Developer Slack
   * Come here to meet the Lightning community, ask for help, and hang out!
-  * [invite link](https://lightningcommunity.slack.com/join/shared_invite/enQtMjk0OTYxNzI4NzExLTFhZDA5YTYxZDU2YWQyOTQzN2ZkMzk3ZGUwNGM0NjE2NzQyNjAyZTkwOTFkZjJmMmMyNzlmNmE5YTRmMGFhM2Q)
+  * [invite link](https://join.slack.com/t/lightningcommunity/shared_invite/enQtMzQ0OTQyNjE5NjU1LWRiMGNmOTZiNzU0MTVmYzc1ZGFkZTUyNzUwOGJjMjYwNWRkNWQzZWE3MTkwZjdjZGE5ZGNiNGVkMzI2MDU4ZTE)
 
 * [#lnd](https://webchat.freenode.net/?channels=lnd) IRC
   * [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lnd)
 
 * [#lightning-dev](https://webchat.freenode.net/?channels=lightning-dev) IRC
   * [![Irc](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=lightning-dev)
+
+
+If something important is missing, or you feel that additional resources or
+links would be helpful, please email [Max
+Fang](mailto:max@lightning.engineering) or message him on the Lightning
+Community Slack.
+
