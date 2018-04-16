@@ -37,6 +37,8 @@ Every time you work with Javascript gRPC, you will have to import `grpc`, load
 var grpc = require('grpc');
 var fs = require("fs");
 
+process.env.GRPC_SSL_CIPHER_SUITES = "HIGH+ECDSA";
+
 //  Lnd cert is at ~/.lnd/tls.cert on Linux and
 //  ~/Library/Application Support/Lnd/tls.cert on Mac
 var lndCert = fs.readFileSync("~/.lnd/tls.cert");
