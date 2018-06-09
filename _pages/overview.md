@@ -7,7 +7,7 @@ permalink: /overview/
 ### Introduction
 
 The LND Overview and Developer Guide aims to provide *just* enough information
-about LND to enable readers to build applications. It start with a conceptual
+about LND to enable readers to build applications. It starts with a conceptual
 review of the Lightning Network, before jumping into the important aspects of
 working with specifically LND. If you are already comfortable with how the
 Lightning Network works, feel free to skip down to the [Components](#components)
