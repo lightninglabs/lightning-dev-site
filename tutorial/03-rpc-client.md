@@ -61,7 +61,7 @@ an email address and password, we created an authentication scheme based on the
 user's `lnd` identity pubkey and logging in by signing an arbitrary message. In
 particular, we are signing the CSRF token sent along with the login POST
 request. This scheme is secure against replay attacks because Django generates
-a unique CSRF token for every login attempt, and never uses CSRF tokens.
+a unique CSRF token for every login attempt, and never reuses CSRF tokens.
 
 Let's create a new account for Alice by logging in and supplying a username.
 Copy down the generated message (in the screenshot, it is `VcccAuMC...`)
@@ -125,12 +125,12 @@ python manage.py shell
 ```python
 # Import rpc files and grpc
 In [1]: from coindesk import rpc_pb2 as ln, rpc_pb2_grpc as lnrpc
-In [2]: import grpc
+In [2]: import grpc, os
 
 # Establish a secure connection with our RPC server. We will first have to
 # gather our cert. Lnd cert is at ~/.lnd/tls.cert on Linux and
 # ~/Library/Application Support/Lnd/tls.cert on Mac
-In [3]: cert = open('~/.lnd/tls.cert').read()
+In [3]: cert = open(os.path.expanduser('~/.lnd/tls.cert')).read()
 In [4]: creds = grpc.ssl_channel_credentials(cert)
 In [5]: channel = grpc.secure_channel('localhost:10009', creds)
 # Create a new 'stub' object that will allow us to interact with our "Bob" lnd node.

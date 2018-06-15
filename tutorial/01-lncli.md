@@ -542,7 +542,7 @@ btcctl --simnet --rpcuser=kek --rpcpass=kek generate 6
 ```
 
 Note that this time, we supplied the `--push_amt` argument, which specifies the
-amount of money we want to other party to have at the first channel state.
+amount of money we want the other party to have at the first channel state.
 
 Let's make a payment from Alice to Charlie by routing through Bob:
 ```bash
