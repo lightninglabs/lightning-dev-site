@@ -75,6 +75,10 @@ make && make install
 ```
 
 **Tests**
+Running tests does require `bitcoind` to be installed. Please see the [Running
+lnd using bitcoind or litecoind
+backend](#running-lnd-using-the-bitcoind-or-litecoind-backend) section of this
+documentation for instructions.
 
 To check that `lnd` was installed properly run the following command:
 ```
