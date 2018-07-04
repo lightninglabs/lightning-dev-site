@@ -89,8 +89,12 @@ additions that are not yet available in the master branch. To install, run the
 following commands:
 
 Install **btcd**: (must be from roasbeef fork, not from btcsuite)
-```
-make btcd 
+```bash
+$ go get -u github.com/Masterminds/glide
+$ git clone https://github.com/roasbeef/btcd $GOPATH/src/github.com/roasbeef/btcd
+$ cd $GOPATH/src/github.com/roasbeef/btcd
+$ glide install
+$ go install . ./cmd/...
 ```
 
 ### Starting btcd
