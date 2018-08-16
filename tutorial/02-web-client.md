@@ -13,11 +13,8 @@ creator himself. Before beginning this step make sure you have `node` and `npm`
 
 ```bash
 # Clone the repo and move into it:
-cd $GOCODE/src/github.com
-mkdir mably
-cd mably
-git clone https://github.com/mably/lncli-web
-cd lncli-web
+git clone https://github.com/mably/lncli-web $GOPATH/src/github.com/mably/lncli-web
+cd $GOPATH/src/github.com/mably/lncli-web
 
 # Install dependencies
 npm install
@@ -34,10 +31,10 @@ openssl ecparam -genkey -name prime256v1 -out tls.key
 openssl req -new -sha256 -key tls.key -out csr.csr -subj '/CN=localhost/O=lnd'
 openssl req -x509 -sha256 -days 36500 -key tls.key -in csr.csr -out tls.cert
 rm csr.csr
-cp tls.cert $GOCODE/src/github.com/mably/lncli-web/lnd.cert
+cp tls.cert $GOPATH/src/github.com/mably/lncli-web/lnd.cert
 
 # Start the server to point to our Alice node:
-cd $GOCODE/src/github.com/mably/lncli-web
+cd $GOPATH/src/github.com/mably/lncli-web
 node server --lndhost=localhost:10001
 
 # Check out the available command line arguments
