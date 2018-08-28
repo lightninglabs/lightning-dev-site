@@ -93,14 +93,15 @@ call.on('data', function(invoice) {
 ```
 
 Now, create an invoice for your node at `localhost:10009`and send a payment to
-it from another node.
+it from another node. If `lnd` is running on a network other than mainnet, the
+network must be specified.
 ```bash
-$ lncli addinvoice --amt=100
+$ lncli --network=NETWORK addinvoice --amt=100
 {
 	"r_hash": <RHASH>,
 	"pay_req": <PAYMENT_REQUEST>
 }
-$ lncli sendpayment --pay_req=<PAYMENT_REQUEST>
+$ lncli --network=NETWORK sendpayment --pay_req=<PAYMENT_REQUEST>
 ```
 Your Javascript console should now display the details of the recently satisfied
 invoice.
