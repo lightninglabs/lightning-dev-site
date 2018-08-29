@@ -238,6 +238,9 @@ location of our application data, we have to set `--macaroonpath` in the
 following command. To disable macaroons, pass the `--no-macaroons` flag into
 both `lncli` and `lnd`.
 
+For usage of networks other than mainnet, an additional `--network` flag must
+be passed into `lncli` specifying the network, in this case simnet.
+
 `lnd` allows you to encrypt your wallet with a passphrase and optionally encrypt
 your cipher seed passphrase as well. This can be turned off by passing
 `--noencryptwallet` into `lnd` or `lnd.conf`. We recommend going through this
@@ -252,7 +255,7 @@ Open up a new terminal window, set `$GOPATH` and include `$GOPATH/bin` in your
 `PATH` as usual. Let's create Alice's wallet and set her passphrase:
 ```bash
 cd $GOPATH/dev/alice
-alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon create
+alice$ lncli --network=simnet --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon create
 ```
 You'll be asked to input and confirm a wallet password for Alice, which must be
 longer than 8 characters. You also have the option to add a passphrase to your
@@ -262,7 +265,7 @@ passphrase.
 
 You can now request some basic information as follows:
 ```bash
-alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon getinfo
+alice$ lncli --network=simnet --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon getinfo
 ```
 `lncli` just made an RPC call to the Alice `lnd` node. This is a good way to
 test if your nodes are up and running and `lncli` is functioning properly. Note
@@ -275,21 +278,21 @@ respectively.
 ```bash
 # In a new terminal window, setting $GOPATH, etc.
 cd $GOPATH/dev/bob
-bob$ lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon create
+bob$ lncli --network=simnet --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon create
 # Note that you'll have to enter an 8+ character password and "n" for the mnemonic.
 
 # In a new terminal window:
 cd $GOPATH/dev/charlie
-charlie$ lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon create
+charlie$ lncli --network=simnet --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon create
 # Note that you'll have to enter an 8+ character password and "n" for the mnemonic.
 ```
 
 To avoid typing the `--rpcserver=localhost:1000X` and `--macaroonpath` flag
 every time, we can set some aliases. Add the following to your `.bashrc`:
 ```bash
-alias lncli-alice="lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon"
-alias lncli-bob="lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon"
-alias lncli-charlie="lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon"
+alias lncli-alice="lncli --network=simnet --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon"
+alias lncli-bob="lncli --network=simnet --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon"
+alias lncli-charlie="lncli --network=simnet --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon"
 ```
 
 To make sure this was applied to all of your current terminal windows, rerun

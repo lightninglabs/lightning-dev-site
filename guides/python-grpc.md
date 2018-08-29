@@ -93,14 +93,15 @@ for invoice in stub.SubscribeInvoices(request):
 ```
 
 Now, create an invoice for your node at `localhost:10009`and send a payment to
-it from another node.
+it from another node. If `lnd` is running on a network other than mainnet, the
+network must be specified.
 ```bash
-$ lncli addinvoice --amt=100
+$ lncli --network=NETWORK addinvoice --amt=100
 {
 	"r_hash": <R_HASH>,
 	"pay_req": <PAY_REQ>
 }
-$ lncli sendpayment --pay_req=<PAY_REQ>
+$ lncli --network=NETWORK sendpayment --pay_req=<PAY_REQ>
 ```
 
 Your Python console should now display the details of the recently satisfied
