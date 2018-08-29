@@ -93,14 +93,15 @@ for invoice in stub.SubscribeInvoices(request):
 ```
 
 Now, create an invoice for your node at `localhost:10009`and send a payment to
-it from another node.
+it from another node. If `lnd` is running on a network other than mainnet, the
+network must be specified.
 ```bash
-$ lncli addinvoice --amt=100
+$ lncli --network=NETWORK addinvoice --amt=100
 {
 	"r_hash": <R_HASH>,
 	"pay_req": <PAY_REQ>
 }
-$ lncli sendpayment --pay_req=<PAY_REQ>
+$ lncli --network=NETWORK sendpayment --pay_req=<PAY_REQ>
 ```
 
 Your Python console should now display the details of the recently satisfied
@@ -144,9 +145,10 @@ To authenticate using macaroons you need to include the macaroon in the metadata
 ```python
 import codecs
 
-# Lnd admin macaroon is at ~/.lnd/admin.macaroon on Linux and
-# ~/Library/Application Support/Lnd/admin.macaroon on Mac
-with open(os.path.expanduser('~/.lnd/admin.macaroon'), 'rb') as f:
+# Lnd data/chain/bitcoin/NETWORK/admin.macaroon is at ~/.lnd/admin.macaroon on Linux and
+# ~/Library/Application Support/Lnd/data/chain/bitcoin/NETWORK/admin.macaroon on Mac
+# where NETWORK needs to be replaced with the network corresponding to the desired macaroon.
+with open(os.path.expanduser('~/.lnd/data/chain/bitcoin/NETWORK/admin.macaroon'), 'rb') as f:
     macaroon_bytes = f.read()
     macaroon = codecs.encode(macaroon_bytes, 'hex')
 ```
