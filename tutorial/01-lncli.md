@@ -207,7 +207,6 @@ command line options:
 datadir=data
 logdir=log
 debuglevel=info
-debughtlc=true
 
 [Bitcoin]
 bitcoin.simnet=1
@@ -383,7 +382,7 @@ Connect Alice to Bob:
 # Get Bob's identity pubkey:
 bob$ lncli-bob getinfo
 {
-    ----->"identity_pubkey": <BOB_PUBKEY>,
+--->"identity_pubkey": <BOB_PUBKEY>,
     "alias": "",
     "num_pending_channels": 0,
     "num_active_channels": 0,
@@ -394,7 +393,11 @@ bob$ lncli-bob getinfo
     "testnet": false,
     "chains": [
         "bitcoin"
-    ]
+    ],
+    "uris": [
+    ],
+    "best_header_timestamp": "1533350134",
+    "version":  "0.4.2-beta commit=7a5a824d179c6ef16bd78bcb7a4763fda5f3f498"
 }
 
 # Connect Alice and Bob together
@@ -485,7 +488,11 @@ alice$ lncli-alice listchannels
             "unsettled_balance": "0",
             "total_satoshis_sent": "0",
             "total_satoshis_received": "0",
-            "num_updates": "0"
+            "num_updates": "0",
+            "pending_htlcs": [
+            ],
+            "csv_delay": 144,
+            "private": false
         }
     ]
 }
@@ -502,6 +509,7 @@ bob$ lncli-bob addinvoice --amt=10000
 {
         "r_hash": "<a_random_rhash_value>",
         "pay_req": "<encoded_invoice>",
+        "add_index": 1
 }
 ```
 
@@ -509,17 +517,21 @@ Send the payment from Alice to Bob:
 ```bash
 alice$ lncli-alice sendpayment --pay_req=<encoded_invoice>
 {
+	"payment_error": "",
 	"payment_preimage": "baf6929fc95b3824fb774a4b75f6c8a1ad3aaef04efbf26cc064904729a21e28",
 	"payment_route": {
-		"total_time_lock": 1,
+		"total_time_lock": 650,
 		"total_amt": 10000,
 		"hops": [
 			{
 				"chan_id": 495879744192512,
 				"chan_capacity": 1000000,
-				"amt_to_forward": 10000
+				"amt_to_forward": 10000,
+                "expiry": 650,
+                "amt_to_forward_msat": 10000000
 			}
-		]
+		],
+		"total_amt_msat": 10000000
 	}
 }
 
@@ -594,7 +606,9 @@ btcctl --simnet --rpcuser=kek --rpcpass=kek generate 1
 # channel. Recall that Bob previously had no on-chain Bitcoin:
 alice$ lncli-bob walletbalance
 {
-    "balance": "20001"
+    "total_balance": "20001",
+    "confirmed_balance": "20001",
+    "unconfirmed_balance": "0"
 }
 ```
 
