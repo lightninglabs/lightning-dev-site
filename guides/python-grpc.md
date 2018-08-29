@@ -145,9 +145,10 @@ To authenticate using macaroons you need to include the macaroon in the metadata
 ```python
 import codecs
 
-# Lnd admin macaroon is at ~/.lnd/admin.macaroon on Linux and
-# ~/Library/Application Support/Lnd/admin.macaroon on Mac
-with open(os.path.expanduser('~/.lnd/admin.macaroon'), 'rb') as f:
+# Lnd data/chain/bitcoin/NETWORK/admin.macaroon is at ~/.lnd/admin.macaroon on Linux and
+# ~/Library/Application Support/Lnd/data/chain/bitcoin/NETWORK/admin.macaroon on Mac
+# where NETWORK needs to be replaced with the network corresponding to the desired macaroon.
+with open(os.path.expanduser('~/.lnd/data/chain/bitcoin/NETWORK/admin.macaroon'), 'rb') as f:
     macaroon_bytes = f.read()
     macaroon = codecs.encode(macaroon_bytes, 'hex')
 ```
