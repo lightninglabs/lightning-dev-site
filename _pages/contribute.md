@@ -13,8 +13,10 @@ permalink: /contribute/
 4.2. [Testing](#Testing)<br />
 4.3. [Code Documentation and Commenting](#CodeDocumentation)<br />
 4.4. [Model Git Commit Messages](#ModelGitCommitMessages)<br />
-4.5. [Code Spacing](#CodeSpacing)<br />
-4.6. [Protobuf Compilation](#Protobuf)<br />
+4.5. [Ideal Git Commit Structure](#IdealGitCommitStructure)<br />
+4.6. [Code Spacing](#CodeSpacing)<br />
+4.7. [Protobuf Compilation](#Protobuf)<br />
+4.8. [Additional Style Constraints On Top of gofmt](ExtraGoFmtStyle)<br />
 5. [Code Approval Process](#CodeApproval)<br />
 5.1. [Code Review](#CodeReview)<br />
 5.2. [Rework Code (if needed)](#CodeRework)<br />
@@ -44,8 +46,8 @@ represent real money and introducing bugs and security vulnerabilities can have
 far more dire consequences than in typical projects where having a small bug is
 minimal by comparison.  In the world of cryptocurrencies, even the smallest bug
 in the wrong area can cost people a significant amount of money.  For this
-reason, the Lightning Network Daemon (lnd) has a formalized and rigorous
-development process (heavily insipred by
+reason, the Lightning Network Daemon (`lnd`) has a formalized and rigorous
+development process (heavily inspired by
 [btcsuite](https://github.com/btcsuite)) which is outlined on this page.
 
 We highly encourage code contributions, however it is imperative that you adhere
@@ -84,7 +86,7 @@ security and performance implications.
 
 ### 3. Required Reading
 
-- [Effective Go](http://golang.org/doc/effective_go.html) - The entire lnd 
+- [Effective Go](http://golang.org/doc/effective_go.html) - The entire `lnd` 
   project follows the guidelines in this document.  For your code to be accepted,
   it must follow the guidelines therein.
 - [Original Satoshi Whitepaper](https://bitcoin.org/bitcoin.pdf) - This is the white paper that started it all.  Having a solid
@@ -100,10 +102,10 @@ Note that the core design of the Lightning Network has shifted over time as
 concrete implementation and design has expanded our knowledge beyond the
 original white paper. Therefore, specific information outlined in the resources
 above may be a bit out of date. Many implementers are currently working on an
-initial [Version 1 Specification](https://medium.com/@lightningnetwork/lightning-network-meeting-on-interoperability-and-specifications-ea49e47696a4).
+initial [Lightning Network Specifications](https://github.com/lightningnetwork/lightning-rfc).
 Once the specification is finalized, it will be the most up-to-date
 comprehensive document explaining the Lightning Network. As a result, it will
-be recommened for newcomers to read first in order to get up to speed. 
+be recommended for newcomers to read first in order to get up to speed. 
 
 <a name="DevelopmentPractices" />
 
@@ -138,7 +140,7 @@ This approach has several benefits:
 
 #### 4.2. Testing
 
-One of the major design goals of all of lnd's packages and the daemon itself is
+One of the major design goals of all of `lnd`'s packages and the daemon itself is
 to aim for a high degree of test coverage.  This is financial software so bugs
 and regressions in the core logic can cost people real money.  For this reason
 every effort must be taken to ensure the code is as accurate and bug-free as
@@ -166,9 +168,13 @@ A quick summary of test practices follows:
   be accompanied by unit tests exercising the new or changed behavior.
 - Changes to behavior within the daemon's interaction with the P2P protocol,
   or RPC's will need to be accompanied by integration tests which use the
-  [`networkHarness`framework](https://github.com/lightningnetwork/lnd/blob/master/networktest.go)
+  [`networkHarness`framework](https://github.com/lightningnetwork/lnd/blob/master/lntest/harness.go)
   contained within `lnd`. For example integration tests, see
   [`lnd_test.go`](https://github.com/lightningnetwork/lnd/blob/master/lnd_test.go#L181). 
+
+Throughout the process of contributing to `lnd`, you'll likely also be
+extensively using the commands within our `Makefile`. As a result, we recommend
+[perusing the make file documentation](https://github.com/lightningnetwork/lnd/blob/master/docs/MAKEFILE.md).
 
 <a name="CodeDocumentation" />
 
@@ -277,7 +283,7 @@ Further paragraphs come after blank lines.
 Here are some of the reasons why wrapping your commit messages to 72 columns is
 a good thing.
 
-- git log doesn’t do any special wrapping of the commit messages. With
+- git log doesn't do any special wrapping of the commit messages. With
   the default pager of less -S, this means your paragraphs flow far off the edge
   of the screen, making them difficult to read. On an 80 column terminal, if we
   subtract 4 columns for the indent on the left and 4 more for symmetry on the
@@ -292,19 +298,39 @@ all short-[commit messages are to be prefixed according to the convention
 outlined in the Go project](https://golang.org/doc/contribute.html#change). All
 commits should begin with the subsystem or package primarily affected by the
 change. In the case of a widespread change, the packages are to be delimited by
-either a '+' or a ','. This prefix seems minor but can be extremly helpful in
+either a '+' or a ','. This prefix seems minor but can be extremely helpful in
 determining the scope of a commit at a glance, or when bug hunting to find a
 commit which introduced a bug or regression. 
 
+<a name="IdealGitCommitStructure" />
+
+#### 4.5. Ideal Git Commit Structure
+
+Within the project we prefer small, contained commits for a pull request over a
+single giant commit that touches several files/packages. Ideal commits build on
+their own, in order to facilitate easy usage of tools like `git bisect` to `git
+cherry-pick`. It's preferred that commits contain an isolated change in a
+single package. In this case, the commit header message should begin with the
+prefix of the modified package. For example, if a commit was made to modify the
+`lnwallet` package, it should start with `lnwallet: `. 
+
+In the case of changes that only build in tandem with changes made in other
+packages, it is permitted for a single commit to be made which contains several
+prefixes such as: `lnwallet+htlcswitch`. This prefix structure along with the
+requirement for atomic contained commits (when possible) make things like
+scanning the set of commits and debugging easier. In the case of a change that
+touches several packages, and can only compile with the change across several
+packages, a `multi: ` prefix should be used.
+
 <a name="CodeSpacing" />
 
-#### 4.5. Code Spacing 
+#### 4.6. Code Spacing 
 
-Blocks of code within lnd should be segmented into logical stanzas of
+Blocks of code within `lnd` should be segmented into logical stanzas of
 operation. Such spacing makes the code easier to follow at a skim, and reduces
 unnecessary line noise. Coupled with the commenting scheme specified above,
 proper spacing allows readers to quickly scan code, extracting semantics quickly.
-Functions should _not_ just be layed out as a bare contiguous block of code. 
+Functions should _not_ just be laid out as a bare contiguous block of code. 
 
 **WRONG**   
 ```go
@@ -348,14 +374,22 @@ Functions should _not_ just be layed out as a bare contiguous block of code.
 
 <a name="Protobuf" />
 
-#### 4.5.6. Protobuf Compilation
+#### 4.7. Protobuf Compilation
 
 The `lnd` project uses `protobuf`, and its extension [`gRPC`](www.grpc.io) in
 several areas and as the primary RPC interface. In order to ensure uniformity
 of all protos checked, in we require that all contributors pin against the
 _exact same_ version of `protoc`. As of the writing of this article, the `lnd`
-project uses [v3.2.0](https://github.com/google/protobuf/releases/tag/v3.2.0)
+project uses [v3.4.0](https://github.com/google/protobuf/releases/tag/v3.4.0)
 of `protoc`.
+
+The following commit hashes of related projects are also required in order to
+generate identical compiled protos and related files:
+   * grpc-ecosystem/grpc-gateway: `f2862b476edcef83412c7af8687c9cd8e4097c0f`
+   * golang/protobuf: `ab9f9a6dab164b7d1246e0e688b0ab7b94d8553e`
+
+For detailed instructions on how to compile modifications to `lnd`'s `protobuf`
+definitions, check out the [lnrpc README](https://github.com/lightningnetwork/lnd/blob/master/lnrpc/README.md).
 
 Additionally, in order to maintain a uniform display of the RPC responses
 rendered by `lncli`, all added or modified `protof` definitions, _must_ attach
@@ -373,12 +407,40 @@ Notice how the `json_name` field option corresponds with the name of the field
 itself, and uses a `snake_case` style of name formatting. All added or modified
 `proto` fields should adhere to the format above.
 
+<a name="ExtraGoFmtStyle" />
+
+#### 4.8. Additional Style Constraints On Top of `gofmt`
+
+Before a PR is submitted, the proposer should ensure that the file passes the
+set of linting scripts run by `make lint`. These include `gofmt`. In addition
+to `gofmt` we've opted to enforce the following style guidelines.
+
+   * ALL columns (on a best effort basis) should be wrapped to 80 line columns.
+     Editors should be set to treat a tab as 4 spaces.
+   * When wrapping a line that contains a function call as the unwrapped line
+     exceeds the column limit, the close paren should be placed on its own
+     line. Additionally, all arguments should begin in a new line after the
+     open paren.
+
+     **WRONG**
+     ```go
+     value, err := bar(a
+        a, b, c)
+     ```
+
+     **RIGHT**
+     ```go
+     value, err := bar(
+        a, a, b, c,
+     )
+     ```
+
 <a name="CodeApproval" />
 
 ### 5. Code Approval Process
 
 This section describes the code approval process that is used for code
-contributions.  This is how to get your changes into lnd.
+contributions.  This is how to get your changes into `lnd`.
 
 <a name="CodeReview" />
 
@@ -427,17 +489,27 @@ master.  In certain cases the code reviewer(s) or interested committers may help
 you rework the code, but generally you will simply be given feedback for you to
 make the necessary changes.
 
+During the process of responding to review comments, we prefer that changes be
+made with [fixup commits](https://robots.thoughtbot.com/autosquashing-git-commits). 
+The reason for this is two fold: it makes it easier for the reviewer to see
+what changes have been made between versions (since Github doesn't easily show
+prior versions like Critique) and it makes it easier on the PR author as they
+can set it to auto squash the fix up commits on rebase.
+
 This process will continue until the code is finally accepted.
 
 <a name="CodeAcceptance" />
 
 #### 5.3. Acceptance
 
-Once your code is accepted, it will be integrated with the master branch.
-Typically it will be rebased and fast-forward merged to master as we prefer to
-keep a clean commit history over a tangled weave of merge commits.  However,
-regardless of the specific merge method used, the code will be integrated with
-the master branch and the pull request will be closed.
+Once your code is accepted, it will be integrated with the master branch. After
+2+ (sometimes 1) LGTM's (approvals) are given on a PR, it's eligible to land in
+master. At this final phase, it may be necessary to rebase the PR in order to
+resolve any conflicts and also squash fix up commits. Ideally, the set of
+[commits by new contributors are PGP signed](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work), 
+although this isn't a strong requirement (but we prefer it!). In order to keep
+these signatures intact, we prefer using merge commits. PR proposers can use
+`git rebase --signoff` to sign and rebase at the same time as a final step.
 
 Rejoice as you will now be listed as a [contributor](https://github.com/lightningnetwork/lnd/graphs/contributors)!
 
@@ -449,7 +521,7 @@ Rejoice as you will now be listed as a [contributor](https://github.com/lightnin
 
 #### 6.1. Contribution Checklist
 
-- [&nbsp;&nbsp;] All changes are Go version 1.5 compliant
+- [&nbsp;&nbsp;] All changes are Go version 1.11 compliant
 - [&nbsp;&nbsp;] The code being submitted is commented according to the
   [Code Documentation and Commenting](#CodeDocumentation) section
 - [&nbsp;&nbsp;] For new code: Code is accompanied by tests which exercise both
@@ -459,10 +531,13 @@ Rejoice as you will now be listed as a [contributor](https://github.com/lightnin
 - [&nbsp;&nbsp;] Any new logging statements use an appropriate subsystem and
   logging level
 - [&nbsp;&nbsp;] Code has been formatted with `go fmt`
-- [&nbsp;&nbsp;] Running `go test` does not fail any tests
+- [&nbsp;&nbsp;] For code and documentation: lines are wrapped at 80 characters
+  (the tab character should be counted as 8 characters, not 4, as some IDEs do
+  per default)
+- [&nbsp;&nbsp;] Running `make unit` and `make itest` do not fail any tests
 - [&nbsp;&nbsp;] Running `go vet` does not report any issues
-- [&nbsp;&nbsp;] Running [golint](https://github.com/golang/lint) does not
-  report any **new** issues that did not already exist
+- [&nbsp;&nbsp;] Running `make lint` does not report any **new** issues that
+  did not already exist
 
 <a name="Licensing" />
 
