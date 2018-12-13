@@ -75,7 +75,7 @@ gcloud auth login
 
 2. Build
 ```bash
-jekyll build
+bundle exec jekyll build
 ```
 
 3. Push to Google Cloud Bucket
