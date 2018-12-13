@@ -24,6 +24,7 @@ sources](https://github.com/lightningnetwork/lnd/blob/master/lnrpc/rpc.proto).
 
 In order for the auto-generated code to compile successfully, you'll need to
 comment out the following line:
+
 ```
 //import "google/api/annotations.proto";
 ```
@@ -36,6 +37,11 @@ Every time you work with Javascript gRPC, you will have to import `grpc`, load
 ```js
 var grpc = require('grpc');
 var fs = require("fs");
+
+// Due to updated ECDSA generated tls.cert we need to let gprc know that
+// we need to use that cipher suite otherwise there will be a handhsake
+// error when we communicate with the lnd rpc server.
+process.env.GRPC_SSL_CIPHER_SUITES = 'HIGH+ECDSA'
 
 //  Lnd cert is at ~/.lnd/tls.cert on Linux and
 //  ~/Library/Application Support/Lnd/tls.cert on Mac
@@ -68,6 +74,7 @@ GetInfo: { identity_pubkey: '03c892e3f3f077ea1e381c081abb36491a2502bc43ed37ffb82
   alias: '',
   num_pending_channels: 0,
   num_active_channels: 1,
+  num_inactive_channels: 0,
   num_peers: 1,
   block_height: 1006,
   block_hash: '198ba1dc43b4190e507fa5c7aea07a74ec0009a9ab308e1736dbdab5c767ff8e',
@@ -160,6 +167,67 @@ async.series(payment_senders, function() {
 
 ```
 This example will send a payment of 100 satoshis every 2 seconds.
+
+
+#### Using Macaroons
+
+To authenticate using macaroons you need to include the macaroon in the metadata of the request.
+
+```js
+var fs = require('fs');
+var grpc = require('grpc');
+
+process.env.GRPC_SSL_CIPHER_SUITES = 'HIGH+ECDSA'
+
+// Lnd admin macaroon is at ~/.lnd/data/chain/bitcoin/simnet/admin.macaroon on Linux and
+// ~/Library/Application Support/Lnd/data/chain/bitcoin/simnet/admin.macaroon on Mac
+var m = fs.readFileSync('~/.lnd/data/chain/bitcoin/simnet/admin.macaroon');
+var macaroon = m.toString('hex');
+var meta = new grpc.Metadata().add('macaroon', macaroon);
+
+var lnrpcDescriptor = grpc.load("rpc.proto");
+var lnrpc = lnrpcDescriptor.lnrpc;
+var client = new lnrpc.Lightning('some.address:10009', grpc.credentials.createInsecure());
+
+client.getInfo({}, meta);
+```
+
+However, this can get tiresome to do for each request, so to avoid explicitly including the macaroon we can update the credentials to include it automatically.
+
+```js
+var fs = require('fs');
+var grpc = require('grpc');
+
+process.env.GRPC_SSL_CIPHER_SUITES = 'HIGH+ECDSA'
+
+// Lnd admin macaroon is at ~/.lnd/data/chain/bitcoin/simnet/admin.macaroon on Linux and
+// ~/Library/Application Support/Lnd/data/chain/bitcoin/simnet/admin.macaroon on Mac
+var m = fs.readFileSync('~/.lnd/data/chain/bitcoin/simnet/admin.macaroon');
+var macaroon = m.toString('hex');
+
+// build meta data credentials
+var metadata = new grpc.Metadata()
+metadata.add('macaroon', macaroon)
+var macaroonCreds = grpc.credentials.createFromMetadataGenerator((_args, callback) => {
+  callback(null, metadata);
+});
+
+// build ssl credentials using the cert the same as before
+var lndCert = fs.readFileSync("~/.lnd/tls.cert");
+var sslCreds = grpc.credentials.createSsl(lndCert);
+
+// combine the cert credentials and the macaroon auth credentials
+// such that every call is properly encrypted and authenticated
+var credentials = grpc.credentials.combineChannelCredentials(sslCreds, macaroonCreds);
+
+// Pass the crendentials when creating a channel
+var lnrpcDescriptor = grpc.load("rpc.proto");
+var lnrpc = lnrpcDescriptor.lnrpc;
+var client = new lnrpc.Lightning('some.address:10009', credentials);
+
+client.getInfo({}, (err, res) => { ... });
+```
+
 
 ### Conclusion
 

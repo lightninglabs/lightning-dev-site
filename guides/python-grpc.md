@@ -80,7 +80,7 @@ is at the default `localhost:10009`, with an open channel between the two nodes.
 
 ```python
 # Retrieve and display the wallet balance
-response = stub.WalletBalance(ln.WalletBalanceRequest(witness_only=True))
+response = stub.WalletBalance(ln.WalletBalanceRequest())
 print(response.total_balance)
 ```
 
@@ -144,9 +144,9 @@ To authenticate using macaroons you need to include the macaroon in the metadata
 ```python
 import codecs
 
-# Lnd admin macaroon is at ~/.lnd/admin.macaroon on Linux and
-# ~/Library/Application Support/Lnd/admin.macaroon on Mac
-with open(os.path.expanduser('~/.lnd/admin.macaroon'), 'rb') as f:
+# Lnd admin macaroon is at ~/.lnd/data/chain/bitcoin/simnet/admin.macaroon on Linux and
+# ~/Library/Application Support/Lnd/data/chain/bitcoin/simnet/admin.macaroon on Mac
+with open(os.path.expanduser('~/.lnd/data/chain/bitcoin/simnet/admin.macaroon'), 'rb') as f:
     macaroon_bytes = f.read()
     macaroon = codecs.encode(macaroon_bytes, 'hex')
 ```
