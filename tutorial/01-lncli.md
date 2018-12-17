@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Stage 1 - Setting up a local cluster
---- 
+---
 ### Introduction
 
 In this stage of the tutorial, we will learn how to set up a local cluster of
@@ -133,7 +133,7 @@ $ tree $GOPATH -L 2
 Start up the Alice node from within the `alice` directory:
 ```bash
 cd $GOPATH/dev/alice
-alice$ lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
+alice$ lnd --rpclisten=localhost:10001 --listen=localhost:10011 --restlisten=localhost:8001 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek
 ```
 The Alice node should now be running and displaying output ending with a line
 beginning with "Waiting for wallet encryption password."
@@ -182,7 +182,7 @@ Run Bob and Charlie:
 ```bash
 # In a new terminal window
 cd $GOPATH/dev/bob
-bob$ lnd --rpclisten=localhost:10002 --listen=localhost:10012 --restlisten=localhost:8002 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek 
+bob$ lnd --rpclisten=localhost:10002 --listen=localhost:10012 --restlisten=localhost:8002 --datadir=data --logdir=log --debuglevel=info --bitcoin.simnet --bitcoin.active --bitcoin.node=btcd --btcd.rpcuser=kek --btcd.rpcpass=kek
 
 # In another terminal window
 cd $GOPATH/dev/charlie
@@ -252,7 +252,7 @@ Open up a new terminal window, set `$GOPATH` and include `$GOPATH/bin` in your
 `PATH` as usual. Let's create Alice's wallet and set her passphrase:
 ```bash
 cd $GOPATH/dev/alice
-alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon create
+alice$ lncli --rpcserver=localhost:10001 create
 ```
 You'll be asked to input and confirm a wallet password for Alice, which must be
 longer than 8 characters. You also have the option to add a passphrase to your
@@ -262,7 +262,7 @@ passphrase.
 
 You can now request some basic information as follows:
 ```bash
-alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon getinfo
+alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon getinfo
 ```
 `lncli` just made an RPC call to the Alice `lnd` node. This is a good way to
 test if your nodes are up and running and `lncli` is functioning properly. Note
@@ -275,21 +275,21 @@ respectively.
 ```bash
 # In a new terminal window, setting $GOPATH, etc.
 cd $GOPATH/dev/bob
-bob$ lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon create
+bob$ lncli --rpcserver=localhost:10002 create
 # Note that you'll have to enter an 8+ character password and "n" for the mnemonic.
 
 # In a new terminal window:
 cd $GOPATH/dev/charlie
-charlie$ lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon create
+charlie$ lncli --rpcserver=localhost:10003 create
 # Note that you'll have to enter an 8+ character password and "n" for the mnemonic.
 ```
 
 To avoid typing the `--rpcserver=localhost:1000X` and `--macaroonpath` flag
 every time, we can set some aliases. Add the following to your `.bashrc`:
 ```bash
-alias lncli-alice="lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon"
-alias lncli-bob="lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon"
-alias lncli-charlie="lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon"
+alias lncli-alice="lncli --rpcserver=localhost:10001 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon"
+alias lncli-bob="lncli --rpcserver=localhost:10002 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon"
+alias lncli-charlie="lncli --rpcserver=localhost:10003 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon"
 ```
 
 To make sure this was applied to all of your current terminal windows, rerun
