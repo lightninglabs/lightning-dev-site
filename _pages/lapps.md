@@ -63,7 +63,7 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
 * [1ML](https://1ml.com/): Lightning Network search and analysis engine
 
 ### Developer Tools
-* [ION](https://ion.radar.tech/):ION provides a comprehensive set of resources for users to join the Lightning Network
+* [ION](https://ion.radar.tech/): ION provides a comprehensive set of resources for users to join the Lightning Network
 * [WooCommerce
   Plugin](https://github.com/joaodealmeida/woocommerce-gateway-lightning):
   Gateway plugin to accept Lightning payments at WooCommerce stores, built on
