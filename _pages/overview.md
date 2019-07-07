@@ -215,7 +215,7 @@ security, we generally want to keep as little as possible in hot wallets, and as
 much as possible in cold wallets.
 
 It is possible to construct Lightning channels where the keys are cold, but they
-would need to be brought back online you conduct a channel update. Only with hot
+would need to be brought back online when you conduct a channel update. Only with hot
 wallets can the Lightning Network attain a high volume of transactions.
 
 This is only a surface level introduction to Lightning integration. For a more
