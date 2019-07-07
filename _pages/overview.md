@@ -362,7 +362,7 @@ not attempt them. This will affect any web application with `lnd` integration,
 since if an invoice for a good or service is not fulfilled within the given
 timeframe, a new one should be generated.
 
-Other possibly unexpected rules include that the payee should accept up the
+Other possibly unexpected rules include that the payee should accept up to
 twice the amount encoded in the transaction, so that the payer can make payments
 harder to track by adding in small variations.
 
