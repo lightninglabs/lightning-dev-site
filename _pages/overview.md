@@ -263,7 +263,7 @@ There are distinct software components we should be aware of when developing on
   Bitcoin light client designed to support Lightning mobile clients. This is a
   wallet UI usable with `lnd`. Neutrino is not required from an application
   development standpoint, but can be regarded as the primary way the LND end
-  user interacts with the Lightning Network and thus and applications built on
+  user interacts with the Lightning Network and applications built on
   top of it.
 
 #### LND Interfaces
