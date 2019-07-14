@@ -46,7 +46,7 @@ title: Installation
     sudo ln -s /usr/lib/go-1.11/bin/go /usr/local/bin/go
     ```
 
-    On Mac OS X:
+    On Mac OS X (ensure that you are using a bash shell: https://support.apple.com/kb/TA27005?locale=en_US):
     ```
     brew install go
     ```
