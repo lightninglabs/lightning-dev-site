@@ -406,7 +406,7 @@ alice$ lncli-alice connect <BOB_PUBKEY>@localhost:10012
 
 }
 ```
-Notice that `localhost:10012` corresponds to the `--peerport=10012` flag we set
+Notice that `localhost:10012` corresponds to the `--listen=10012` flag we set
 when starting the Bob `lnd` node.
 
 Let's check that Alice and Bob are now aware of each other.
