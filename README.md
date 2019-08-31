@@ -24,6 +24,19 @@ The rest of the files in this repo are the standard Jekyll site files.
 
 ## Running the site locally
 
+### Prerequisites
+
+You're going to need:
+
+ - **Linux or OS X** — Windows may work, but is unsupported.
+ - **Ruby, version 2.2.5 or newer**
+ - **Bundler** — If Ruby is already installed, but the `bundle` command doesn't work, just run `gem install bundler` in a terminal.
+
+### Running locally
+
+```shell
+git clone https://github.com/lightninglabs/lightning-dev-site
+```
 Install Jekyll:
 ```
 $ gem install jekyll bundler
@@ -32,6 +45,8 @@ Run the site and watch for changes:
 ```
 $ bundle exec jekyll serve
 ```
+* If running remotely add: `--host=0.0.0.0`
+
 
 ## Regenerating documentation
 
@@ -40,12 +55,17 @@ $ bundle exec jekyll serve
 pip install Jinja2
 ```
 
-# Get the latest INSTALL.md
+### Get the latest INSTALL.md
 ```shell
 curl -o INSTALL.md -s https://raw.githubusercontent.com/lightningnetwork/lnd/master/docs/INSTALL.md
 ```
 
-# Get the latest gRPC guides
+### Fetch the latest Docker guide
+```shell
+curl -o DOCKER-README.md -s https://raw.githubusercontent.com/lightningnetwork/lnd/master/docker/README.md
+```
+
+### Get the latest gRPC guides
 ```shell
 curl -o python.md -s https://raw.githubusercontent.com/lightningnetwork/lnd/master/docs/grpc/python.md
 curl -o javascript.md -s https://raw.githubusercontent.com/lightningnetwork/lnd/master/docs/grpc/javascript.md
