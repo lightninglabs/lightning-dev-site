@@ -232,7 +232,7 @@ client.getInfo({}, (err, res) => { ... });
 ### Conclusion
 
 With the above, you should have all the `lnd` related `gRPC` dependencies
-installed locally in your project. In order to get up to speed with `protofbuf`
+installed locally in your project. In order to get up to speed with `protobuf`
 usage from Javascript, see [this official `protobuf` reference for
 Javascript](https://developers.google.com/protocol-buffers/docs/reference/javascript-generated).
 Additionally, [this official gRPC
