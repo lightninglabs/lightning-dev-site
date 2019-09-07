@@ -249,11 +249,7 @@ layers we encounter when reasoning about `lnd`:
 #### Software Components
 
 There are distinct software components we should be aware of when developing on
-- `btcd` / `btcutil`: `lnd` currently uses [`btcd` roasbeef
-  fork](https://github.com/roasbeef/btcd) to interface with the underlying
-  blockchain. `btcd` comes with `btcutil`, also [roasbeef
-  fork](https://github.com/Roasbeef/btcutil), that allows us to drive `btcd`
-  from the command line.
+- [`btcd`](https://github.com/btcsuite/btcd) or [`bitcoind`](https://github.com/bitcoin/bitcoin) is used by `lnd` to interface with the underlying  blockchain.
 - `lnd` / `lncli`: LND stands for Lightning Network Daemon and serves as the
   main software component driving the Lightning Network. It manages a database,
   connects to peers, opens / closes channels, generates payment invoices, sends,
