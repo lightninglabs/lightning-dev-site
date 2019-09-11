@@ -406,7 +406,7 @@ alice$ lncli-alice connect <BOB_PUBKEY>@localhost:10012
 
 }
 ```
-Notice that `localhost:10012` corresponds to the `--peerport=10012` flag we set
+Notice that `localhost:10012` corresponds to the `--listen=localhost:10012` flag we set
 when starting the Bob `lnd` node.
 
 Let's check that Alice and Bob are now aware of each other.
@@ -604,7 +604,7 @@ btcctl --simnet --rpcuser=kek --rpcpass=kek generate 1
 
 # Check that Bob's on-chain balance was credited by his settled amount in the
 # channel. Recall that Bob previously had no on-chain Bitcoin:
-alice$ lncli-bob walletbalance
+bob$ lncli-bob walletbalance
 {
     "total_balance": "20001",
     "confirmed_balance": "20001",
