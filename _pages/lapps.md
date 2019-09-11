@@ -162,7 +162,6 @@ c-lightning is a specification-compliant LN implementation in C, under the
 
 ### Requests
 
-If you would like your Lightning app considered for this page, please email a
-link and one sentence description of your app to
-[max@lightning.engineering](mailto:max@lightning.engineering). If applicable,
-please specify which Lightning implementation it is built on.
+If you would like your Lightning app considered for this page, please share a
+link and a one sentence description of your app on the [LND Developer Slack](https://join.slack.com/t/lightningcommunity/shared_invite/enQtMzQ0OTQyNjE5NjU1LWRiMGNmOTZiNzU0MTVmYzc1ZGFkZTUyNzUwOGJjMjYwNWRkNWQzZWE3MTkwZjdjZGE5ZGNiNGVkMzI2MDU4ZTE) 
+If applicable, please specify which Lightning implementation it is built on.
