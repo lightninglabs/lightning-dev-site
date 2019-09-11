@@ -258,9 +258,9 @@ There are distinct software components we should be aware of when developing on
 - [Neutrino](https://github.com/lightninglabs/neutrino) is an experimental
   Bitcoin light client designed to support Lightning mobile clients. This is a
   wallet UI usable with `lnd`. Neutrino is not required from an application
-  development standpoint, but can be regarded as the primary way the LND end
-  user interacts with the Lightning Network and thus and applications built on
-  top of it.
+  development standpoint, but can be regarded as the primary way for the  
+  end-user of `lnd` to interact with the Bitcoin Network and the applications  
+  built on top of it.
 
 #### LND Interfaces
 
@@ -358,7 +358,7 @@ not attempt them. This will affect any web application with `lnd` integration,
 since if an invoice for a good or service is not fulfilled within the given
 timeframe, a new one should be generated.
 
-Other possibly unexpected rules include that the payee should accept up the
+Other possibly unexpected rules include that the payee should accept up to
 twice the amount encoded in the transaction, so that the payer can make payments
 harder to track by adding in small variations.
 
