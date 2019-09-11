@@ -50,10 +50,12 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
   cryptocurrencies. 
 * [Free DNS Demo](http://freedns.lightning-network.ro/): Purchase subdomains
   with off-chain payments.
+* [HodlHodl.com](https://HodlHodl.com): Peer-to-peer cryptocurrency exchange with        Lightning integration.
 * [Zigzag](http://zigzag.bitlum.io/): Cryptocurrency trading using Lightning
   (custodial)
 * [lntxbot](https://telegram.me/lntxbot) Lightning integration to Telegram with  
   tipping, send and receive and satellite API usage (custodial).
+* [paywall.link](https://paywall.link/) Put any website behind a paywall and pay with    Lightning. 
 
 ### Lightning network explorers
 
@@ -105,9 +107,12 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
   article](https://coinjournal.net/you-can-go-on-a-digital-treasure-hunt-for-bitcoin-in-minecraft/)
 * [Lightning Gem](https://lightninggem.com/): Betting game using Lightning for
   payments
+* [Kriptode.com](https://kriptode.com/) Lightning based games and more.
+* [Satoshis.place](https://satoshis.place/) Internet graffiti paid with Lightning
 * [Thunderdice](http://thunderdice.ws/): Off-chain SatoshiDice
 
   <img src="/assets/lapps/thunderdice.png" alt="Screenshot of Thunder Dice Homepage" style="max-width: 50%;"/>
+
 
 ### Eclair Lapps
 
