@@ -32,52 +32,49 @@ title: Installation
   * **Go:** `lnd` is written in Go. To install, run one of the following commands:
 
 
-    **Note**: The minimum version of Go supported is Go 1.11. We recommend that
-    users use the latest version of Go, which at the time of writing is
-    [`1.11`](https://blog.golang.org/go1.11).
+    **Note**: The minimum version of Go supported is Go 1.11. We recommend to use 1.12.8 version of Go. The most recent v1.13 will be supported from lnd v0.8.0-beta.
 
 
     On Linux:
+    ```bash
+    wget https://dl.google.com/go/go1.12.8.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.12.8.linux-amd64.tar.gz
     ```
-    sudo apt-get install golang-1.11-go
-    ```
-    > Note that golang-1.11-go puts binaries in /usr/lib/go-1.11/bin. If you want them on your PATH, you need to make that change yourself. Alternatively, you can run:
-    ```
-    sudo ln -s /usr/lib/go-1.11/bin/go /usr/local/bin/go
-    ```
-
     On Mac OS X:
-    ```
+    ```bash
     brew install go
     ```
 
     On FreeBSD:
-    ```
+    ```bash
     pkg install go
     ```
 
-    Alternatively, one can download the pre-compiled binaries hosted on the
-    [golang download page](https://golang.org/dl/). If one seeks to install
-    from source, then more detailed installation instructions can be found
+    The pre-compiled binaries are hosted on [golang download page](https://golang.org/dl/).  
+    If one seeks to install from source, then more detailed installation instructions can be found
     [here](http://golang.org/doc/install).
 
-    At this point, you should set your `$GOPATH` environment variable, which
-    represents the path to your workspace. By default, `$GOPATH` is set to
-    `~/go`. You will also need to add `$GOPATH/bin` to your `PATH`. This ensures
-    that your shell will be able to detect the binaries you install.
+    At this point, you should set your `PATH` environment variable so that your  
+    shell will be able to detect the binaries you install: 
 
+    ```bash
+    export PATH=$PATH:/usr/local/go/bin
+    ```
+    By default `GOPATH` is assumed to be `$HOME/go`. If you want to use a custom location as your  
+    workspace, you can set the GOPATH environment variable:
     ```bash
     export GOPATH=~/gocode
     export PATH=$PATH:$GOPATH/bin
     ```
 
-    We recommend placing the above in your .bashrc or in a setup script so that
-    you can avoid typing this every time you open a new terminal window.
+    It is recommended to place the above in your `/etc/profile` (for a system-wide installation),  
+    in `$HOME/.profile` or in a setup script so that you can avoid typing this every time you  
+     open a new terminal window.
 
   * **go modules:** This project uses [go modules](https://github.com/golang/go/wiki/Modules) 
     to manage dependencies as well as to provide *reproducible builds*.
 
-    Usage of go modules (with go 1.11) means that you no longer need to clone
+    Usage of go modules means that you no longer need to clone
     `lnd` into your `$GOPATH` for development purposes. Instead, your `lnd`
     repo can now live anywhere!
 
@@ -85,7 +82,7 @@ title: Installation
 
 With the preliminary steps completed, to install `lnd`, `lncli`, and all
 related dependencies run the following commands:
-```
+```bash
 go get -d github.com/lightningnetwork/lnd
 cd $GOPATH/src/github.com/lightningnetwork/lnd
 make && make install
@@ -99,7 +96,7 @@ For Windows WSL users, make will need to be referenced directly via
 /usr/bin/make/, or alternatively by wrapping quotation marks around make,
 like so:
 
-```
+```bash
 /usr/bin/make && /usr/bin/make install
 
 "make" && "make" install
@@ -109,7 +106,7 @@ On FreeBSD, use gmake instead of make.
 
 Alternatively, if one doesn't wish to use `make`, then the `go` commands can be
 used directly:
-```
+```bash
 GO111MODULE=on go install -v ./...
 ```
 
@@ -117,7 +114,7 @@ GO111MODULE=on go install -v ./...
 
 To update your version of `lnd` to the latest version run the following
 commands:
-```
+```bash
 cd $GOPATH/src/github.com/lightningnetwork/lnd
 git pull
 make clean && make && make install
@@ -127,7 +124,7 @@ On FreeBSD, use gmake instead of make.
 
 Alternatively, if one doesn't wish to use `make`, then the `go` commands can be
 used directly:
-```
+```bash
 cd $GOPATH/src/github.com/lightningnetwork/lnd
 git pull
 GO111MODULE=on go install -v ./...
@@ -136,7 +133,7 @@ GO111MODULE=on go install -v ./...
 **Tests**
 
 To check that `lnd` was installed properly run the following command:
-```
+```bash
 make check
 ```
 
