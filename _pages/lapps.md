@@ -52,6 +52,15 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
   with off-chain payments.
 * [Zigzag](http://zigzag.bitlum.io/): Cryptocurrency trading using Lightning
   (custodial)
+* [lntxbot](https://telegram.me/lntxbot) Lightning integration to Telegram with  
+  tipping, send and receive and satellite API usage (custodial).
+
+### Lightning network explorers
+
+* [1ml.com](https://1ml.com/)
+* [explore.casa](https://explore.casa/)
+* [explorer.acinq.co](https://explorer.acinq.co/)
+* [ln.alhur.es](https://ln.alhur.es/)
 
 ### Protocol Services
 
@@ -60,7 +69,6 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
 * [lnd.fun](http://lnd.fun/): Panel for webmasters to manage their full lightning node.
   <img src="/assets/lapps/lnd.fun.png" alt="Screenshot of lnd.fun dashboard home view" style="max-width: 50%;"/>
 * [kibana](https://stats.preimage.net/): Visualization of the Lightning Network
-* [1ML](https://1ml.com/): Lightning Network search and analysis engine
 
 ### Developer Tools
 
@@ -83,6 +91,8 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
   tipbot
 * [CoinTippy](http://cointippy.com/): Custodial tip bot available on
   multiple platforms, including Reddit, Twitter, and Telegram.
+* [LightningPay-PHP](https://github.com/robclark56/lightningPay-PHP): PHP plugin for eCommerce website to add _Pay by Lightning_ to accept order payments via the Lightning Network. 
+* [Tippin.me](https://tippin.me/) LN tips integrated to Twitter (custodial)
 
 ### Gaming
 * [Hammercoin](https://hammerco.in/): A role-playing game using Lightning for
