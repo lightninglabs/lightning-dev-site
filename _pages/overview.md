@@ -275,13 +275,12 @@ There are several ways to drive `lnd`.
   bidrectional streaming methods. Check out the guides for working with gRPC for
   [Python](/guides/python-grpc/) and [Javascript](/guides/javascript-grpc/)
 - LND also features a REST proxy someone can use if they are accustomed to
-  standard RESTful APIs. However, gRPC has higher performance and can provide
-  real-time notifications.
+  standard RESTful APIs. However, REST does not have full streaming RPC coverage.
 
 All of these LND interfaces are documented in the [API
 Reference](//api.lightning.community), featuring a description of the
 parameters, responses, and code examples for Python, Javascript, and command
-line arguments if it exists.
+line arguments if those exist.
 
 ### Channel Lifecycle
 
