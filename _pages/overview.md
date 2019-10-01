@@ -64,7 +64,7 @@ the underlying blockchain, but with modern data processing and latency limits -
 payments can be made nearly as quickly as packets can be sent.
 
 Hash Time-Locked Contracts (HTLCs) allow transactions to be sent between parties
-who do not have a direct channel by routing it through multiple hops, so anyone
+who do not have a direct channel by routing them through multiple hops, so anyone
 connected to the Lightning Network is part of a single, interconnected global
 financial system.
 
@@ -258,7 +258,7 @@ There are distinct software components we should be aware of when developing on
 - [Neutrino](https://github.com/lightninglabs/neutrino) is an experimental
   Bitcoin light client designed to support Lightning mobile clients. This is a
   wallet UI usable with `lnd`. Neutrino is not required from an application
-  development standpoint, but can be regarded as the primary way for the  
+  development standpoint, but can be regarded as the primary way for an  
   end-user of `lnd` to interact with the Bitcoin Network and the applications  
   built on top of it.
 

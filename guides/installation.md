@@ -51,7 +51,7 @@ title: Installation
     ```
 
     The pre-compiled binaries are hosted on [golang download page](https://golang.org/dl/).  
-    If one seeks to install from source, then more detailed installation instructions can be found
+    In order to install from source, more detailed installation instructions can be found
     [here](http://golang.org/doc/install).
 
     At this point, you should set your `PATH` environment variable so that your  
