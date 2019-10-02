@@ -11,22 +11,18 @@ compatible apps built on Eclair and c-lightning.
 
 ### Wallets
 
-#### [Lightning App](https://github.com/lightninglabs/lightning-app) by Lightning Labs:
-The Lightning App is a cross-platform wallet powered by `lnd`. See the 
-[mainnet for desktop](https://blog.lightning.engineering/announcement/2019/04/23mainnet-app.html)
-and [mobile announcement](https://blog.lightning.engineering/announcement/2019/06/19mobile-app.html)
-for more information, or checkout the
-[code](https://github.com/lightninglabs/lightning-app) or
-[releases](https://github.com/lightninglabs/lightning-app/releases)
-  
+* [Lightning App](https://github.com/lightninglabs/lightning-app) by Lightning Labs: a cross-platform
+  wallet powered by `lnd`. See the 
+  announcement for [desktop](https://blog.lightning.engineering/announcement/2019/04/23mainnet-app.html)
+  and [mobile](https://blog.lightning.engineering/announcement/2019/06/19/mobile-app.html)
+  for more information, or checkout the
+  [code](https://github.com/lightninglabs/lightning-app) or
+  [releases](https://github.com/lightninglabs/lightning-app/releases).  
 <img src="/assets/lapps/lnd_desktop_app.png" alt="Screenshot of Lightning Desktop App" style="max-width: 80%;"/>
 
-#### [Zap](https://zap.jackmallers.com/) Wallet by Jack Mallers  
-The Zap wallet is a mobile and desktop app focused on ease of
-use and general user experience.
-Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
-[Github](https://github.com/LN-Zap)
-
+* [Zap](https://zap.jackmallers.com/) Wallet by Jack Mallers: a mobile and desktop app focused on ease of
+  use and general user experience. Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
+  [Github](https://github.com/LN-Zap).  
 <img src="/assets/lapps/zap.png" alt="Zap Wallet payment request view" style="max-width: 80%;"/>
 
 * [HTLC.me](https://htlc.me/): Hosted wallet great for quickly trying out 
@@ -41,8 +37,8 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
 * [Bitrefill](https://en.bitrefill.com/): Recharge prepaid phone cards with
   Bitcoin and Litecoin
 * [Y'alls](http://yalls.org/): Read and write articles, with Lightning Network
-  micropayments
-  <img src="/assets/lapps/yalls.png" alt="Screenshot of Yalls home view" style="max-width: 50%;"/>
+  micropayments  
+<img src="/assets/lapps/yalls.png" alt="Screenshot of Yalls home view" style="max-width: 50%;"/>
 * [LNCast](http://lncast.com/): Lightning Network Podcasts
 * [Bard](https://www.bard.fun/): Simple paywall for watching a music visualizer
 * [HodlHodl.com](https://hodlhodl.com/?set_asset=btcln): Peer-to-peer cryptocurrency
@@ -64,8 +60,8 @@ Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
 
 * [Lightning Faucet](https://faucet.lightning.community/): Receive free testnet
   Bitcoin
-* [lnd.fun](http://lnd.fun/): Panel for webmasters to manage their full lightning node
-  <img src="/assets/lapps/lnd.fun.png" alt="Screenshot of lnd.fun dashboard home view" style="max-width: 50%;"/>
+* [lnd.fun](http://lnd.fun/): Panel for webmasters to manage their full lightning node  
+<img src="/assets/lapps/lnd.fun.png" alt="Screenshot of lnd.fun dashboard home view" style="max-width: 50%;"/>
 
 ### Developer Tools
 
