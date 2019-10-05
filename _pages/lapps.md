@@ -11,21 +11,23 @@ compatible apps built on Eclair and c-lightning.
 
 ### Wallets
 
-* [Lightning App](https://github.com/lightninglabs/lightning-app) by Lightning Labs: a cross-platform
-  wallet powered by `lnd`. See the 
-  announcement for [desktop](https://blog.lightning.engineering/announcement/2019/04/23mainnet-app.html)
+* [Lightning App](https://github.com/lightninglabs/lightning-app) by Lightning Labs:
+  a cross-platform wallet powered by `lnd`. See the announcement for
+  [desktop](https://blog.lightning.engineering/announcement/2019/04/23mainnet-app.html)
   and [mobile](https://blog.lightning.engineering/announcement/2019/06/19/mobile-app.html)
-  for more information, or checkout the
-  [code](https://github.com/lightninglabs/lightning-app) or
-  [releases](https://github.com/lightninglabs/lightning-app/releases).  
+  for more information. Checkout the [code](https://github.com/lightninglabs/lightning-app)
+  and find the releases for
+  [desktop](https://github.com/lightninglabs/lightning-app/releases),
+  [Android](https://play.google.com/apps/testing/engineering.lightning.LightningMainnet)
+  and [iOS](https://testflight.apple.com/join/xx23MrBp).  
 <img src="/assets/lapps/lnd_desktop_app.png" alt="Screenshot of Lightning Desktop App" style="max-width: 80%;"/>
 
 * [Zap](https://zap.jackmallers.com/) Wallet by Jack Mallers: a mobile and desktop app focused on ease of
   use and general user experience. Check out the [Zap website](https://zap.jackmallers.com/) or read the code on
-  [Github](https://github.com/LN-Zap).  
+  [GitHub](https://github.com/LN-Zap).  
 <img src="/assets/lapps/zap.png" alt="Zap Wallet payment request view" style="max-width: 80%;"/>
 
-* [HTLC.me](https://htlc.me/): Hosted wallet great for quickly trying out 
+* [HTLC.me](https://htlc.me/): Hosted wallet great for quickly trying out
   Lightning payments on the Bitcoin testnet.
 * [ZeusLN](https://zeusln.app/):
   A mobile Bitcoin app for Lightning Network Daemon (lnd) node operators. Runs on Android and iOS.
