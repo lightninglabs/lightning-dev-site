@@ -4,7 +4,6 @@ title: Installation
 
 ---
 
-# Table of Contents
 * [Installation](#installation)
     * [Preliminaries](#preliminaries)
     * [Installing lnd](#installing-lnd)
@@ -18,10 +17,11 @@ title: Installation
     * [Running lnd using the btcd backend](#running-lnd-using-the-btcd-backend)
   * [Using Neutrino](#using-neutrino)
   * [Using bitcoind or litecoind](#using-bitcoind-or-litecoind)
+* [Creating a Wallet](#creating-a-wallet)
 * [Macaroons](#macaroons)
 * [Network Reachability](#network-reachability)
-* [Simnet vs. Testnet Development](#simnet-vs.-testnet-development)
-* [Creating an lnd.conf (Optional)](#creating-an-lnd.conf-(optional))
+* [Simnet vs. Testnet Development](#simnet-vs-testnet-development)
+* [Creating an lnd.conf (Optional)](#creating-an-lndconf-optional)
 
 # Installation
 
@@ -32,49 +32,75 @@ title: Installation
   * **Go:** `lnd` is written in Go. To install, run one of the following commands:
 
 
-    **Note**: The minimum version of Go supported is Go 1.11. We recommend to use 1.12.8 version of Go. The most recent v1.13 will be supported from lnd v0.8.0-beta.
+    **Note**: The minimum version of Go supported is Go 1.13. We recommend that
+    users use the latest version of Go, which at the time of writing is
+    [`1.13`](https://blog.golang.org/go1.13).
 
 
     On Linux:
-    ```bash
-    wget https://dl.google.com/go/go1.12.8.linux-amd64.tar.gz
-    tar -C /usr/local -xzf go1.12.8.linux-amd64.tar.gz
+
+    (x86-64)
     ```
+    wget https://dl.google.com/go/go1.13.linux-amd64.tar.gz
+    sha256sum go1.13.linux-amd64.tar.gz | awk -F " " '{ print $1 }'
+    ```
+
+    The final output of the command above should be
+    `68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856`. If it
+    isn't, then the target REPO HAS BEEN MODIFIED, and you shouldn't install
+    this version of Go. If it matches, then proceed to install Go:
+    ```
+    tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz
+    export PATH=$PATH:/usr/local/go/bin
+    ```
+
+    (ARMv6)
+    ```
+    wget https://dl.google.com/go/go1.13.linux-armv6l.tar.gz
+    sha256sum go1.13.linux-armv6l.tar.gz | awk -F " " '{ print $1 }'
+    ```
+
+    The final output of the command above should be
+    `931906d67cae1222f501e7be26e0ee73ba89420be0c4591925901cb9a4e156f0`. If it
+    isn't, then the target REPO HAS BEEN MODIFIED, and you shouldn't install
+    this version of Go. If it matches, then proceed to install Go:
+    ```
+    tar -C /usr/local -xzf go1.13.linux-armv6l.tar.gz
+    export PATH=$PATH:/usr/local/go/bin
+    ```
+
     On Mac OS X:
-    ```bash
-    brew install go
+    ```
+    brew install go@1.13
     ```
 
     On FreeBSD:
-    ```bash
+    ```
     pkg install go
     ```
 
-    The pre-compiled binaries are hosted on [golang download page](https://golang.org/dl/).  
-    In order to install from source, more detailed installation instructions can be found
-    [here](http://golang.org/doc/install).
+    Alternatively, one can download the pre-compiled binaries hosted on the
+    [Golang download page](https://golang.org/dl/). If one seeks to install
+    from source, then more detailed installation instructions can be found
+    [here](https://golang.org/doc/install).
 
-    At this point, you should set your `PATH` environment variable so that your  
-    shell will be able to detect the binaries you install: 
+    At this point, you should set your `$GOPATH` environment variable, which
+    represents the path to your workspace. By default, `$GOPATH` is set to
+    `~/go`. You will also need to add `$GOPATH/bin` to your `PATH`. This ensures
+    that your shell will be able to detect the binaries you install.
 
-    ```bash
-    export PATH=$PATH:/usr/local/go/bin
-    ```
-    By default `GOPATH` is assumed to be `$HOME/go`. If you want to use a custom location as your  
-    workspace, you can set the GOPATH environment variable:
     ```bash
     export GOPATH=~/gocode
     export PATH=$PATH:$GOPATH/bin
     ```
 
-    It is recommended to place the above in your `/etc/profile` (for a system-wide installation),  
-    in `$HOME/.profile` or in a setup script so that you can avoid typing this every time you  
-     open a new terminal window.
+    We recommend placing the above in your .bashrc or in a setup script so that
+    you can avoid typing this every time you open a new terminal window.
 
-  * **go modules:** This project uses [go modules](https://github.com/golang/go/wiki/Modules) 
+  * **Go modules:** This project uses [Go modules](https://github.com/golang/go/wiki/Modules) 
     to manage dependencies as well as to provide *reproducible builds*.
 
-    Usage of go modules means that you no longer need to clone
+    Usage of Go modules (with Go 1.12) means that you no longer need to clone
     `lnd` into your `$GOPATH` for development purposes. Instead, your `lnd`
     repo can now live anywhere!
 
@@ -82,21 +108,21 @@ title: Installation
 
 With the preliminary steps completed, to install `lnd`, `lncli`, and all
 related dependencies run the following commands:
-```bash
+```
 go get -d github.com/lightningnetwork/lnd
 cd $GOPATH/src/github.com/lightningnetwork/lnd
 make && make install
 ```
 
 **NOTE**: Our instructions still use the `$GOPATH` directory from prior
-versions of Go, but with go 1.11, it's now possible for `lnd` to live
+versions of Go, but with Go 1.12, it's now possible for `lnd` to live
 _anywhere_ on your file system.
 
 For Windows WSL users, make will need to be referenced directly via
 /usr/bin/make/, or alternatively by wrapping quotation marks around make,
 like so:
 
-```bash
+```
 /usr/bin/make && /usr/bin/make install
 
 "make" && "make" install
@@ -106,7 +132,7 @@ On FreeBSD, use gmake instead of make.
 
 Alternatively, if one doesn't wish to use `make`, then the `go` commands can be
 used directly:
-```bash
+```
 GO111MODULE=on go install -v ./...
 ```
 
@@ -114,7 +140,7 @@ GO111MODULE=on go install -v ./...
 
 To update your version of `lnd` to the latest version run the following
 commands:
-```bash
+```
 cd $GOPATH/src/github.com/lightningnetwork/lnd
 git pull
 make clean && make && make install
@@ -124,7 +150,7 @@ On FreeBSD, use gmake instead of make.
 
 Alternatively, if one doesn't wish to use `make`, then the `go` commands can be
 used directly:
-```bash
+```
 cd $GOPATH/src/github.com/lightningnetwork/lnd
 git pull
 GO111MODULE=on go install -v ./...
@@ -133,7 +159,7 @@ GO111MODULE=on go install -v ./...
 **Tests**
 
 To check that `lnd` was installed properly run the following command:
-```bash
+```
 make check
 ```
 
@@ -248,7 +274,7 @@ btcctl --testnet --rpcuser=REPLACEME --rpcpass=REPLACEME getpeerinfo | more
 If you are on testnet, run this command after `btcd` has finished syncing.
 Otherwise, replace `--bitcoin.testnet` with `--bitcoin.simnet`. If you are
 installing `lnd` in preparation for the
-[tutorial](http://dev.lightning.community/tutorial), you may skip this step.
+[tutorial](https://dev.lightning.community/tutorial), you may skip this step.
 ```
 lnd --bitcoin.active --bitcoin.testnet --debuglevel=debug --btcd.rpcuser=kek --btcd.rpcpass=kek --externalip=X.X.X.X
 ```
@@ -257,8 +283,8 @@ lnd --bitcoin.active --bitcoin.testnet --debuglevel=debug --btcd.rpcuser=kek --b
 
 In order to run `lnd` in its light client mode, you'll need to locate a
 full-node which is capable of serving this new light client mode. `lnd` uses
-[BIP 157](https://github.com/bitcoin/bips/tree/master/bip-0157) and [BIP
-158](https://github.com/bitcoin/bips/tree/master/bip-0158) for its light client
+[BIP 157](https://github.com/bitcoin/bips/blob/master/bip-0157.mediawiki) and [BIP
+158](https://github.com/bitcoin/bips/blob/master/bip-0158.mediawiki) for its light client
 mode.  A public instance of such a node can be found at
 `faucet.lightning.community`.
 
@@ -344,6 +370,20 @@ lnd --bitcoin.active --bitcoin.testnet --debuglevel=debug --bitcoin.node=bitcoin
   `lnd` plus any application that consumes the RPC could cause `lnd` to miss
   crucial updates from the backend.
 
+
+# Creating a wallet
+If `lnd` is being run for the first time, create a new wallet with:
+```
+lncli create
+```
+This will prompt for a wallet password, and optionally a cipher seed
+passphrase.
+
+`lnd` will then print a 24 word cipher seed mnemonic, which can be used to
+recover the wallet in case of data loss. The user should write this down and
+keep in a safe place.
+
+
 # Macaroons
 
 `lnd`'s authentication system is called **macaroons**, which are decentralized
@@ -421,3 +461,15 @@ for Litecoin accordingly. See a more detailed sample config file available
 and explore the other sections for node configuration, including `[Btcd]`,
 `[Bitcoind]`, `[Neutrino]`, `[Ltcd]`, and `[Litecoind]` depending on which
 chain and node type you're using.
+
+
+
+
+### Next Steps
+
+* **[Tutorial](/tutorial/):** Get acquainted with the skills necessary for `lnd` development.
+* **[Developer Guides](/guides/):** Look through developer manuals on gRPC,
+  Docker, and more.
+* **[Resources](/resources/):** Learn about the Lightning Network 
+* **[Code Contribution Guidelines](/contribute/):** Contribute to `lnd` itself.
+
