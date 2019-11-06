@@ -170,7 +170,7 @@ A quick summary of test practices follows:
   or RPC's will need to be accompanied by integration tests which use the
   [`networkHarness`framework](https://github.com/lightningnetwork/lnd/blob/master/lntest/harness.go)
   contained within `lnd`. For example integration tests, see
-  [`lnd_test.go`](https://github.com/lightningnetwork/lnd/blob/master/lnd_test.go#L181). 
+  [`lnd_test.go`](https://github.com/lightningnetwork/lnd/blob/master/lntest/itest/lnd_test.go#L203). 
 
 Throughout the process of contributing to `lnd`, you'll likely also be
 extensively using the commands within our `Makefile`. As a result, we recommend
@@ -376,7 +376,7 @@ Functions should _not_ just be laid out as a bare contiguous block of code.
 
 #### 4.7. Protobuf Compilation
 
-The `lnd` project uses `protobuf`, and its extension [`gRPC`](www.grpc.io) in
+The `lnd` project uses `protobuf`, and its extension [`gRPC`](https://www.grpc.io/) in
 several areas and as the primary RPC interface. In order to ensure uniformity
 of all protos checked, in we require that all contributors pin against the
 _exact same_ version of `protoc`. As of the writing of this article, the `lnd`
@@ -490,7 +490,7 @@ you rework the code, but generally you will simply be given feedback for you to
 make the necessary changes.
 
 During the process of responding to review comments, we prefer that changes be
-made with [fixup commits](https://robots.thoughtbot.com/autosquashing-git-commits). 
+made with [fixup commits](https://thoughtbot.com/blog/autosquashing-git-commits). 
 The reason for this is two fold: it makes it easier for the reviewer to see
 what changes have been made between versions (since Github doesn't easily show
 prior versions like Critique) and it makes it easier on the PR author as they

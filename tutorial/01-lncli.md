@@ -252,7 +252,7 @@ Open up a new terminal window, set `$GOPATH` and include `$GOPATH/bin` in your
 `PATH` as usual. Let's create Alice's wallet and set her passphrase:
 ```bash
 cd $GOPATH/dev/alice
-alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon create
+alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon create
 ```
 You'll be asked to input and confirm a wallet password for Alice, which must be
 longer than 8 characters. You also have the option to add a passphrase to your
@@ -262,7 +262,7 @@ passphrase.
 
 You can now request some basic information as follows:
 ```bash
-alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon getinfo
+alice$ lncli --rpcserver=localhost:10001 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon getinfo
 ```
 `lncli` just made an RPC call to the Alice `lnd` node. This is a good way to
 test if your nodes are up and running and `lncli` is functioning properly. Note
@@ -275,21 +275,21 @@ respectively.
 ```bash
 # In a new terminal window, setting $GOPATH, etc.
 cd $GOPATH/dev/bob
-bob$ lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon create
+bob$ lncli --rpcserver=localhost:10002 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon create
 # Note that you'll have to enter an 8+ character password and "n" for the mnemonic.
 
 # In a new terminal window:
 cd $GOPATH/dev/charlie
-charlie$ lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon create
+charlie$ lncli --rpcserver=localhost:10003 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon create
 # Note that you'll have to enter an 8+ character password and "n" for the mnemonic.
 ```
 
 To avoid typing the `--rpcserver=localhost:1000X` and `--macaroonpath` flag
 every time, we can set some aliases. Add the following to your `.bashrc`:
 ```bash
-alias lncli-alice="lncli --rpcserver=localhost:10001 --macaroonpath=data/admin.macaroon"
-alias lncli-bob="lncli --rpcserver=localhost:10002 --macaroonpath=data/admin.macaroon"
-alias lncli-charlie="lncli --rpcserver=localhost:10003 --macaroonpath=data/admin.macaroon"
+alias lncli-alice="lncli --rpcserver=localhost:10001 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon"
+alias lncli-bob="lncli --rpcserver=localhost:10002 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon"
+alias lncli-charlie="lncli --rpcserver=localhost:10003 --macaroonpath=data/chain/bitcoin/simnet/admin.macaroon"
 ```
 
 To make sure this was applied to all of your current terminal windows, rerun
@@ -406,7 +406,7 @@ alice$ lncli-alice connect <BOB_PUBKEY>@localhost:10012
 
 }
 ```
-Notice that `localhost:10012` corresponds to the `--peerport=10012` flag we set
+Notice that `localhost:10012` corresponds to the `--listen=localhost:10012` flag we set
 when starting the Bob `lnd` node.
 
 Let's check that Alice and Bob are now aware of each other.
@@ -604,7 +604,7 @@ btcctl --simnet --rpcuser=kek --rpcpass=kek generate 1
 
 # Check that Bob's on-chain balance was credited by his settled amount in the
 # channel. Recall that Bob previously had no on-chain Bitcoin:
-alice$ lncli-bob walletbalance
+bob$ lncli-bob walletbalance
 {
     "total_balance": "20001",
     "confirmed_balance": "20001",
@@ -626,7 +626,7 @@ repository](https://github.com/lightninglabs/lightning-faucet)._
 [//]: # (TODO Max: Replace the link to Github LN Faucet to an internal guide for interacting with the Lightning Faucet)
 
 #### Navigation
-- [Proceed to Stage 2 - Web Client](/tutorial/02-web-client)
+- [Proceed to Stage 2 - Web Client](/tutorial/02-web-client.md)
 - [Return to main tutorial page](/tutorial/)
 
 ### Questions

@@ -168,7 +168,4 @@ for anyone's needs.
 
 
 If something important is missing, or you feel that additional resources or
-links would be helpful, please email [Max
-Fang](mailto:max@lightning.engineering) or message him on the Lightning
-Community Slack.
-
+links would be helpful, please send a message in the [LND Developer Slack](https://join.slack.com/t/lightningcommunity/shared_invite/enQtMzQ0OTQyNjE5NjU1LWRiMGNmOTZiNzU0MTVmYzc1ZGFkZTUyNzUwOGJjMjYwNWRkNWQzZWE3MTkwZjdjZGE5ZGNiNGVkMzI2MDU4ZTE)

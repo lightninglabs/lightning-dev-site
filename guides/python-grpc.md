@@ -188,7 +188,7 @@ stub.GetInfo(ln.GetInfoRequest())
 
 With the above, you should have all the `lnd` related `gRPC` dependencies
 installed locally into your virtual environment. In order to get up to speed
-with `protofbuf` usage from Python, see [this official `protobuf` tutorial for
+with `protobuf` usage from Python, see [this official `protobuf` tutorial for
 Python](https://developers.google.com/protocol-buffers/docs/pythontutorial).
 Additionally, [this official gRPC
 resource](http://www.grpc.io/docs/tutorials/basic/python.html) provides more

@@ -7,9 +7,9 @@ permalink: /overview/
 ### Introduction
 
 The LND Overview and Developer Guide aims to provide *just* enough information
-about LND to enable readers to build applications. It start with a conceptual
+about LND to enable readers to build applications. It starts with a conceptual
 review of the Lightning Network, before jumping into the important aspects of
-working with specifically LND. If you are already comfortable with how the
+working specifically with LND. If you are already comfortable with how the
 Lightning Network works, feel free to skip down to the [Components](#components)
 section. The command line examples are for illustrative purposes only and will
 be covered in more depth in the [installation guide](/guides/installation/) and
@@ -64,7 +64,7 @@ the underlying blockchain, but with modern data processing and latency limits -
 payments can be made nearly as quickly as packets can be sent.
 
 Hash Time-Locked Contracts (HTLCs) allow transactions to be sent between parties
-who do not have a direct channels by routing it through multiple hops, so anyone
+who do not have a direct channel by routing them through multiple hops, so anyone
 connected to the Lightning Network is part of a single, interconnected global
 financial system.
 
@@ -215,7 +215,7 @@ security, we generally want to keep as little as possible in hot wallets, and as
 much as possible in cold wallets.
 
 It is possible to construct Lightning channels where the keys are cold, but they
-would need to be brought back online you conduct a channel update. Only with hot
+would need to be brought back online to conduct a channel update. Only with hot
 wallets can the Lightning Network attain a high volume of transactions.
 
 This is only a surface level introduction to Lightning integration. For a more
@@ -249,11 +249,7 @@ layers we encounter when reasoning about `lnd`:
 #### Software Components
 
 There are distinct software components we should be aware of when developing on
-- `btcd` / `btcutil`: `lnd` currently uses [`btcd` roasbeef
-  fork](https://github.com/roasbeef/btcd) to interface with the underlying
-  blockchain. `btcd` comes with `btcutil`, also [roasbeef
-  fork](https://github.com/Roasbeef/btcutil), that allows us to drive `btcd`
-  from the command line.
+- [`btcd`](https://github.com/btcsuite/btcd) or [`bitcoind`](https://github.com/bitcoin/bitcoin) is used by `lnd` to interface with the underlying  blockchain.
 - `lnd` / `lncli`: LND stands for Lightning Network Daemon and serves as the
   main software component driving the Lightning Network. It manages a database,
   connects to peers, opens / closes channels, generates payment invoices, sends,
@@ -262,9 +258,9 @@ There are distinct software components we should be aware of when developing on
 - [Neutrino](https://github.com/lightninglabs/neutrino) is an experimental
   Bitcoin light client designed to support Lightning mobile clients. This is a
   wallet UI usable with `lnd`. Neutrino is not required from an application
-  development standpoint, but can be regarded as the primary way the LND end
-  user interacts with the Lightning Network and thus and applications built on
-  top of it.
+  development standpoint, but can be regarded as the primary way for an  
+  end-user of `lnd` to interact with the Bitcoin Network and the applications  
+  built on top of it.
 
 #### LND Interfaces
 
@@ -274,18 +270,17 @@ There are several ways to drive `lnd`.
   instantaneously. A full list of commands can be viewed with `lncli --help`.
   To see a breakdown of the parameters for a particular command, run
   `lncli <command> --help`
-- gRPC is the preferred programmatic way interact with `lnd`. It includes simple
+- gRPC is the preferred programmatic way to interact with `lnd`. It includes simple
   methods that return a response immediately, as well as response-streaming and
   bidrectional streaming methods. Check out the guides for working with gRPC for
   [Python](/guides/python-grpc/) and [Javascript](/guides/javascript-grpc/)
 - LND also features a REST proxy someone can use if they are accustomed to
-  standard RESTful APIs. However, gRPC is higher performance and can provide
-  real-time notifications.
+  standard RESTful APIs. However, REST does not have full streaming RPC coverage.
 
 All of these LND interfaces are documented in the [API
 Reference](//api.lightning.community), featuring a description of the
 parameters, responses, and code examples for Python, Javascript, and command
-line arguments if it exists.
+line arguments if those exist.
 
 ### Channel Lifecycle
 
@@ -362,7 +357,7 @@ not attempt them. This will affect any web application with `lnd` integration,
 since if an invoice for a good or service is not fulfilled within the given
 timeframe, a new one should be generated.
 
-Other possibly unexpected rules include that the payee should accept up the
+Other possibly unexpected rules include that the payee should accept up to
 twice the amount encoded in the transaction, so that the payer can make payments
 harder to track by adding in small variations.
 

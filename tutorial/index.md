@@ -7,7 +7,7 @@ title: Tutorial
 
 This tutorial will get you up to speed with all the skills necessary to work
 with [`lnd`](https://github.com/lightningnetwork/lnd). We will be building a
-Bitcoin micropayments paywell into a news site!
+Bitcoin micropayments paywall into a news site!
 
 Those seeking more conceptual familiarity with the Lightning Network can read
 through the [LND Overview and Developer Guide](/overview/). It also contains a
