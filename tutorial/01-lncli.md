@@ -626,7 +626,7 @@ repository](https://github.com/lightninglabs/lightning-faucet)._
 [//]: # (TODO Max: Replace the link to Github LN Faucet to an internal guide for interacting with the Lightning Faucet)
 
 #### Navigation
-- [Proceed to Stage 2 - Web Client](/tutorial/02-web-client.md)
+- [Proceed to Stage 2 - Web Client](/tutorial/02-web-client)
 - [Return to main tutorial page](/tutorial/)
 
 ### Questions
