@@ -69,7 +69,7 @@ title: Installation
     export PATH=$PATH:/usr/local/go/bin
     ```
 
-    On Mac OS X:
+    On Mac OS X (ensure that you are using a bash shell: https://support.apple.com/kb/TA27005?locale=en_US):
     ```
     brew install go@1.13
     ```
