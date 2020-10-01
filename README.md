@@ -86,6 +86,7 @@ post](https://little418.com/2015/07/jekyll-google-cloud-storage.html) for more
 information.
 
 ### Steps
+So we have the following steps-
 
 1. Install Google Cloud SDK and authenticate into it:
 ```bash
@@ -107,3 +108,4 @@ gsutil -m rsync -d -r ./_site gs://dev.lightning.community
 ```
 
 In the future, you can just run `./deploy.sh` to deploy automatically.
+Thank you!
