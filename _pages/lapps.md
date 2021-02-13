@@ -66,7 +66,7 @@ compatible apps built on Eclair and c-lightning.
 <img src="/assets/lapps/lnd.fun.png" alt="Screenshot of lnd.fun dashboard home view" style="max-width: 50%;"/>
 
 ### Developer Tools
-
+* [ION](https://ion.radar.tech/): A comprehensive set of resources for users to join the Lightning Network.
 * [WooCommerce
   Plugin](https://github.com/joaodealmeida/woocommerce-gateway-lightning):
   Gateway plugin to accept Lightning payments at WooCommerce stores
