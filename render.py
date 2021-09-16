@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
@@ -10,7 +10,7 @@ def read_file_without_title(filename):
     file_lines = open(filename).readlines()
 
     while True:
-        line = file_lines[0].decode('utf-8').strip()
+        line = file_lines[0].strip()
 
         # If the line is empty or begins with a `# ` denoting a h1 md header
         if line == '' or line[:2] == '# ':
@@ -47,7 +47,7 @@ def render():
     installation_output = 'guides/installation.md'
     with open(installation_output, "wb") as file_out:
         file_out.write(installation_guide)
-    print "Rendered {}".format(installation_output)
+    print("Rendered {}".format(installation_output))
 
     # Read DOCKER-README.md and output guides/docker.md
     docker_guide = template.render(
@@ -58,7 +58,7 @@ def render():
     docker_output = 'guides/docker.md'
     with open(docker_output, "wb") as file_out:
         file_out.write(docker_guide)
-    print "Rendered {}".format(docker_output)
+    print("Rendered {}".format(docker_output))
 
     # Read python.md and output guides/python-grpc.md
     python_grpc_guide = template.render(
@@ -69,7 +69,7 @@ def render():
     python_grpc_output = 'guides/python-grpc.md'
     with open(python_grpc_output, "wb") as file_out:
         file_out.write(python_grpc_guide)
-    print "Rendered {}".format(python_grpc_output)
+    print("Rendered {}".format(python_grpc_output))
 
     # Read javascript.md and output guides/javascript-grpc.md
     javascript_grpc_guide = template.render(
@@ -80,7 +80,7 @@ def render():
     javascript_grpc_output = 'guides/javascript-grpc.md'
     with open(javascript_grpc_output, "wb") as file_out:
         file_out.write(javascript_grpc_guide)
-    print "Rendered {}".format(javascript_grpc_output)
+    print("Rendered {}".format(javascript_grpc_output))
 
 
 if __name__ == '__main__':

@@ -50,9 +50,10 @@ $ bundle exec jekyll serve
 
 ## Regenerating documentation
 
+### Install python dependencies
+
 ```shell
-# Install Jinja for python templating
-pip install Jinja2
+pip install -r requirements.txt
 ```
 
 ### Get the latest INSTALL.md

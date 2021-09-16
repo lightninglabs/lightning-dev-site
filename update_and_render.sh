@@ -16,7 +16,7 @@ curl -o javascript.md -s https://raw.githubusercontent.com/lightningnetwork/lnd/
 # cp ~/lightning/ln-lnd/src/github.com/lightningnetwork/lnd/docs/grpc/javascript.md .
 
 # Render docs
-./render.py
+python3 render.py
 
 # Clean up
 rm INSTALL.md
