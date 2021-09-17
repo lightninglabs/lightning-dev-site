@@ -120,9 +120,6 @@ Eclair is a Scala implementation of the Lightning Network built by [ACINQ](https
 * [Starblocks](https://starblocks.acinq.co/#/): Virtual coffee shop
 * [Strike](https://strike.acinq.co/#/): Stripe-like Lightning payment aggregator
   API (custodial)
-* [Lightning Conductor](http://lightningconductor.net/): A service for
-  converting Lightning balances to BTC and back without having to close
-  or open channels, currently on testnet.
 
 ### c-Lightning Lapps
 
