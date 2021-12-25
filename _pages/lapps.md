@@ -41,6 +41,7 @@ compatible apps built on Eclair and c-lightning.
 * [Y'alls](http://yalls.org/): Read and write articles, with Lightning Network
   micropayments  
 <img src="/assets/lapps/yalls.png" alt="Screenshot of Yalls home view" style="max-width: 50%;"/>
+
 * [LNCast](http://lncast.com/): Lightning Network Podcasts
 * [Bard](https://www.bard.fun/): Simple paywall for watching a music visualizer
 * [HodlHodl.com](https://hodlhodl.com/?set_asset=btcln): Peer-to-peer cryptocurrency
