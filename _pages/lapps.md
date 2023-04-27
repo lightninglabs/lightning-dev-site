@@ -77,6 +77,7 @@ compatible apps built on Eclair and c-lightning.
 * [LightningJ](http://www.lightningj.org/): A project intending to simplify the
   integration of Lightning implementations for Java developers, containing
   simple to use API implementations and converters between JSON and XML.
+* [LightningPay-PHP](https://github.com/robclark56/lightningPay-PHP): PHP plugin for eCommerce website to add _Pay by Lightning_ to accept order payments via the Lightning Network. 
 
 ### Tipping
 * [LightningTip](https://github.com/michael1011/lightningtip): Library to accept
